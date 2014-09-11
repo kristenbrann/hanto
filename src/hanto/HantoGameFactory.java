@@ -45,7 +45,7 @@ public class HantoGameFactory
 	 * @param gameId the version desired.
 	 * @return the game instance
 	 */
-	public static HantoGame makeHantoGame(HantoGameID gameId)
+	public HantoGame makeHantoGame(HantoGameID gameId)
 	{
 		return makeHantoGame(gameId, HantoPlayerColor.BLUE);
 	}
@@ -56,7 +56,7 @@ public class HantoGameFactory
 	 * @param movesFirst the player color that moves first
 	 * @return the game instance
 	 */
-	public static HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
+	public HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
 		HantoGame game = null;
 		switch (gameId) {
 			// to be filled in
