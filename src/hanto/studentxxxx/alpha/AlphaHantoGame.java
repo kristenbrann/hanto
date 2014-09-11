@@ -4,6 +4,7 @@
 package hanto.studentxxxx.alpha;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
