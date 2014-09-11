@@ -20,7 +20,7 @@ import hanto.studentxxxx.common.Butterfly;
  */
 public class AlphaHantoGame implements HantoGame{
 	
-	private HashMap<HantoCoordinate, HantoPiece> theBoard;
+	private Map<HantoCoordinate, HantoPiece> theBoard;
 	
 	
 	public AlphaHantoGame() {
