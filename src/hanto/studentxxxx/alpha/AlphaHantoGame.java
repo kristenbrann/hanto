@@ -66,7 +66,7 @@ public class AlphaHantoGame implements HantoGame{
 		StringBuilder output = new StringBuilder();
 		for(Map.Entry<HantoCoordinate, HantoPiece> entry : theBoard.entrySet()){
 			output.append(entry.getKey().toString());
-			output.append(" : ");
+			output.append("\t:\t");
 			output.append(entry.getValue().toString());
 			output.append("\n");
 		}

@@ -40,7 +40,7 @@ public class Butterfly implements HantoPiece{
 	
 	@Override
 	public String toString() {
-		return color.name() + " Butterfly";
+		return color.name() + "\tButterfly";
 	}
 
 }

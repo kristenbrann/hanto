@@ -70,7 +70,8 @@ public class testAlphaGame {
 			assertEquals("Placing an adjacent butterfly to home should return DRAW", MoveResult.DRAW, theGame.makeMove(secondPiece.getType(), null, adjacent));
 			assertEquals("The piece adjacent to home should be a red piece", secondPiece.getColor(), theGame.getPieceAt(adjacent).getColor());
 			assertEquals("The piece adjacent should be a butterfly.", secondPiece.getType(), theGame.getPieceAt(adjacent).getType());
-		} catch(HantoException e) {	
+			System.out.println(theGame.getPrintableBoard());
+		} catch(HantoException e) {
 			System.out.println(e.getMessage());
 			fail("unexpected exception");
 		}
