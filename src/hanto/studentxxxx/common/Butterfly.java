@@ -25,7 +25,7 @@ public class Butterfly implements HantoPiece{
 	HantoPlayerColor color;
 	
 	public Butterfly(HantoPlayerColor color) {
-		
+		this.color = color;
 	}
 
 	@Override
@@ -36,6 +36,11 @@ public class Butterfly implements HantoPiece{
 	@Override
 	public HantoPieceType getType() {
 		return HantoPieceType.BUTTERFLY;
+	}
+	
+	@Override
+	public String toString() {
+		return color.name() + " Butterfly";
 	}
 
 }

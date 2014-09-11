@@ -15,6 +15,7 @@ package hanto.studentxxxx.alpha;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -62,8 +63,15 @@ public class AlphaHantoGame implements HantoGame{
 
 	@Override
 	public String getPrintableBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder output = new StringBuilder();
+		for(Map.Entry<HantoCoordinate, HantoPiece> entry : theBoard.entrySet()){
+			output.append(entry.getKey().toString());
+			output.append(" : ");
+			output.append(entry.getValue().toString());
+			output.append("\n");
+		}
+		
+		return output.toString();
 	}
 
 }

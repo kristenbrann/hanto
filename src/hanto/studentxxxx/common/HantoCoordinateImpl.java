@@ -37,5 +37,9 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	public int getY() {
 		return y;
 	}
+	
+	public String toString() {
+		return "(" + x + "," + y + ")";
+	}
 
 }

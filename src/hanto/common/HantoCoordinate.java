@@ -28,4 +28,9 @@ public interface HantoCoordinate
 	 * @return the Y-coordinate
 	 */
 	int getY();
+	
+	/**
+	 * @return printable string
+	 */
+	String toString();
 }
