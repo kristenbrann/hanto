@@ -47,5 +47,10 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	public String toString() {
 		return "(" + x + "," + y + ")";
 	}
+	
+	boolean equals(HantoCoordinate c) {
+		return (x == c.getX()) && (y == c.getY());
+	}
+
 
 }

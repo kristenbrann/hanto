@@ -29,6 +29,8 @@ public abstract class AbsHantoGame implements HantoGame{
 	//Every hanto game will have a HashMap to represent the Board
 	protected Map<HantoCoordinate, HantoPiece> theBoard;
 	
+	protected HantoCoordinate home;
+	
 	protected AbsHantoGame() {
 		theBoard = new HashMap<HantoCoordinate, HantoPiece>();
 	}
@@ -70,5 +72,13 @@ public abstract class AbsHantoGame implements HantoGame{
 									Math.abs((to.getX()-to.getY()*-1-(from.getX()-from.getY())*-1)))
 							);
 		return distance;
+	}
+	
+	/**
+	 * @param c The coordinate to check if at the 'home' position
+	 * @return returns true if the tested coordinate is 'home' : (0,0)
+	 */
+	public boolean isHome(HantoCoordinate c){
+		return c.equals(home);
 	}
 }

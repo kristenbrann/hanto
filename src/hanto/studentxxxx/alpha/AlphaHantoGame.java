@@ -55,13 +55,7 @@ public class AlphaHantoGame extends AbsHantoGame{
 		return result;
 	}
 	
-	/**
-	 * @param c The coordinate to check if at the 'home' position
-	 * @return returns true if the tested coordinate is 'home' : (0,0)
-	 */
-	public boolean isHome(HantoCoordinate c){
-		return c.getX() == 0 && c.getY() == 0;
-	}
+
 	
 	/** Checks to see if two tiles are adjacent to each other
 	 * 
