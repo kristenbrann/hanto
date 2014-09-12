@@ -54,5 +54,4 @@ public interface HantoGame
 	 */
 	String getPrintableBoard();
 	
-	int getDistance(HantoCoordinate from, HantoCoordinate to);
 }

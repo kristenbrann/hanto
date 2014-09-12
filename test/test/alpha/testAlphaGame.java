@@ -19,8 +19,10 @@ import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentxxxx.common.AbsHantoGame;
 import hanto.studentxxxx.common.Butterfly;
 import hanto.studentxxxx.common.HantoCoordinateImpl;
 
@@ -56,6 +58,16 @@ public class testAlphaGame {
 	@Test
 	public void testNothingOnTheBoard() {
 		assertNull(theGame.getPieceAt(home));
+	}
+	
+	@Test
+	public void testGetPrintableBoard() {
+		try {
+			theGame.makeMove(HantoPieceType.BUTTERFLY, null, home);
+			assertTrue(theGame.getPrintableBoard().equals("(0,0)\t:\tBLUE\tButterfly\n"));
+		} catch (HantoException e){
+			fail("unexpected exception");
+		}
 	}
 	
 	@Test
@@ -171,7 +183,7 @@ public class testAlphaGame {
 	public void testGetDistance(){
 		HantoCoordinate coordinate1 = new HantoCoordinateImpl(0, 0);
 		HantoCoordinate coordinate2 = new HantoCoordinateImpl(0, 1);
-		assertEquals(1,theGame.getDistance(coordinate1,coordinate2));
+		assertEquals(1,((AbsHantoGame)theGame).getDistance(coordinate1,coordinate2));
 	}
 
 	
@@ -229,7 +241,6 @@ public class testAlphaGame {
 		theGame.makeMove(secondPiece.getType(), null, adjacent);
 	}
 	
-
 	@Test(expected=HantoException.class)
 	public void makeInvalidMovesCantPlaceSecondPieceAtHome() throws HantoException {
 		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);

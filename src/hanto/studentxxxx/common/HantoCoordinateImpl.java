@@ -23,6 +23,12 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	
 	int x, y;
 	
+	/**
+	 * Constructor for the implementation of HantoCoordinate
+	 * 
+	 * @param x The x value of the coordinate (using hex style)
+	 * @param y the y value of the coordinate (using hex style)
+	 */
 	public HantoCoordinateImpl (int x, int y){
 		this.x = x;
 		this.y = y;
