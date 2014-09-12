@@ -22,7 +22,6 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentxxxx.common.AbsHantoGame;
 import hanto.studentxxxx.common.Butterfly;
 import hanto.studentxxxx.common.HantoCoordinateImpl;
 
@@ -181,9 +180,9 @@ public class testAlphaGame {
 	
 	@Test
 	public void testGetDistance(){
-		HantoCoordinate coordinate1 = new HantoCoordinateImpl(0, 0);
-		HantoCoordinate coordinate2 = new HantoCoordinateImpl(0, 1);
-		assertEquals(1,((AbsHantoGame)theGame).getDistance(coordinate1,coordinate2));
+		HantoCoordinateImpl coordinate1 = new HantoCoordinateImpl(0, 0);
+		HantoCoordinateImpl coordinate2 = new HantoCoordinateImpl(0, 1);
+		assertEquals(1,coordinate1.getDistanceTo(coordinate2));
 	}
 
 	

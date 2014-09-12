@@ -20,9 +20,11 @@ public class BetaHantoGame extends AbsHantoGame {
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		MoveResult result = MoveResult.OK;
+		
+		HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
 
 		if (theBoard.isEmpty()) {
-			if (isHome(to)) {
+			if (isHome(hcTo)) {
 				switch (pieceType) {
 				case BUTTERFLY:
 					theBoard.put(to, new Butterfly(HantoPlayerColor.BLUE));
@@ -39,12 +41,6 @@ public class BetaHantoGame extends AbsHantoGame {
 			}
 		}
 		return result;
-	}
-
-	@Override
-	public int getDistance(HantoCoordinate from, HantoCoordinate to) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

@@ -20,7 +20,6 @@ import hanto.common.*;
  */
 public class HantoCoordinateImpl implements HantoCoordinate{
 	
-	
 	int x, y;
 	
 	/**
@@ -32,6 +31,11 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	public HantoCoordinateImpl (int x, int y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public HantoCoordinateImpl (HantoCoordinate c) {
+		x = c.getX();
+		y = c.getY();
 	}
 
 	@Override
@@ -50,6 +54,34 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	
 	boolean equals(HantoCoordinate c) {
 		return (x == c.getX()) && (y == c.getY());
+	}
+
+	public boolean isAdjacent(HantoCoordinate c) {
+		return getDistanceTo(c) == 1;
+	}
+	
+	/**
+	 * @param from The Coordinate where we are calculating the distance from
+	 * @param to The Coordinate where we are calculating the distance to
+	 * @return The number of tiles the two tiles are away from each other. If they are adjacent,
+	 * 			then it should return 1.
+	 */
+	public int getDistanceTo(HantoCoordinate to){
+		int dx = to.getX() - x;
+		int dy = to.getY() - y;
+		
+		int distance;
+		
+		if ( sameSign (dx, dy) ) {
+			distance = Math.abs(dx + dy);
+		} else {
+			distance = Math.max(Math.abs(dx), Math.abs(dy));
+		}
+		return distance;
+	}
+	
+	private boolean sameSign(int x, int y) {
+		return (x < 0 && y < 0) || ( y >= 0 && x >= 0 );
 	}
 
 

@@ -19,6 +19,11 @@ package hanto.common;
 public class HantoException extends Exception
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6856425033626282394L;
+
+	/**
 	 * Every instance of this exception must have a message describing the exception.
 	 * 
 	 * @param message

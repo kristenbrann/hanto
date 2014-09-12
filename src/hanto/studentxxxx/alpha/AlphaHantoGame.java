@@ -27,15 +27,19 @@ import hanto.studentxxxx.common.HantoCoordinateImpl;
  *
  */
 public class AlphaHantoGame extends AbsHantoGame{
+	
+	public AlphaHantoGame() {
+		home = new HantoCoordinateImpl(0, 0);
+	}
 
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		MoveResult result = MoveResult.OK;
-		
+		HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
 		
 		if(theBoard.isEmpty()){
-			if(isHome(to)){
+			if(isHome(hcTo)){
 				theBoard.put(to, new Butterfly(HantoPlayerColor.BLUE));
 				result = MoveResult.OK;
 			}
@@ -43,7 +47,7 @@ public class AlphaHantoGame extends AbsHantoGame{
 				throw new HantoException("First piece must be placed at (0,0).");
 			}
 		} else {
-			if(areAdjacent(new HantoCoordinateImpl(0, 0), to)){
+			if(hcTo.isAdjacent(home)){
 				theBoard.put(to, new Butterfly(HantoPlayerColor.RED));
 				result = MoveResult.DRAW;
 			}
@@ -63,8 +67,8 @@ public class AlphaHantoGame extends AbsHantoGame{
 	 * @param to   The tile to determine if adjacent to
 	 * @return  true if the two tiles are adjacent (touching)
 	 */
-	public boolean areAdjacent(HantoCoordinate from, HantoCoordinate to){
-		return getDistance(from, to) == 1;
+	public boolean areAdjacent(HantoCoordinateImpl from, HantoCoordinateImpl to){
+		return from.getDistanceTo( to ) == 1;
 	}
 
 }

@@ -63,8 +63,10 @@ public class HantoGameFactory
 		switch (gameId) {
 		case ALPHA_HANTO:
 			game = new AlphaHantoGame();
+			break;
 		case BETA_HANTO:
 			game = new BetaHantoGame();
+			break;
 		default:
 			break;
 		}

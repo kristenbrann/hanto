@@ -59,26 +59,10 @@ public abstract class AbsHantoGame implements HantoGame{
 	}
 	
 	/**
-	 * @param from The Coordinate where we are calculating the distance from
-	 * @param to The Coordinate where we are calculating the distance to
-	 * @return The number of tiles the two tiles are away from each other. If they are adjacent,
-	 * 			then it should return 1.
-	 */
-	public int getDistance(HantoCoordinate from, HantoCoordinate to){
-		int distance = Math.max(
-							Math.abs(to.getY() - from.getY()),
-							Math.max(
-									Math.abs(to.getX() - from.getX()),
-									Math.abs((to.getX()-to.getY()*-1-(from.getX()-from.getY())*-1)))
-							);
-		return distance;
-	}
-	
-	/**
 	 * @param c The coordinate to check if at the 'home' position
 	 * @return returns true if the tested coordinate is 'home' : (0,0)
 	 */
-	public boolean isHome(HantoCoordinate c){
+	public boolean isHome(HantoCoordinateImpl c){
 		return c.equals(home);
 	}
 }
