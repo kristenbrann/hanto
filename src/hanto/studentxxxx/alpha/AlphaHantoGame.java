@@ -25,6 +25,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentxxxx.common.Butterfly;
+import hanto.studentxxxx.common.HantoCoordinateImpl;
 
 /**
  * 
@@ -46,11 +47,21 @@ public class AlphaHantoGame implements HantoGame{
 		
 		
 		if(theBoard.isEmpty()){
-			theBoard.put(to, new Butterfly(HantoPlayerColor.BLUE));
-			result = MoveResult.OK;
+			if(isHome(to)){
+				theBoard.put(to, new Butterfly(HantoPlayerColor.BLUE));
+				result = MoveResult.OK;
+			}
+			else{
+				throw new HantoException("First piece must be placed at (0,0).");
+			}
 		} else {
-			theBoard.put(to, new Butterfly(HantoPlayerColor.RED));
-			result = MoveResult.DRAW;
+			if(areAdjacent(new HantoCoordinateImpl(0,0),to)){
+				theBoard.put(to, new Butterfly(HantoPlayerColor.RED));
+				result = MoveResult.DRAW;
+			}
+			else{
+				throw new HantoException("Second piece must be adjacent to (0,0)");
+			}
 		}
 		
 		return result;
@@ -72,6 +83,24 @@ public class AlphaHantoGame implements HantoGame{
 		}
 		
 		return output.toString();
+	}
+	
+	public boolean isHome(HantoCoordinate c){
+		return c.getX()==0 && c.getY()==0;
+	}
+	
+	public boolean areAdjacent(HantoCoordinate from, HantoCoordinate to){
+		return getDistance(from,to)==1;
+	}
+	
+	public int getDistance(HantoCoordinate from, HantoCoordinate to){
+		int distance = Math.max(
+							Math.abs(to.getY() - from.getY()),
+							Math.max(
+									Math.abs(to.getX() - from.getX()),
+									Math.abs((to.getX()-to.getY()*-1-(from.getX()-from.getY())*-1)))
+							);
+		return distance;
 	}
 
 }

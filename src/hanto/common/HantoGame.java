@@ -53,4 +53,6 @@ public interface HantoGame
 	 * @return a printable representation of the board.
 	 */
 	String getPrintableBoard();
+	
+	int getDistance(HantoCoordinate from, HantoCoordinate to);
 }

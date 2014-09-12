@@ -70,7 +70,6 @@ public class testAlphaGame {
 			assertEquals("Placing an adjacent butterfly to home should return DRAW", MoveResult.DRAW, theGame.makeMove(secondPiece.getType(), null, adjacent));
 			assertEquals("The piece adjacent to home should be a red piece", secondPiece.getColor(), theGame.getPieceAt(adjacent).getColor());
 			assertEquals("The piece adjacent should be a butterfly.", secondPiece.getType(), theGame.getPieceAt(adjacent).getType());
-			System.out.println(theGame.getPrintableBoard());
 		} catch(HantoException e) {
 			System.out.println(e.getMessage());
 			fail("unexpected exception");
@@ -167,82 +166,77 @@ public class testAlphaGame {
 		}
 	}
 	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesRedCantMoveFirst() {
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.RED);
-//		theGame.makeMove(firstPiece.getType(), null, home);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesNotHomeLocation1() {
-//		HantoCoordinate notHome = new HantoCoordinateImpl(-1, 1);
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		theGame.makeMove(firstPiece.getType(), null, notHome);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesNotHomeLocation2() {
-//		HantoCoordinate notHome = new HantoCoordinateImpl(0, 1);
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		theGame.makeMove(firstPiece.getType(), null, notHome);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesNotHomeLocation3() {
-//		HantoCoordinate notHome = new HantoCoordinateImpl(50, -1);
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		theGame.makeMove(firstPiece.getType(), null, notHome);
-//	}
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesNotHomeLocation4() {
-//		HantoCoordinate notHome = new HantoCoordinateImpl(2, -2);
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		theGame.makeMove(firstPiece.getType(), null, notHome);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesSecondPieceNotAdjacent1() {
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
-//		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
-//		HantoCoordinate adjacent = new HantoCoordinateImpl(-2, 2);
-//		theGame.makeMove(secondPiece.getType(), null, adjacent);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesSecondPieceNotAdjacent2() {
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
-//		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
-//		HantoCoordinate adjacent = new HantoCoordinateImpl(-5, -5);
-//		theGame.makeMove(secondPiece.getType(), null, adjacent);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesSecondPieceNotAdjacent3() {
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
-//		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
-//		HantoCoordinate adjacent = new HantoCoordinateImpl(-25, 3);
-//		theGame.makeMove(secondPiece.getType(), null, adjacent);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesConsecutiveBlueMoves() {
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
-//		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		HantoCoordinate adjacent = new HantoCoordinateImpl(1, 1);
-//		theGame.makeMove(secondPiece.getType(), null, adjacent);
-//	}
-//	
-//	@Test(expected=HantoException.class)
-//	public void makeInvalidMovesCantPlaceSecondPieceAtHome() {
-//		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-//		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
-//		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
-//		theGame.makeMove(secondPiece.getType(), null, home);
-//	}
+	
+	@Test
+	public void testGetDistance(){
+		HantoCoordinate coordinate1 = new HantoCoordinateImpl(0, 0);
+		HantoCoordinate coordinate2 = new HantoCoordinateImpl(0, 1);
+		assertEquals(1,theGame.getDistance(coordinate1,coordinate2));
+	}
+
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesNotHomeLocation1() throws HantoException {
+			HantoCoordinate notHome = new HantoCoordinateImpl(-1, 1);
+			HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+			theGame.makeMove(firstPiece.getType(), null, notHome);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesNotHomeLocation2() throws HantoException {
+		HantoCoordinate notHome = new HantoCoordinateImpl(0, 1);
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), null, notHome);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesNotHomeLocation3() throws HantoException {
+		HantoCoordinate notHome = new HantoCoordinateImpl(50, -1);
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), null, notHome);
+	}
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesNotHomeLocation4() throws HantoException {
+		HantoCoordinate notHome = new HantoCoordinateImpl(2, -2);
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), null, notHome);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesSecondPieceNotAdjacent1() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
+		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoCoordinate adjacent = new HantoCoordinateImpl(-2, 2);
+		theGame.makeMove(secondPiece.getType(), null, adjacent);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesSecondPieceNotAdjacent2() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
+		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoCoordinate adjacent = new HantoCoordinateImpl(-5, -5);
+		theGame.makeMove(secondPiece.getType(), null, adjacent);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesSecondPieceNotAdjacent3() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
+		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoCoordinate adjacent = new HantoCoordinateImpl(-25, 3);
+		theGame.makeMove(secondPiece.getType(), null, adjacent);
+	}
+	
+
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovesCantPlaceSecondPieceAtHome() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		assertEquals(MoveResult.OK, theGame.makeMove(firstPiece.getType(), null, home));
+		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
+		theGame.makeMove(secondPiece.getType(), null, home);
+	}
 
 	
 
