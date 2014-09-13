@@ -46,5 +46,18 @@ public class Butterfly implements HantoPiece{
 	public String toString() {
 		return color.name() + "\tButterfly";
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		boolean isEqual = false;
+		if (o instanceof Butterfly) {
+			isEqual = equals((Butterfly) o);
+		}
+		return isEqual;
+	}
+	
+	public boolean equals(Butterfly bfly) {
+		return color == bfly.getColor();
+	}
 
 }
