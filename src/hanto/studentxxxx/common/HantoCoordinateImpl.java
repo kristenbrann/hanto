@@ -52,8 +52,18 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 		return "(" + x + "," + y + ")";
 	}
 	
-	boolean equals(HantoCoordinate c) {
+	
+	public boolean equals(HantoCoordinate c) {
 		return (x == c.getX()) && (y == c.getY());
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		boolean equals = false;
+		if(o instanceof HantoCoordinate){
+			equals = equals((HantoCoordinate)o);
+		}
+		return equals;
 	}
 
 	public boolean isAdjacent(HantoCoordinate c) {
@@ -82,6 +92,15 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	
 	private boolean sameSign(int x, int y) {
 		return (x < 0 && y < 0) || ( y >= 0 && x >= 0 );
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (x ^ (x >>> 32));
+		result = prime * result + (int) (y ^ (y >>> 32));
+		return result;
 	}
 
 

@@ -43,15 +43,8 @@ public class BetaHantoGame extends AbsHantoGame {
 						+ home.toString());
 			}
 		}
-		else {
-			boolean isAdjacent = false;
-			for(Entry<HantoCoordinate, HantoPiece> entry : this.theBoard.entrySet()){
-				HantoCoordinateImpl entryCoord = new HantoCoordinateImpl(entry.getKey().getX(),entry.getKey().getY());
-				if(areAdjacent(entryCoord,hcTo)){
-					isAdjacent = true;
-				}
-			}
-			if(isAdjacent){
+		else {			
+			if(hasAdjacentPiece(hcTo)){
 				switch(pieceType) {
 				case BUTTERFLY:
 					theBoard.put(to, new Butterfly(HantoPlayerColor.BLUE));
@@ -67,6 +60,46 @@ public class BetaHantoGame extends AbsHantoGame {
 			}
 		}
 		return result;
+	}
+	
+	public boolean hasAdjacentPiece(HantoCoordinateImpl hc){
+		boolean foundAdjacentPiece = false;
+		
+		HantoCoordinate adjacent = new HantoCoordinateImpl(hc.getX(),hc.getY()+1);
+		if(theBoard.containsKey(adjacent)){
+			foundAdjacentPiece = true;
+		}
+		else{
+			adjacent = new HantoCoordinateImpl(hc.getX()+1,hc.getY());
+			if(theBoard.containsKey(adjacent)){
+				foundAdjacentPiece = true;
+			}
+			else{
+				adjacent = new HantoCoordinateImpl(hc.getX()+1,hc.getY()-1);
+				if(theBoard.containsKey(adjacent)){
+					foundAdjacentPiece = true;
+				}
+				else{
+					adjacent = new HantoCoordinateImpl(hc.getX(),hc.getY()-1);
+					if(theBoard.containsKey(adjacent)){
+						foundAdjacentPiece = true;
+					}
+					else{
+						adjacent = new HantoCoordinateImpl(hc.getX()-1,hc.getY());
+						if(theBoard.containsKey(adjacent)){
+							foundAdjacentPiece = true;
+						}
+						else{
+							adjacent = new HantoCoordinateImpl(hc.getX()-1,hc.getY()+1);
+							if(theBoard.containsKey(adjacent)){
+								foundAdjacentPiece = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return foundAdjacentPiece;
 	}
 
 }
