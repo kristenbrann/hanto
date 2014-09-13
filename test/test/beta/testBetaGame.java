@@ -1,10 +1,6 @@
 package test.beta;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -13,9 +9,7 @@ import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentxxxx.common.Butterfly;
-import hanto.studentxxxx.common.HantoCoordinateImpl;
-import hanto.studentxxxx.common.Sparrow;
+import hanto.studentxxxx.common.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -79,30 +73,6 @@ public class testBetaGame {
 			theGame.makeMove(firstPiece.getType(), null, notHome);
 	}
 	
-	@Test
-	public void makeValidSecondMove() {
-		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
-		HantoCoordinate home = new HantoCoordinateImpl(0,0);
-		HantoCoordinate adjacentToHome = new HantoCoordinateImpl(0,1);
-		try {
-			theGame.makeMove(firstPiece.getType(),null,home);
-			theGame.makeMove(secondPiece.getType(),null,adjacentToHome);
-		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
-		}
-	}
-	
-	@Test(expected=HantoException.class)
-	public void makeInvalidSecondMove() throws HantoException{
-		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-		HantoPiece secondPiece = new Butterfly(HantoPlayerColor.RED);
-		HantoCoordinate home = new HantoCoordinateImpl(0,0);
-		HantoCoordinate notAdjacentToHome = new HantoCoordinateImpl(5,5);
-		theGame.makeMove(firstPiece.getType(),null,home);
-		theGame.makeMove(secondPiece.getType(),null,notAdjacentToHome);
-	}
 	
 	
 	
