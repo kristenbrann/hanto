@@ -73,9 +73,12 @@ public class testBetaGame {
 			theGame.makeMove(firstPiece.getType(), null, notHome);
 	}
 	
-	
-	
-	
+	@Test(expected=HantoException.class)
+	public void makeInvalidFirstMove2() throws HantoException {
+			HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+			HantoCoordinate notHome = new HantoCoordinateImpl(0, -1);
+			theGame.makeMove(firstPiece.getType(), null, notHome);
+	}
 	
 
 }
