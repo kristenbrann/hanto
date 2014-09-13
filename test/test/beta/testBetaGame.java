@@ -459,13 +459,10 @@ public class testBetaGame {
 		HantoPiece secondBPiece = new Sparrow(HantoPlayerColor.BLUE);
 		HantoPiece thirdBPiece = new Sparrow(HantoPlayerColor.BLUE);
 		HantoPiece fourthBPiece = new Sparrow(HantoPlayerColor.BLUE);
-		HantoPiece fifthBPiece = new Sparrow(HantoPlayerColor.BLUE);
 		
 		HantoPiece firstRPiece = new Butterfly(HantoPlayerColor.RED);
 		HantoPiece secondRPiece = new Sparrow(HantoPlayerColor.RED);
 		HantoPiece thirdRPiece = new Sparrow(HantoPlayerColor.RED);
-		HantoPiece fourthRPiece = new Sparrow(HantoPlayerColor.RED);
-		//HantoPiece fifthRPiece = new Sparrow(HantoPlayerColor.RED);
 		
 		HantoCoordinate firstBCoord = home;
 		HantoCoordinate secondBCoord = new HantoCoordinateImpl(0,2);
