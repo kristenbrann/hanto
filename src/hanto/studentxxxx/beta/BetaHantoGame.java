@@ -14,7 +14,10 @@ import hanto.studentxxxx.common.Sparrow;
 public class BetaHantoGame extends AbsHantoGame {
 	
 	private int turn;
-
+	private final int maxTurns = 11;
+	private HantoCoordinateImpl blueButterfly;
+	private HantoCoordinateImpl redButterfly;
+	
 	public BetaHantoGame() {
 		home = new HantoCoordinateImpl(0, 0);
 		turn = 0;
@@ -25,7 +28,6 @@ public class BetaHantoGame extends AbsHantoGame {
 			HantoCoordinate to) throws HantoException {
 		MoveResult result = MoveResult.OK;
 		HantoPlayerColor pc = determineColor();
-		turn++;
 		
 		HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
 
@@ -34,6 +36,17 @@ public class BetaHantoGame extends AbsHantoGame {
 				switch (pieceType) {
 				case BUTTERFLY:
 					theBoard.put(to, new Butterfly(pc));
+					switch (pc) {
+					case BLUE:
+						blueButterfly = hcTo;
+						break;
+					case RED:
+						redButterfly = hcTo;
+						break;
+					default:
+						break;
+					}
+					
 					break;
 				case SPARROW:
 					theBoard.put(to, new Sparrow(pc));
@@ -52,12 +65,27 @@ public class BetaHantoGame extends AbsHantoGame {
 				case BUTTERFLY:
 					HantoPiece bfly = new Butterfly(pc);
 					if(!theBoard.containsValue(bfly)){
-						theBoard.put(to, new Butterfly(pc));
+						theBoard.put(to, bfly);
+						switch (pc) {
+						case BLUE:
+							blueButterfly = hcTo;
+							break;
+						case RED:
+							redButterfly = hcTo;
+							break;
+						default:
+							break;
+						}
 					} else {
 						throw new HantoException("Player " + pc.name() + " has already placed a butterfly.");
 					}
 					break;
 				case SPARROW:
+					if(turn==6||turn==7){
+						if(!theBoard.containsValue(new Butterfly(pc))){
+							throw new HantoException("Player " + pc.name() + " must place a butterfly by the fourth turn.");
+						}
+					}
 					theBoard.put(to, new Sparrow(pc));
 				default:
 					break;
@@ -67,7 +95,38 @@ public class BetaHantoGame extends AbsHantoGame {
 				throw new HantoException("Piece must be placed adjacent to another piece.");
 			}
 		}
+		
+		result = resolve();
+		turn++;
 		return result;
+	}
+	
+	private MoveResult resolve() {
+		MoveResult result = MoveResult.OK;
+		if(turn==maxTurns){
+			result = MoveResult.DRAW;
+		}
+		else{
+			if(redButterfly!=null && isSurrounded(redButterfly)){
+				result = MoveResult.BLUE_WINS;
+			}
+			else if(blueButterfly!=null && isSurrounded(blueButterfly)){
+				result = MoveResult.RED_WINS;
+			}
+		}
+		return result;
+	}
+
+	
+	private boolean isSurrounded(HantoCoordinateImpl hc){
+		boolean isSurrounded = true;
+		for(HantoCoordinate entry : hc.getAdjacentCoordinates()){
+			if(getPieceAt(entry)==null){
+				isSurrounded = false;
+				break;
+			}
+		}
+		return isSurrounded;
 	}
 	
 	private HantoPlayerColor determineColor() {
@@ -83,39 +142,10 @@ public class BetaHantoGame extends AbsHantoGame {
 
 	public boolean hasAdjacentPiece(HantoCoordinateImpl hc){
 		boolean foundAdjacentPiece = false;
-		
-		HantoCoordinate adjacent = new HantoCoordinateImpl(hc.getX(),hc.getY()+1);
-		if(theBoard.containsKey(adjacent)){
-			foundAdjacentPiece = true;
-		}
-		else{
-			adjacent = new HantoCoordinateImpl(hc.getX()+1,hc.getY());
-			if(theBoard.containsKey(adjacent)){
+		for(HantoCoordinate entry : hc.getAdjacentCoordinates()){
+			if(getPieceAt(entry)!=null){
 				foundAdjacentPiece = true;
-			}
-			else{
-				adjacent = new HantoCoordinateImpl(hc.getX()+1,hc.getY()-1);
-				if(theBoard.containsKey(adjacent)){
-					foundAdjacentPiece = true;
-				}
-				else{
-					adjacent = new HantoCoordinateImpl(hc.getX(),hc.getY()-1);
-					if(theBoard.containsKey(adjacent)){
-						foundAdjacentPiece = true;
-					}
-					else{
-						adjacent = new HantoCoordinateImpl(hc.getX()-1,hc.getY());
-						if(theBoard.containsKey(adjacent)){
-							foundAdjacentPiece = true;
-						}
-						else{
-							adjacent = new HantoCoordinateImpl(hc.getX()-1,hc.getY()+1);
-							if(theBoard.containsKey(adjacent)){
-								foundAdjacentPiece = true;
-							}
-						}
-					}
-				}
+				break;
 			}
 		}
 		return foundAdjacentPiece;

@@ -12,6 +12,9 @@
  */
 package hanto.studentxxxx.common;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import hanto.common.*;
 
 /**
@@ -101,6 +104,18 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 		result = prime * result + (int) (x ^ (x >>> 32));
 		result = prime * result + (int) (y ^ (y >>> 32));
 		return result;
+	}
+	
+
+	public Collection<HantoCoordinate> getAdjacentCoordinates(){
+		Collection<HantoCoordinate> coordinates = new ArrayList<HantoCoordinate>(6);
+		coordinates.add(new HantoCoordinateImpl(x,y+1));
+		coordinates.add(new HantoCoordinateImpl(x+1,y));
+		coordinates.add(new HantoCoordinateImpl(x+1,y-1));
+		coordinates.add(new HantoCoordinateImpl(x,y-1));
+		coordinates.add(new HantoCoordinateImpl(x-1,y));
+		coordinates.add(new HantoCoordinateImpl(x-1,y+1));
+		return coordinates;
 	}
 
 
