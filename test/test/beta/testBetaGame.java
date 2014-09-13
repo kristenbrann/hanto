@@ -442,9 +442,55 @@ public class testBetaGame {
 
 			assertEquals("Placing a sparrow should return OK", MoveResult.OK, theGame.makeMove(thirdRPiece.getType(),null,thirdRCoord));
 
-			assertEquals("Placing a sparrow should return OK", MoveResult.RED_WINS, theGame.makeMove(fourthBPiece.getType(),null,fourthBCoord));
+			assertEquals("Placing a sparrow should return RED_WINS", MoveResult.RED_WINS, theGame.makeMove(fourthBPiece.getType(),null,fourthBCoord));
 
 			
+		} catch (HantoException e) {
+			System.out.println(e.getMessage());
+			fail("unexpected exception");
+		}
+		
+		
+	}
+	
+	@Test
+	public void simulateValidBlueWinsGame() throws HantoException {
+		HantoPiece firstBPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoPiece secondBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece thirdBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece fourthBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece fifthBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		
+		HantoPiece firstRPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoPiece secondRPiece = new Sparrow(HantoPlayerColor.RED);
+		HantoPiece thirdRPiece = new Sparrow(HantoPlayerColor.RED);
+		HantoPiece fourthRPiece = new Sparrow(HantoPlayerColor.RED);
+		//HantoPiece fifthRPiece = new Sparrow(HantoPlayerColor.RED);
+		
+		HantoCoordinate firstBCoord = home;
+		HantoCoordinate secondBCoord = new HantoCoordinateImpl(0,2);
+		HantoCoordinate thirdBCoord = new HantoCoordinateImpl(1,0);
+		HantoCoordinate fourthBCoord = new HantoCoordinateImpl(-1,1);
+		
+		HantoCoordinate firstRCoord = new HantoCoordinateImpl(0,1);
+		HantoCoordinate secondRCoord = new HantoCoordinateImpl(1,1);
+		HantoCoordinate thirdRCoord = new HantoCoordinateImpl(-1,2);
+		
+		try {
+			assertEquals("Placing a butterfly at home as first move should return OK", MoveResult.OK, theGame.makeMove(firstBPiece.getType(),null,firstBCoord));
+			
+			assertEquals("Placing a butterfly should return OK", MoveResult.OK, theGame.makeMove(firstRPiece.getType(),null,firstRCoord));
+
+			assertEquals("Placing a sparrow should return OK", MoveResult.OK, theGame.makeMove(secondBPiece.getType(),null,secondBCoord));
+			
+			assertEquals("Placing a sparrow should return OK", MoveResult.OK, theGame.makeMove(secondRPiece.getType(),null,secondRCoord));
+
+			assertEquals("Placing a sparrow should return OK", MoveResult.OK, theGame.makeMove(thirdBPiece.getType(),null,thirdBCoord));
+
+			assertEquals("Placing a sparrow should return OK", MoveResult.OK, theGame.makeMove(thirdRPiece.getType(),null,thirdRCoord));
+
+			assertEquals("Placing a sparrow should return BLUE_WINS", MoveResult.BLUE_WINS, theGame.makeMove(fourthBPiece.getType(),null,fourthBCoord));
+					
 		} catch (HantoException e) {
 			System.out.println(e.getMessage());
 			fail("unexpected exception");
