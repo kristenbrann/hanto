@@ -61,14 +61,6 @@ public class AlphaHantoGame extends AbsHantoGame{
 	
 
 	
-	/** Checks to see if two tiles are adjacent to each other
-	 * 
-	 * @param from The tile to determine if adjacent from
-	 * @param to   The tile to determine if adjacent to
-	 * @return  true if the two tiles are adjacent (touching)
-	 */
-	public boolean areAdjacent(HantoCoordinateImpl from, HantoCoordinateImpl to){
-		return from.getDistanceTo( to ) == 1;
-	}
+	
 
 }
