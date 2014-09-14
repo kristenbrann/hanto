@@ -42,7 +42,6 @@ public class Sparrow implements HantoPiece {
 	
 	@Override
 	public String toString() {
-		return color.name() + "\tSparrow";
+		return color.name() + "\t" + HantoPieceType.SPARROW.getPrintableName();
 	}
-
 }

@@ -26,9 +26,4 @@ public interface HantoPiece
 	 */
 	HantoPieceType getType();
 	
-	/**
-	 * 
-	 * @return readable form
-	 */
-	String toString();
 }

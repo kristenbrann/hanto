@@ -44,7 +44,7 @@ public class Butterfly implements HantoPiece{
 	
 	@Override
 	public String toString() {
-		return color.name() + "\tButterfly";
+		return color.name() + "\t" + HantoPieceType.BUTTERFLY.getPrintableName();
 	}
 	
 	@Override

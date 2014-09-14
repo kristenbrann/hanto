@@ -1,3 +1,4 @@
+package test.hanto;
 /*******************************************************************************
  * This files was developed for CS4233: Object-Oriented Analysis & Design.
  * The course was taken at Worcester Polytechnic Institute.
@@ -10,7 +11,7 @@
 /**
  * @author tcarmstrong klbrann
  */
-package test.alpha;
+
 
 import static org.junit.Assert.*;
 import hanto.HantoGameFactory;

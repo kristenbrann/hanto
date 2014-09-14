@@ -1,4 +1,5 @@
-package test.beta;
+package test.hanto;
+
 
 import static org.junit.Assert.*;
 import hanto.HantoGameFactory;
