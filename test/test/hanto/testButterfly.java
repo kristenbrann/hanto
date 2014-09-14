@@ -3,7 +3,7 @@ package test.hanto;
 import static org.junit.Assert.*;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
-import hanto.studentxxxx.common.Butterfly;
+import hanto.student_TCA_KLB.common.Butterfly;
 
 import org.junit.Before;
 import org.junit.Test;

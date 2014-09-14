@@ -23,8 +23,8 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentxxxx.common.Butterfly;
-import hanto.studentxxxx.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.Butterfly;
+import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 
 import org.junit.Before;
 import org.junit.Test;

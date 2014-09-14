@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import hanto.common.HantoCoordinate;
-import hanto.studentxxxx.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

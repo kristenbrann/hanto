@@ -10,7 +10,7 @@
 /**
  * @author tcarmstrong klbrann
  */
-package hanto.studentxxxx.common;
+package hanto.student_TCA_KLB.common;
 
 import java.util.ArrayList;
 import java.util.Collection;

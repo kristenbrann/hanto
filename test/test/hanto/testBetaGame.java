@@ -10,7 +10,7 @@ import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentxxxx.common.*;
+import hanto.student_TCA_KLB.common.*;
 
 import org.junit.Before;
 import org.junit.Test;

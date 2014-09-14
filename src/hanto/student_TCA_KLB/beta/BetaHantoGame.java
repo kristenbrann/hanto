@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentxxxx.beta;
+package hanto.student_TCA_KLB.beta;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -16,10 +16,10 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentxxxx.common.AbsHantoGame;
-import hanto.studentxxxx.common.Butterfly;
-import hanto.studentxxxx.common.HantoCoordinateImpl;
-import hanto.studentxxxx.common.Sparrow;
+import hanto.student_TCA_KLB.common.AbsHantoGame;
+import hanto.student_TCA_KLB.common.Butterfly;
+import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.Sparrow;
 
 /**
  * @author tcarmstrong klbrann

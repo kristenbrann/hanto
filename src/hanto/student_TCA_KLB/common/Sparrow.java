@@ -7,31 +7,29 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-/**
- * @author tcarmstrong klbrann
- */
-package hanto.studentxxxx.common;
+
+package hanto.student_TCA_KLB.common;
 
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 
 /**
- * 
+ * @author tcarmstrong klbrann
  *
  */
-public class Butterfly implements HantoPiece{
+public class Sparrow implements HantoPiece {
 	
 	HantoPlayerColor color;
-	
-	/** Constructor for a Butterfly
+
+	/** Constructor for the Sparrow piece
 	 * 
-	 * @param color The Player color of the butterfly
+	 * @param color The player color for the Sparrow Piece
 	 */
-	public Butterfly(HantoPlayerColor color) {
+	public Sparrow(HantoPlayerColor color) {
 		this.color = color;
 	}
-
+	
 	@Override
 	public HantoPlayerColor getColor() {
 		return color;
@@ -39,25 +37,11 @@ public class Butterfly implements HantoPiece{
 
 	@Override
 	public HantoPieceType getType() {
-		return HantoPieceType.BUTTERFLY;
+		return HantoPieceType.SPARROW;
 	}
 	
 	@Override
 	public String toString() {
-		return color.name() + "\t" + HantoPieceType.BUTTERFLY.getPrintableName();
+		return color.name() + "\t" + HantoPieceType.SPARROW.getPrintableName();
 	}
-	
-	@Override
-	public boolean equals(Object o) {
-		boolean isEqual = false;
-		if (o instanceof Butterfly) {
-			isEqual = equals((Butterfly) o);
-		}
-		return isEqual;
-	}
-	
-	public boolean equals(Butterfly bfly) {
-		return color == bfly.getColor();
-	}
-
 }

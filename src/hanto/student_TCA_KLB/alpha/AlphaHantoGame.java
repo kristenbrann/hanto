@@ -11,16 +11,16 @@
  * @author tcarmstrong klbrann
  * 
  */
-package hanto.studentxxxx.alpha;
+package hanto.student_TCA_KLB.alpha;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentxxxx.common.AbsHantoGame;
-import hanto.studentxxxx.common.Butterfly;
-import hanto.studentxxxx.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.AbsHantoGame;
+import hanto.student_TCA_KLB.common.Butterfly;
+import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 
 /**
  * 
