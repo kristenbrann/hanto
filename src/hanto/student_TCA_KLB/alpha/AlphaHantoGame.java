@@ -33,10 +33,10 @@ public class AlphaHantoGame extends AbsHantoGame{
 	}
 
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(final HantoPieceType pieceType, final HantoCoordinate from,
+	final HantoCoordinate to) throws HantoException {
 		MoveResult result = MoveResult.OK;
-		HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
+		final HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
 		
 		if(theBoard.isEmpty()){
 			if(isHome(hcTo)){

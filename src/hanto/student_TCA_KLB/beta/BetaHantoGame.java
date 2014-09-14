@@ -38,12 +38,12 @@ public class BetaHantoGame extends AbsHantoGame {
 	}
 
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(final HantoPieceType pieceType, final HantoCoordinate from,
+	final HantoCoordinate to) throws HantoException {
 		MoveResult result = MoveResult.OK;
-		HantoPlayerColor pc = determineColor();
+		final HantoPlayerColor pc = determineColor();
 
-		HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
+		final HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
 
 		if (theBoard.isEmpty()) {
 			if (isHome(hcTo)) {
@@ -66,7 +66,7 @@ public class BetaHantoGame extends AbsHantoGame {
 			if (hasAdjacentPiece(hcTo)) {
 				switch (pieceType) {
 				case BUTTERFLY:
-					HantoPiece bfly = new Butterfly(pc);
+					final HantoPiece bfly = new Butterfly(pc);
 					if (!theBoard.containsValue(bfly)) {
 						theBoard.put(to, bfly);
 						switch (pc) {
@@ -122,7 +122,7 @@ public class BetaHantoGame extends AbsHantoGame {
 		return result;
 	}
 
-	private boolean isSurrounded(HantoCoordinateImpl hc) {
+	private boolean isSurrounded(final HantoCoordinateImpl hc) {
 		boolean isSurrounded = true;
 		for (HantoCoordinate entry : hc.getAdjacentCoordinates()) {
 			if (getPieceAt(entry) == null) {
@@ -151,7 +151,7 @@ public class BetaHantoGame extends AbsHantoGame {
 	 *            The coordinate to check adjacency
 	 * @return true if there are pieces touching the given coordinate.
 	 */
-	public boolean hasAdjacentPiece(HantoCoordinateImpl hc) {
+	public boolean hasAdjacentPiece(final HantoCoordinateImpl hc) {
 		boolean foundAdjacentPiece = false;
 		for (HantoCoordinate entry : hc.getAdjacentCoordinates()) {
 			if (getPieceAt(entry) != null) {
@@ -161,5 +161,4 @@ public class BetaHantoGame extends AbsHantoGame {
 		}
 		return foundAdjacentPiece;
 	}
-
 }

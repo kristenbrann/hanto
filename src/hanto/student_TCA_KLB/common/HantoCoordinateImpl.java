@@ -36,6 +36,9 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 		this.y = y;
 	}
 	
+	/** Copy constructor
+	 * @param c 
+	 */
 	public HantoCoordinateImpl (HantoCoordinate c) {
 		x = c.getX();
 		y = c.getY();
@@ -69,12 +72,16 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 		return equals;
 	}
 
+	/** Determines if the given coordinate is adjacent to this coordinate
+	 * @param c the given coordinate
+	 * @return
+	 */
 	public boolean isAdjacent(HantoCoordinate c) {
 		return getDistanceTo(c) == 1;
 	}
 	
 	/**
-	 * @param from The Coordinate where we are calculating the distance from
+	 * 
 	 * @param to The Coordinate where we are calculating the distance to
 	 * @return The number of tiles the two tiles are away from each other. If they are adjacent,
 	 * 			then it should return 1.
@@ -101,20 +108,23 @@ public class HantoCoordinateImpl implements HantoCoordinate{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (x ^ (x >>> 32));
-		result = prime * result + (int) (y ^ (y >>> 32));
+		result = prime * result + (x ^ (x >>> 32));
+		result = prime * result + (y ^ (y >>> 32));
 		return result;
 	}
 	
 
+	/**
+	 * @return A collection of coordinates adjacent to this coordinate
+	 */
 	public Collection<HantoCoordinate> getAdjacentCoordinates(){
 		Collection<HantoCoordinate> coordinates = new ArrayList<HantoCoordinate>(6);
-		coordinates.add(new HantoCoordinateImpl(x,y+1));
-		coordinates.add(new HantoCoordinateImpl(x+1,y));
-		coordinates.add(new HantoCoordinateImpl(x+1,y-1));
-		coordinates.add(new HantoCoordinateImpl(x,y-1));
-		coordinates.add(new HantoCoordinateImpl(x-1,y));
-		coordinates.add(new HantoCoordinateImpl(x-1,y+1));
+		coordinates.add(new HantoCoordinateImpl(x, y+1));
+		coordinates.add(new HantoCoordinateImpl(x+1, y));
+		coordinates.add(new HantoCoordinateImpl(x+1, y-1));
+		coordinates.add(new HantoCoordinateImpl(x, y-1));
+		coordinates.add(new HantoCoordinateImpl(x-1, y));
+		coordinates.add(new HantoCoordinateImpl(x-1, y+1));
 		return coordinates;
 	}
 
