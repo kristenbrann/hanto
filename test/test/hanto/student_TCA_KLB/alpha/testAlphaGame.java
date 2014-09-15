@@ -31,7 +31,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * @author Nucleus
+ * @author tcarmstrong klbrann
  *
  */
 public class testAlphaGame {
