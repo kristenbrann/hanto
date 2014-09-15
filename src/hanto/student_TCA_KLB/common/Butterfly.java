@@ -56,6 +56,10 @@ public class Butterfly implements HantoPiece{
 		return isEqual;
 	}
 	
+	/** Determines if the given butterfly is the same as this butterfly
+	 * @param bfly the Butterfly to compare
+	 * @return
+	 */
 	public boolean equals(Butterfly bfly) {
 		return color == bfly.getColor();
 	}

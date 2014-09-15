@@ -21,18 +21,18 @@ import hanto.common.HantoGame;
 import hanto.common.HantoPiece;
 
 /**
- * @author Nucleus
+ * @author tcarmstrong klbrann
  *
  */
 public abstract class AbsHantoGame implements HantoGame{
 
 	//Every hanto game will have a HashMap to represent the Board
-	protected Map<HantoCoordinate, HantoPiece> theBoard;
+	protected Map<HantoCoordinateImpl, HantoPiece> theBoard;
 	
 	protected HantoCoordinate home;
 	
 	protected AbsHantoGame() {
-		theBoard = new HashMap<HantoCoordinate, HantoPiece>();
+		theBoard = new HashMap<HantoCoordinateImpl, HantoPiece>();
 	}
 	
 
@@ -40,7 +40,7 @@ public abstract class AbsHantoGame implements HantoGame{
 	 * @see hanto.common.HantoGame#getPieceAt(hanto.common.HantoCoordinate)
 	 */
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		return theBoard.get(where);
+		return theBoard.get(new HantoCoordinateImpl(where));
 	}
 
 	/* (non-Javadoc) // $codepro.audit.disable codeInComments
@@ -48,7 +48,7 @@ public abstract class AbsHantoGame implements HantoGame{
 	 */
 	public String getPrintableBoard() {
 		StringBuilder output = new StringBuilder();
-		for(Map.Entry<HantoCoordinate, HantoPiece> entry : theBoard.entrySet()){
+		for(Map.Entry<HantoCoordinateImpl, HantoPiece> entry : theBoard.entrySet()){
 			output.append(entry.getKey().toString());
 			output.append("\t:\t");
 			output.append(entry.getValue().toString());

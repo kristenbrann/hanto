@@ -20,11 +20,11 @@ public class testHantoPieceType {
 	@Test
 	public void testGetSymbol() {
 		assertTrue(HantoPieceType.BUTTERFLY.getSymbol().equals("B"));
-		assertTrue(HantoPieceType.CRAB.toString().equals("C"));
-		assertTrue(HantoPieceType.HORSE.toString().equals("H"));
-		assertTrue(HantoPieceType.CRANE.toString().equals("N"));
-		assertTrue(HantoPieceType.DOVE.toString().equals("D"));
-		assertTrue(HantoPieceType.SPARROW.toString().equals("S"));
+		assertTrue(HantoPieceType.CRAB.getSymbol().equals("C"));
+		assertTrue(HantoPieceType.HORSE.getSymbol().equals("H"));
+		assertTrue(HantoPieceType.CRANE.getSymbol().equals("N"));
+		assertTrue(HantoPieceType.DOVE.getSymbol().equals("D"));
+		assertTrue(HantoPieceType.SPARROW.getSymbol().equals("S"));
 	}
 	
 

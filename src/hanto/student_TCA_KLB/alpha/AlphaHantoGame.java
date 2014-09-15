@@ -26,36 +26,46 @@ import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
  * 
  *
  */
-public class AlphaHantoGame extends AbsHantoGame{
-	
+public class AlphaHantoGame extends AbsHantoGame {
+
 	public AlphaHantoGame() {
 		home = new HantoCoordinateImpl(0, 0);
 	}
 
 	@Override
-	public MoveResult makeMove(final HantoPieceType pieceType, final HantoCoordinate from,
-	final HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(final HantoPieceType pieceType,
+			final HantoCoordinate from, final HantoCoordinate to)
+			throws HantoException {
 		MoveResult result = MoveResult.OK;
 		final HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
-		
-		if(theBoard.isEmpty()){
-			if(isHome(hcTo)){
-				theBoard.put(to, new Butterfly(HantoPlayerColor.BLUE));
-				result = MoveResult.OK;
-			}
-			else{
-				throw new HantoException("First piece must be placed at (0,0).");
+
+		if (pieceType == HantoPieceType.BUTTERFLY) {
+			if (from == null) {
+				if (theBoard.isEmpty()) {
+					if (isHome(hcTo)) {
+						theBoard.put(hcTo, new Butterfly(HantoPlayerColor.BLUE));
+						result = MoveResult.OK;
+					} else {
+						throw new HantoException(
+								"First piece must be placed at (0,0).");
+					}
+				} else {
+					if (hcTo.isAdjacent(home)) {
+						theBoard.put(hcTo, new Butterfly(HantoPlayerColor.RED));
+						result = MoveResult.DRAW;
+					} else {
+						throw new HantoException(
+								"Second piece must be adjacent to (0,0)");
+					}
+				}
+			} else {
+				throw new HantoException("Cannot move a piece, can only place.");
 			}
 		} else {
-			if(hcTo.isAdjacent(home)){
-				theBoard.put(to, new Butterfly(HantoPlayerColor.RED));
-				result = MoveResult.DRAW;
-			}
-			else{
-				throw new HantoException("Second piece must be adjacent to (0,0)");
-			}
+			throw new HantoException("Can only place Butterflys,  and a "
+					+ pieceType.getPrintableName() + " was given.");
 		}
-		
+
 		return result;
 	}
 }

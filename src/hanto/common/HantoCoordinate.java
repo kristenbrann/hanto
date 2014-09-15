@@ -8,7 +8,7 @@
 
 package hanto.common;
 
-/**
+/**	
  * The HantoCoordinate identifies a specific hex on the Hanto board.
  * 
  * @author gpollice
