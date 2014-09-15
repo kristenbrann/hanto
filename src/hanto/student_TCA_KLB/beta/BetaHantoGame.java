@@ -43,9 +43,18 @@ public class BetaHantoGame extends AbsHantoGame {
 			throws HantoException {
 		MoveResult result = MoveResult.OK;
 		final HantoPlayerColor pc = determineColor();
+		HantoCoordinateImpl hcTo = null;
+		if(to == null){
+			throw new HantoException("Must specify a Coordinate to place piece at.");
+		} else {
+			hcTo = new HantoCoordinateImpl(to);
+			if(getPieceAt(hcTo)!=null) {
+				throw new HantoException("A piece has already been placed at coordinate: " + hcTo.toString() +".");
+			}
+		}
 
-		final HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
-
+		
+		
 		if (from == null) {
 			if (theBoard.isEmpty()) {
 				if (isHome(hcTo)) {

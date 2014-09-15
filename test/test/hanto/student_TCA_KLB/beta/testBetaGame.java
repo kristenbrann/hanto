@@ -676,6 +676,20 @@ public class testBetaGame {
 		theGame.makeMove(HantoPieceType.CRANE, null, adjacentToHome);
 	}
 	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovePieceAlreadyThere() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoPiece secondPiece = new Sparrow(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), null, home);
+		theGame.makeMove(secondPiece.getType(), null, home);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMoveToCoordinateIsNull() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), null, null);
+	}
+	
 	@Test
 	public void simulateValidBlueWinsGame1() throws HantoException {
 		HantoPiece firstBPiece = new Butterfly(HantoPlayerColor.BLUE);
