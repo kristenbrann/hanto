@@ -41,92 +41,92 @@ public class BetaHantoGame extends AbsHantoGame {
 	public MoveResult makeMove(final HantoPieceType pieceType,
 			final HantoCoordinate from, final HantoCoordinate to)
 			throws HantoException {
+		
 		MoveResult result = MoveResult.OK;
-		final HantoPlayerColor pc = determineColor();
+
 		HantoCoordinateImpl hcTo = null;
-		if(to == null){
-			throw new HantoException("Must specify a Coordinate to place piece at.");
+		if(to==null){
+			throw new HantoException("Must specify a Coordinate to place piece at.");			
 		} else {
 			hcTo = new HantoCoordinateImpl(to);
-			if(getPieceAt(hcTo)!=null) {
-				throw new HantoException("A piece has already been placed at coordinate: " + hcTo.toString() +".");
-			}
 		}
 
+		validateMove(pieceType, from, to);
+		placePiece(pieceType, hcTo);
 		
+		result = resolve();
+		turn++;
+		return result;
+	}
+	
+	private void placePiece(HantoPieceType pieceType, HantoCoordinateImpl to) throws HantoException {
+
+		final HantoPlayerColor pc = determineColor();
 		
-		if (from == null) {
-			if (theBoard.isEmpty()) {
-				if (isHome(hcTo)) {
-					switch (pieceType) {
-					case BUTTERFLY:
-						theBoard.put(hcTo, new Butterfly(pc));
-						blueButterfly = hcTo;
-						break;
-					case SPARROW:
-						theBoard.put(hcTo, new Sparrow(pc));
-						break;
-					default:
-						throw new HantoException(
-								"Expecting a Butterfly or a Sparrow but was given a "
-										+ pieceType.getPrintableName() + ".");
-					}
-					result = MoveResult.OK;
-				} else {
+		switch (pieceType) {
+		case BUTTERFLY:
+			final HantoPiece bfly = new Butterfly(pc);
+			theBoard.put(to, bfly);
+			switch (pc) {
+			case BLUE:
+				blueButterfly = to;
+				break;
+			case RED:
+				redButterfly = to;
+				break;
+			default:
+				break;
+			}
+			break;
+		case SPARROW:
+			theBoard.put(to, new Sparrow(pc));
+			break;
+		default:
+			throw new HantoException(
+					"Expecting a Butterfly or a Sparrow but was given a "
+							+ pieceType.getPrintableName() + ".");
+		}
+		
+	}
+
+	private void validateMove(final HantoPieceType pieceType,
+			final HantoCoordinate from, final HantoCoordinate to)
+			throws HantoException {
+
+		final HantoPlayerColor pc = determineColor();
+
+		HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
+		
+		if(getPieceAt(hcTo)!=null) {
+				throw new HantoException("A piece has already been placed at coordinate: " + to.toString() +".");
+		} else if (from == null) {
+			if(theBoard.isEmpty()){
+				if(!isHome(hcTo)){
 					throw new HantoException("First piece must be placed at "
 							+ home.toString() + ".");
 				}
 			} else {
-				if (hasAdjacentPiece(hcTo)) {
-					switch (pieceType) {
-					case BUTTERFLY:
-						final HantoPiece bfly = new Butterfly(pc);
-						if (!theBoard.containsValue(bfly)) {
-							theBoard.put(hcTo, bfly);
-							switch (pc) {
-							case BLUE:
-								blueButterfly = hcTo;
-								break;
-							case RED:
-								redButterfly = hcTo;
-								break;
-							default:
-								break;
-							}
-						} else {
-							throw new HantoException("Player " + pc.name()
-									+ " has already placed a butterfly.");
+				if (pieceType.equals(HantoPieceType.BUTTERFLY)&&theBoard.containsValue(new Butterfly(pc))) {
+					throw new HantoException("Player " + pc.name()
+							+ " has already placed a butterfly.");
+				} else{
+					if (turn == 6 || turn == 7) {
+						if (!theBoard.containsValue(new Butterfly(pc))) {
+							throw new HantoException(
+									"Player "
+											+ pc.name()
+											+ " must place a butterfly by the fourth turn.");
 						}
-						break;
-					case SPARROW:
-						if (turn == 6 || turn == 7) {
-							if (!theBoard.containsValue(new Butterfly(pc))) {
-								throw new HantoException(
-										"Player "
-												+ pc.name()
-												+ " must place a butterfly by the fourth turn.");
-							}
-						}
-						theBoard.put(hcTo, new Sparrow(pc));
-						break;
-					default:
-						throw new HantoException(
-								"Expecting a Butterfly or a Sparrow but was given a "
-										+ pieceType.getPrintableName() + ".");
-					}
-				} else {
+					} else if (!hasAdjacentPiece(hcTo)) {
 					throw new HantoException(
 							"Piece must be placed adjacent to another piece.");
+					}
 				}
-
 			}
 		} else {
-			throw new HantoException("Cannot move a piece, can only place.");
+				throw new HantoException("Cannot move a piece, can only place.");
 		}
-
-		result = resolve();
-		turn++;
-		return result;
+		
 	}
 
 	private MoveResult resolve() {

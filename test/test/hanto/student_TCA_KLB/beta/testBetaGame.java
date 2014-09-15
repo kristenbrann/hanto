@@ -27,7 +27,7 @@ public class testBetaGame {
 	private HantoCoordinate home;
 	
 	@BeforeClass
-	public void setUpBeforeClass() {
+	public static void setUpBeforeClass() {
 		theFactory = HantoGameFactory.getInstance();
 	}
 
