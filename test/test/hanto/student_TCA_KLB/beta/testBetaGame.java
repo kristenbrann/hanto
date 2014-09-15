@@ -14,19 +14,28 @@ import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.*;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * @author tcarmstrong klbrann
+ *
+ */
 public class testBetaGame {
-	HantoGame theGame;
-	HantoGameFactory theFactory;
-	HantoCoordinate home;
+	private HantoGame theGame;
+	private static HantoGameFactory theFactory;
+	private HantoCoordinate home;
+	
+	@BeforeClass
+	public void setUpBeforeClass() {
+		theFactory = HantoGameFactory.getInstance();
+	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		theFactory = HantoGameFactory.getInstance();
 		theGame = theFactory.makeHantoGame(HantoGameID.BETA_HANTO);
 		home = new HantoCoordinateImpl(0, 0);
 	}
