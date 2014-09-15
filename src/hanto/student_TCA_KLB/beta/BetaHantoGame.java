@@ -128,12 +128,12 @@ public class BetaHantoGame extends AbsHantoGame {
 			result = MoveResult.RED_WINS;
 		} else if (turn == maxTurns) {
 			result = MoveResult.DRAW;
-		} else if ( (redButterfly != null && isSurrounded(redButterfly)) &&
+		}
+		if ( (redButterfly != null && isSurrounded(redButterfly)) &&
 			(blueButterfly != null && isSurrounded(blueButterfly)) ) {
 			result = MoveResult.DRAW;
 		}
 		return result;
-		
 	}
 
 	private boolean isSurrounded(final HantoCoordinateImpl hc) {
