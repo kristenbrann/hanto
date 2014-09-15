@@ -27,6 +27,7 @@ import hanto.student_TCA_KLB.common.Butterfly;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -36,16 +37,20 @@ import org.junit.Test;
 public class testAlphaGame {
 	
 	
-	HantoGame theGame;
-	HantoGameFactory theFactory;
-	HantoCoordinate home;
+	private HantoGame theGame;
+	private static HantoGameFactory theFactory;
+	private HantoCoordinate home;
+	
+	@BeforeClass
+	public void setUpBeforeClass() {
+		theFactory = HantoGameFactory.getInstance();
+	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		theFactory = HantoGameFactory.getInstance();
 		theGame = theFactory.makeHantoGame(HantoGameID.ALPHA_HANTO);
 		home = new HantoCoordinateImpl(0, 0);
 	}
