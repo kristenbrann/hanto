@@ -186,6 +186,20 @@ public class testAlphaGame {
 		assertEquals(1,coordinate1.getDistanceTo(coordinate2));
 	}
 
+	@Test(expected=HantoException.class)
+	public void makeInvalidMoveFromNotNull() throws HantoException {
+		HantoCoordinate notHome = new HantoCoordinateImpl(-1, 1);
+		HantoCoordinate home = new HantoCoordinateImpl(0,0);
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), notHome, home);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidPieceNotButterfly() throws HantoException {
+		HantoCoordinate notHome = new HantoCoordinateImpl(-1, 1);
+		HantoCoordinate home = new HantoCoordinateImpl(0,0);
+		theGame.makeMove(HantoPieceType.CRANE, notHome, home);
+	}
 	
 	@Test(expected=HantoException.class)
 	public void makeInvalidMovesNotHomeLocation1() throws HantoException {

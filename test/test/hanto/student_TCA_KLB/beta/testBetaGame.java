@@ -8,6 +8,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.*;
@@ -652,6 +653,29 @@ public class testBetaGame {
 
 	}
 
+	@Test(expected=HantoException.class)
+	public void makeInvalidMoveFromNotNull() throws HantoException {
+		HantoCoordinate notHome = new HantoCoordinateImpl(-1, 1);
+		HantoCoordinate home = new HantoCoordinateImpl(0,0);
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		theGame.makeMove(firstPiece.getType(), notHome, home);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMoveFromNullWithInvalidPieceType() throws HantoException {
+		HantoCoordinate home = new HantoCoordinateImpl(0,0);
+		theGame.makeMove(HantoPieceType.CRAB, null, home);
+	}
+	
+	@Test(expected=HantoException.class)
+	public void makeInvalidMovePlaceInvalidPieceTypeOnSecondMove() throws HantoException{
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
+		HantoCoordinate adjacentToHome = new HantoCoordinateImpl(1, 0);
+		theGame.makeMove(firstPiece.getType(), null, home);
+		theGame.makeMove(HantoPieceType.CRANE, null, adjacentToHome);
+	}
+	
 	@Test
 	public void simulateValidBlueWinsGame1() throws HantoException {
 		HantoPiece firstBPiece = new Butterfly(HantoPlayerColor.BLUE);
