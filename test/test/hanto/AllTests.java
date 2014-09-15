@@ -16,7 +16,8 @@ import test.hanto.student_TCA_KLB.common.testSparrow;
 @RunWith(Suite.class)
 @SuiteClasses({ testAlphaGame.class, testBetaGame.class, testButterfly.class,
 		testHantoCoordinateImpl.class, testSparrow.class, testMoveResult.class,
-		testHantoPieceType.class, testHantoGameID.class})
+		testHantoPieceType.class, testHantoGameID.class,
+		AlphaHantoMasterTest.class})
 public class AllTests {
 
 }
