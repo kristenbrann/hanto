@@ -1,4 +1,4 @@
-package test.hanto;
+package test.hanto.common;
 
 import static org.junit.Assert.*;
 import hanto.common.HantoPieceType;
