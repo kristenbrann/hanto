@@ -20,13 +20,15 @@ import hanto.common.HantoPlayerColor;
  * 
  *
  */
-public class Butterfly implements HantoPiece{
-	
+public class Butterfly implements HantoPiece {
+
 	HantoPlayerColor color;
-	
-	/** Constructor for a Butterfly
+
+	/**
+	 * Constructor for a Butterfly
 	 * 
-	 * @param color The Player color of the butterfly
+	 * @param color
+	 *            The Player color of the butterfly
 	 */
 	public Butterfly(HantoPlayerColor color) {
 		this.color = color;
@@ -41,12 +43,13 @@ public class Butterfly implements HantoPiece{
 	public HantoPieceType getType() {
 		return HantoPieceType.BUTTERFLY;
 	}
-	
+
 	@Override
 	public String toString() {
-		return color.name() + "\t" + HantoPieceType.BUTTERFLY.getPrintableName();
+		return color.name() + "\t"
+				+ HantoPieceType.BUTTERFLY.getPrintableName();
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		boolean isEqual = false;
@@ -55,10 +58,19 @@ public class Butterfly implements HantoPiece{
 		}
 		return isEqual;
 	}
-	
-	/** Determines if the given butterfly is the same as this butterfly
-	 * @param bfly the Butterfly to compare
-	 * @return
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+
+	}
+
+	/**
+	 * Determines if the given butterfly is the same as this butterfly
+	 * 
+	 * @param bfly
+	 *            the Butterfly to compare
+	 * @return true if the two butterflies are equivelent
 	 */
 	public boolean equals(Butterfly bfly) {
 		return color == bfly.getColor();

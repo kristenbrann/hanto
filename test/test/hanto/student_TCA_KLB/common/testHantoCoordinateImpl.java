@@ -72,8 +72,8 @@ public class testHantoCoordinateImpl {
 	@Test
 	public void testIsAdjacent() {
 		HantoCoordinateImpl temp = new HantoCoordinateImpl(home);
-		assertTrue(temp.isAdjacent(ex5));
-		assertFalse(temp.isAdjacent(ex3));
+		assertTrue(temp.isAdjacentTo(ex5));
+		assertFalse(temp.isAdjacentTo(ex3));
 	}
 	
 	@Test

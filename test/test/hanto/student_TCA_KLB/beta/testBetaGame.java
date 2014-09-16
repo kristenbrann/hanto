@@ -1,6 +1,5 @@
 package test.hanto.student_TCA_KLB.beta;
 
-
 import static org.junit.Assert.*;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
@@ -25,7 +24,7 @@ public class testBetaGame {
 	private HantoGame theGame;
 	private static HantoGameFactory theFactory;
 	private HantoCoordinate home;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		theFactory = HantoGameFactory.getInstance();
@@ -64,8 +63,8 @@ public class testBetaGame {
 			assertEquals("The piece at home should be a sparrow.",
 					firstPiece.getType(), theGame.getPieceAt(home).getType());
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -82,8 +81,8 @@ public class testBetaGame {
 			assertEquals("The piece at home should be a butterfly.",
 					firstPiece.getType(), theGame.getPieceAt(home).getType());
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -121,8 +120,8 @@ public class testBetaGame {
 							.getType());
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -145,15 +144,15 @@ public class testBetaGame {
 					"Placing Sparrow adjacent to home as second move should return OK",
 					MoveResult.OK, theGame.makeMove(secondPiece.getType(),
 							null, adjacentToHome));
-			assertEquals("The piece at home should be a blue piece",
+			assertEquals("The piece next to home should be a red piece",
 					secondPiece.getColor(), theGame.getPieceAt(adjacentToHome)
 							.getColor());
-			assertEquals("The piece at home should be a sparrow.",
+			assertEquals("The piece next to home should be a sparrow.",
 					secondPiece.getType(), theGame.getPieceAt(adjacentToHome)
 							.getType());
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -183,8 +182,8 @@ public class testBetaGame {
 					secondPiece.getType(), theGame.getPieceAt(adjacentToHome)
 							.getType());
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -214,8 +213,8 @@ public class testBetaGame {
 					secondPiece.getType(), theGame.getPieceAt(adjacentToHome)
 							.getType());
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -268,8 +267,8 @@ public class testBetaGame {
 							.getType());
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -314,8 +313,8 @@ public class testBetaGame {
 					theGame.getPieceAt(adjacentToSecondPiece).getType());
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -360,8 +359,8 @@ public class testBetaGame {
 					theGame.getPieceAt(adjacentToSecondPiece).getType());
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -540,8 +539,8 @@ public class testBetaGame {
 							.getType());
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -656,49 +655,51 @@ public class testBetaGame {
 							fourthBPiece.getType(), null, fourthBCoord));
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 
 	}
 
-	@Test(expected=HantoException.class)
+	@Test(expected = HantoException.class)
 	public void makeInvalidMoveFromNotNull() throws HantoException {
 		HantoCoordinate notHome = new HantoCoordinateImpl(-1, 1);
-		HantoCoordinate home = new HantoCoordinateImpl(0,0);
+		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
 		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
 		theGame.makeMove(firstPiece.getType(), notHome, home);
 	}
-	
-	@Test(expected=HantoException.class)
-	public void makeInvalidMoveFromNullWithInvalidPieceType() throws HantoException {
-		HantoCoordinate home = new HantoCoordinateImpl(0,0);
+
+	@Test(expected = HantoException.class)
+	public void makeInvalidMoveFromNullWithInvalidPieceType()
+			throws HantoException {
+		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
 		theGame.makeMove(HantoPieceType.CRAB, null, home);
 	}
-	
-	@Test(expected=HantoException.class)
-	public void makeInvalidMovePlaceInvalidPieceTypeOnSecondMove() throws HantoException{
+
+	@Test(expected = HantoException.class)
+	public void makeInvalidMovePlaceInvalidPieceTypeOnSecondMove()
+			throws HantoException {
 		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
 		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
 		HantoCoordinate adjacentToHome = new HantoCoordinateImpl(1, 0);
 		theGame.makeMove(firstPiece.getType(), null, home);
 		theGame.makeMove(HantoPieceType.CRANE, null, adjacentToHome);
 	}
-	
-	@Test(expected=HantoException.class)
+
+	@Test(expected = HantoException.class)
 	public void makeInvalidMovePieceAlreadyThere() throws HantoException {
 		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
 		HantoPiece secondPiece = new Sparrow(HantoPlayerColor.BLUE);
 		theGame.makeMove(firstPiece.getType(), null, home);
 		theGame.makeMove(secondPiece.getType(), null, home);
 	}
-	
-	@Test(expected=HantoException.class)
+
+	@Test(expected = HantoException.class)
 	public void makeInvalidMoveToCoordinateIsNull() throws HantoException {
 		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
 		theGame.makeMove(firstPiece.getType(), null, null);
 	}
-	
+
 	@Test
 	public void simulateValidBlueWinsGame1() throws HantoException {
 		HantoPiece firstBPiece = new Butterfly(HantoPlayerColor.BLUE);
@@ -749,8 +750,8 @@ public class testBetaGame {
 							fourthBPiece.getType(), null, fourthBCoord));
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 
@@ -804,8 +805,58 @@ public class testBetaGame {
 							fourthBPiece.getType(), null, fourthBCoord));
 
 		} catch (HantoException e) {
-			System.out.println(e.getMessage());
-			fail("unexpected exception");
+
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testBothButterfliesGetSurroundedResultInDraw() {
+		theGame = theFactory.makeHantoGame(HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
+		HantoPiece firstBPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoPiece secondBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece thirdBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece fourthBPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece fifthBPiece = new Sparrow(HantoPlayerColor.BLUE);
+
+		HantoPiece firstRPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoPiece secondRPiece = new Sparrow(HantoPlayerColor.RED);
+		HantoPiece thirdRPiece = new Sparrow(HantoPlayerColor.RED);
+		HantoPiece fourthRPiece = new Sparrow(HantoPlayerColor.RED);
+		HantoPiece fifthRPiece = new Sparrow(HantoPlayerColor.RED);
+
+		HantoCoordinate firstRCoord = home;
+		HantoCoordinate secondRCoord = new HantoCoordinateImpl(0, -1);
+		HantoCoordinate thirdRCoord = new HantoCoordinateImpl(-1, 1);
+		HantoCoordinate fourthRCoord = new HantoCoordinateImpl(1, 1);
+		HantoCoordinate fifthRCoord = new HantoCoordinateImpl(2, -1);
+		
+		HantoCoordinate firstBCoord = new HantoCoordinateImpl(1, 0);
+		HantoCoordinate secondBCoord = new HantoCoordinateImpl(-1, 0);
+		HantoCoordinate thirdBCoord = new HantoCoordinateImpl(0, 1);
+		HantoCoordinate fourthBCoord = new HantoCoordinateImpl(2, 0);
+		HantoCoordinate fifthBCoord = new HantoCoordinateImpl(1, -1);
+
+
+		try {
+			theGame.makeMove(firstRPiece.getType(), null, firstRCoord);
+			assertEquals(firstRPiece.getColor(), theGame.getPieceAt(firstRCoord).getColor());
+			theGame.makeMove(firstBPiece.getType(), null, firstBCoord);
+			assertEquals(firstBPiece.getColor(), theGame.getPieceAt(firstBCoord).getColor());
+			
+			theGame.makeMove(secondRPiece.getType(), null, secondRCoord);
+			theGame.makeMove(secondBPiece.getType(), null, secondBCoord);
+
+			theGame.makeMove(thirdRPiece.getType(), null, thirdRCoord);
+			theGame.makeMove(thirdBPiece.getType(), null, thirdBCoord);
+			
+			theGame.makeMove(fourthRPiece.getType(), null, fourthRCoord);
+			theGame.makeMove(fourthBPiece.getType(), null, fourthBCoord);
+			
+			theGame.makeMove(fifthRPiece.getType(), null, fifthRCoord);
+			assertEquals(MoveResult.DRAW, theGame.makeMove(fifthBPiece.getType(), null, fifthBCoord));
+		} catch (HantoException e) {
+			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
 }
