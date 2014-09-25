@@ -6,8 +6,9 @@ import static hanto.common.HantoPieceType.*;
 import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPlayerColor.*;
 import static org.junit.Assert.*;
-import hanto.HantoGameFactory;
 import hanto.common.*;
+import hanto.student_TCA_KLB.HantoGameFactory;
+
 import org.junit.*;
 
 /**

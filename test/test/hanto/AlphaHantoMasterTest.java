@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import hanto.HantoGameFactory;
 import hanto.common.*;
+import hanto.student_TCA_KLB.HantoGameFactory;
 import hanto.student_TCA_KLB.alpha.AlphaHantoGame;
 
 public class AlphaHantoMasterTest {

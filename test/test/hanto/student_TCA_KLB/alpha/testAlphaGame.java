@@ -14,7 +14,6 @@ package test.hanto.student_TCA_KLB.alpha;
 
 
 import static org.junit.Assert.*;
-import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -23,6 +22,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.student_TCA_KLB.HantoGameFactory;
 import hanto.student_TCA_KLB.common.Butterfly;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 
