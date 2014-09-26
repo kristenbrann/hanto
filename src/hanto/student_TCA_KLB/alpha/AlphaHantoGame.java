@@ -73,7 +73,7 @@ public class AlphaHantoGame extends AbsHantoGame {
 	}
 
 	@Override
-	protected MoveResult resolve() {
+	protected MoveResult determineMoveResult() {
 		MoveResult result;
 		if (turn == 0) {
 			result = MoveResult.OK;

@@ -42,17 +42,15 @@ public class BetaHantoGame extends AbsHantoGame {
 	protected void placePiece(final HantoPieceType pieceType, final HantoCoordinate to)
 			throws InvalidPieceTypeException {
 
-		final HantoPlayerColor pc = determineColor();
-
 		final HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
 
 		switch (pieceType) {
 		case BUTTERFLY:
 
-			final HantoPiece bfly = new Butterfly(pc);
+			final HantoPiece bfly = new Butterfly(currentPlayer);
 			theBoard.put(hcTo, bfly);
 
-			switch (pc) {
+			switch (currentPlayer) {
 			case BLUE:
 				blueButterfly = hcTo;
 				break;
@@ -65,7 +63,7 @@ public class BetaHantoGame extends AbsHantoGame {
 			break;
 
 		case SPARROW:
-			theBoard.put(hcTo, new Sparrow(pc));
+			theBoard.put(hcTo, new Sparrow(currentPlayer));
 			break;
 
 		default:
@@ -84,8 +82,6 @@ public class BetaHantoGame extends AbsHantoGame {
 			throw new InvalidTargetLocationException("Location cannot be null");
 		}
 
-		final HantoPlayerColor pc = determineColor();
-
 		if (getPieceAt(to) != null) {
 			throw new InvalidTargetLocationException(to, "Piece already there");
 		}
@@ -99,17 +95,17 @@ public class BetaHantoGame extends AbsHantoGame {
 
 			} else {
 				if (pieceType.equals(HantoPieceType.BUTTERFLY)
-						&& theBoard.containsValue(new Butterfly(pc))) {
+						&& theBoard.containsValue(new Butterfly(currentPlayer))) {
 					throw new InvalidPieceTypeException(pieceType, "Player "
-							+ pc.name() + " has already placed a butterfly.");
+							+ currentPlayer.name() + " has already placed a butterfly.");
 
 				} else {
 					if (turn == 6 || turn == 7) {
-						if (!theBoard.containsValue(new Butterfly(pc))) {
+						if (!theBoard.containsValue(new Butterfly(currentPlayer))) {
 							throw new InvalidPieceTypeException(
 									pieceType,
 									"Player "
-											+ pc.name()
+											+ currentPlayer.name()
 											+ " must place a butterfly by the fourth turn");
 						}
 
@@ -129,7 +125,7 @@ public class BetaHantoGame extends AbsHantoGame {
 	}
 
 	@Override
-	protected MoveResult resolve() {
+	protected MoveResult determineMoveResult() {
 		MoveResult result = MoveResult.OK;
 		if (redButterfly != null && isSurrounded(redButterfly)) {
 			result = MoveResult.BLUE_WINS;
@@ -141,33 +137,6 @@ public class BetaHantoGame extends AbsHantoGame {
 		if ((redButterfly != null && isSurrounded(redButterfly))
 				&& (blueButterfly != null && isSurrounded(blueButterfly))) {
 			result = MoveResult.DRAW;
-		}
-		return result;
-	}
-
-	@Override
-	protected HantoPlayerColor determineColor() {
-		HantoPlayerColor result = null;
-		if (turn % 2 == 0) {
-			switch (movesFirst) {
-			case BLUE:
-				result = HantoPlayerColor.BLUE;
-				break;
-
-			case RED:
-				result = HantoPlayerColor.RED;
-				break;
-			}
-		} else {
-			switch (movesFirst) {
-			case BLUE:
-				result = HantoPlayerColor.RED;
-				break;
-
-			case RED:
-				result = HantoPlayerColor.BLUE;
-				break;
-			}
 		}
 		return result;
 	}

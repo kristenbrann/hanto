@@ -36,6 +36,7 @@ public abstract class AbsHantoGame implements HantoGame {
 	protected HantoCoordinateImpl home;
 	protected int turn;
 	protected HantoPlayerColor movesFirst;
+	protected HantoPlayerColor currentPlayer;
 
 	/**
 	 * @param color
@@ -106,10 +107,12 @@ public abstract class AbsHantoGame implements HantoGame {
 	public MoveResult makeMove(final HantoPieceType pieceType,
 			final HantoCoordinate from, final HantoCoordinate to)
 			throws HantoException {
-
+		
+		determineColor();
+		
 		validateMove(pieceType, from, to);
 		placePiece(pieceType, to);
-		MoveResult result = resolve();
+		MoveResult result = determineMoveResult();
 		turn++;
 		return result;
 	}
@@ -166,11 +169,33 @@ public abstract class AbsHantoGame implements HantoGame {
 	/**
 	 * @return The result state of the move
 	 */
-	protected abstract MoveResult resolve();
+	protected abstract MoveResult determineMoveResult();
 
 	/**
 	 * @return the color of the piece to be placed
 	 */
-	protected abstract HantoPlayerColor determineColor();
+	protected void determineColor() {
+		if (turn % 2 == 0) {
+			switch (movesFirst) {
+			case BLUE:
+				currentPlayer = HantoPlayerColor.BLUE;
+				break;
+
+			case RED:
+				currentPlayer = HantoPlayerColor.RED;
+				break;
+			}
+		} else {
+			switch (movesFirst) {
+			case BLUE:
+				currentPlayer = HantoPlayerColor.RED;
+				break;
+
+			case RED:
+				currentPlayer = HantoPlayerColor.BLUE;
+				break;
+			}
+		}
+	}
 
 }
