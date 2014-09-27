@@ -174,7 +174,7 @@ public abstract class AbsHantoGame implements HantoGame {
 	/**
 	 * @return the color of the piece to be placed
 	 */
-	protected void determineColor() {
+	protected void determineColor() {	
 		if (turn % 2 == 0) {
 			switch (movesFirst) {
 			case BLUE:
