@@ -68,7 +68,7 @@ public class AlphaHantoGame extends AbsHantoGame {
 	protected void placePiece(final HantoPieceType pieceType,
 			final HantoCoordinate to) {
 		theBoard.put(new HantoCoordinateImpl(to), new Butterfly(
-				determineColor()));
+				currentPlayer));
 
 	}
 
@@ -83,22 +83,4 @@ public class AlphaHantoGame extends AbsHantoGame {
 		return result;
 	}
 
-	@Override
-	protected HantoPlayerColor determineColor() {
-		HantoPlayerColor result = null;
-		if (theBoard.isEmpty()) {
-			result = movesFirst;
-		} else {
-			switch (movesFirst) {
-			case RED:
-				result = HantoPlayerColor.BLUE;
-				break;
-
-			case BLUE:
-				result = HantoPlayerColor.RED;
-				break;
-			}
-		}
-		return result;
-	}
 }
