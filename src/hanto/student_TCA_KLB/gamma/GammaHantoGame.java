@@ -58,15 +58,17 @@ public class GammaHantoGame extends AbsHantoGame {
 				}
 			} else {
 				if(to!=null){
-					HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
-					boolean nextToOpposingPiece = false;
-					for(HantoCoordinate adjacent : hcTo.getAdjacentCoordinates()){
-						if(getPieceAt(adjacent)!=null && getPieceAt(adjacent).getColor()!=currentPlayer){
-							nextToOpposingPiece = true;
+					if(turn>1){
+						HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
+						boolean nextToOpposingPiece = false;
+						for(HantoCoordinate adjacent : hcTo.getAdjacentCoordinates()){
+							if(getPieceAt(adjacent)!=null && getPieceAt(adjacent).getColor()!=currentPlayer){
+								nextToOpposingPiece = true;
+							}
 						}
-					}
-					if(nextToOpposingPiece){
-						throw new InvalidTargetLocationException(to, "Piece cannot be placed next adjacent to a piece of the opposing color.");
+						if(nextToOpposingPiece){
+							throw new InvalidTargetLocationException(to, "Piece cannot be placed next adjacent to a piece of the opposing color.");
+						}
 					}
 				}
 			}

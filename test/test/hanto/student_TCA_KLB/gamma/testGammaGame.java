@@ -129,7 +129,7 @@ public class testGammaGame {
 			theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
 			assertEquals(
 					"Moving a butterfly should return OK.",
-					MoveResult.OK, theGame.makeMove(blueFirstPiece.getType(), null, blueSecondCoord));
+					MoveResult.OK, theGame.makeMove(blueFirstPiece.getType(), home, blueSecondCoord));
 			assertEquals("The piece at (1,0) should be a blue piece",
 					blueFirstPiece.getColor(), theGame.getPieceAt(home).getColor());
 			assertEquals("The piece at (1,0) should be a butterfly.",
@@ -164,7 +164,7 @@ public class testGammaGame {
 			theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
 			
 			assertEquals(
-					"Placing a butterfly at home as first move should return OK",
+					"Placing a blue Sparrow next to the Blue Butterfly should return OK",
 					MoveResult.OK,
 					theGame.makeMove(blueSecondPiece.getType(), null, blueSecondCoord));
 			assertEquals("The piece at home should be a blue piece",
@@ -198,9 +198,11 @@ public class testGammaGame {
 		HantoPiece blueFirstPiece = new Butterfly(HantoPlayerColor.BLUE);
 		HantoPiece blueSecondPiece = new Sparrow(HantoPlayerColor.BLUE);
 		HantoPiece redFirstPiece = new Butterfly(HantoPlayerColor.RED);
-		HantoPiece redSecondPiece = new Butterfly(HantoPlayerColor.RED);
 		HantoCoordinate redFirstCoord = new HantoCoordinateImpl(0,1);
 		HantoCoordinate blueSecondCoord = new HantoCoordinateImpl(1,0);
+		theGame.makeMove(blueFirstPiece.getType(), null, home);
+		theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
+		theGame.makeMove(blueSecondPiece.getType(), null, blueSecondCoord);
 	}
 
 }
