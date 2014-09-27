@@ -1,5 +1,9 @@
 package hanto.student_TCA_KLB.gamma;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPiece;
@@ -29,11 +33,44 @@ public class GammaHantoGame extends AbsHantoGame {
 				if (!isHome(to)) {
 					throw new InvalidTargetLocationException(to,
 							"First piece must be placed at " + home.toString());
-				}
+				}				
 			} else {
 				throw new InvalidSourceLocationException(from,
 						"Cannot move a piece if no pieces are on the board");
 			}
+		} else {
+			if(from!=null){
+				HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(from);
+				if(!hcFrom.isAdjacentTo(to)){
+					throw new InvalidTargetLocationException(to,
+							"Piece can only move one hex.");
+				} else {
+					boolean canSlide = false;
+					for(HantoCoordinate c : hcFrom.getAdjacentCoordinates()){
+						HantoCoordinateImpl next = new HantoCoordinateImpl(c);
+						if(next.isAdjacentTo(to) && getPieceAt(next)==null) {
+							canSlide = true;
+						}
+					}
+					if(!canSlide){
+						throw new InvalidTargetLocationException(to,"Not enough space to slide from "+from+" to "+to+".");
+					}
+				}
+			} else {
+				if(to!=null){
+					HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
+					boolean nextToOpposingPiece = false;
+					for(HantoCoordinate adjacent : hcTo.getAdjacentCoordinates()){
+						if(getPieceAt(adjacent)!=null && getPieceAt(adjacent).getColor()!=currentPlayer){
+							nextToOpposingPiece = true;
+						}
+					}
+					if(nextToOpposingPiece){
+						throw new InvalidTargetLocationException(to, "Piece cannot be placed next adjacent to a piece of the opposing color.");
+					}
+				}
+			}
+			
 		}
 	}
 

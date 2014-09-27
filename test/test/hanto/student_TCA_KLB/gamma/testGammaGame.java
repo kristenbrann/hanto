@@ -118,11 +118,89 @@ public class testGammaGame {
 		theGame.makeMove(firstPiece.getType(), notHome, home);
 	}
 	
+	@Test
+	public void makeValidWalkingMove() {
+		try {
+			HantoPiece blueFirstPiece = new Butterfly(HantoPlayerColor.BLUE);
+			HantoPiece redFirstPiece = new Butterfly(HantoPlayerColor.RED);
+			HantoCoordinate redFirstCoord = new HantoCoordinateImpl(0,1);
+			HantoCoordinate blueSecondCoord = new HantoCoordinateImpl(1,0);
+			theGame.makeMove(blueFirstPiece.getType(), null, home);
+			theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
+			assertEquals(
+					"Moving a butterfly should return OK.",
+					MoveResult.OK, theGame.makeMove(blueFirstPiece.getType(), null, blueSecondCoord));
+			assertEquals("The piece at (1,0) should be a blue piece",
+					blueFirstPiece.getColor(), theGame.getPieceAt(home).getColor());
+			assertEquals("The piece at (1,0) should be a butterfly.",
+					blueFirstPiece.getType(), theGame.getPieceAt(home).getType());
+			
+		} catch (HantoException e) {
+
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	}
 	
+	@Test(expected = HantoException.class)
+	public void makeInvalidWalkingMoveMoreThanOneHex() throws HantoException {
+		HantoPiece blueFirstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoPiece redFirstPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoCoordinate redFirstCoord = new HantoCoordinateImpl(0,1);
+		HantoCoordinate blueSecondCoord = new HantoCoordinateImpl(1,1);
+		theGame.makeMove(blueFirstPiece.getType(), null, home);
+		theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
+		theGame.makeMove(blueFirstPiece.getType(), home, blueSecondCoord);
+	}	
 	
+	@Test
+	public void validPlaceThreePieces() {
+		try {
+			HantoPiece blueFirstPiece = new Butterfly(HantoPlayerColor.BLUE);
+			HantoPiece blueSecondPiece = new Sparrow(HantoPlayerColor.BLUE);
+			HantoPiece redFirstPiece = new Butterfly(HantoPlayerColor.RED);
+			HantoCoordinate redFirstCoord = new HantoCoordinateImpl(0,1);
+			HantoCoordinate blueSecondCoord = new HantoCoordinateImpl(0,-1);
+			theGame.makeMove(blueFirstPiece.getType(), null, home);
+			theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
+			
+			assertEquals(
+					"Placing a butterfly at home as first move should return OK",
+					MoveResult.OK,
+					theGame.makeMove(blueSecondPiece.getType(), null, blueSecondCoord));
+			assertEquals("The piece at home should be a blue piece",
+					blueSecondPiece.getColor(), theGame.getPieceAt(blueSecondCoord).getColor());
+			assertEquals("The piece at home should be a butterfly.",
+					blueSecondPiece.getType(), theGame.getPieceAt(blueSecondCoord).getType());
+		} catch (HantoException e) {
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	}	
 	
+	@Test(expected = HantoException.class)
+	public void makeInvalidWalkingMoveCantSlide() throws HantoException {
+		HantoPiece blueFirstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoPiece blueSecondPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece redFirstPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoPiece redSecondPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoCoordinate redFirstCoord = new HantoCoordinateImpl(0,1);
+		HantoCoordinate redSecondCoord = new HantoCoordinateImpl(-1,2);
+		HantoCoordinate blueSecondCoord = new HantoCoordinateImpl(1,-1);
+		HantoCoordinate blueThirdCoord = new HantoCoordinateImpl(1,0);
+		theGame.makeMove(blueFirstPiece.getType(), null, home);
+		theGame.makeMove(redFirstPiece.getType(), null, redFirstCoord);
+		theGame.makeMove(blueSecondPiece.getType(), null, blueSecondCoord);
+		theGame.makeMove(redSecondPiece.getType(), null, redSecondCoord);
+		theGame.makeMove(blueFirstPiece.getType(), home, blueThirdCoord);
+	}
 	
-	
-	
+	@Test(expected = HantoException.class)
+	public void makeInvalidMovePlaceNextToOpposingColor() throws HantoException {
+		HantoPiece blueFirstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoPiece blueSecondPiece = new Sparrow(HantoPlayerColor.BLUE);
+		HantoPiece redFirstPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoPiece redSecondPiece = new Butterfly(HantoPlayerColor.RED);
+		HantoCoordinate redFirstCoord = new HantoCoordinateImpl(0,1);
+		HantoCoordinate blueSecondCoord = new HantoCoordinateImpl(1,0);
+	}
 
 }
