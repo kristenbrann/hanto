@@ -14,7 +14,11 @@
 package hanto.student_TCA_KLB.common;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -200,6 +204,27 @@ public abstract class AbsHantoGame implements HantoGame {
 				break;
 			}
 		}
+	}
+	
+	private boolean boardIsContinuous() {
+		Set<HantoCoordinateImpl> visited = new HashSet<HantoCoordinateImpl> ();
+		
+		List<HantoCoordinateImpl> fringe = new LinkedList<HantoCoordinateImpl>();
+		
+		fringe.add( theBoard.keySet().iterator().next() );
+		
+		while(!fringe.isEmpty()) {
+			HantoCoordinateImpl current = fringe.remove(0);
+			visited.add(current);
+			
+			for(HantoCoordinate adjacent : current.getAdjacentCoordinates()) {
+				if(getPieceAt(adjacent) != null && !visited.contains(new HantoCoordinateImpl(adjacent))) {
+					fringe.add(new HantoCoordinateImpl(adjacent));
+				}
+			}
+		}
+		
+		return visited.size() == theBoard.size();
 	}
 
 }

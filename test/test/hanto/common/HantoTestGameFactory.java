@@ -13,7 +13,6 @@ package test.hanto.common;
 import test.hanto.student_TCA_KLB.alpha.AlphaHantoTestGame;
 import test.hanto.student_TCA_KLB.beta.BetaHantoTestGame;
 import test.hanto.student_TCA_KLB.gamma.GammaHantoTestGame;
-import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
 
@@ -49,7 +48,7 @@ public class HantoTestGameFactory {
 	 *            the version desired.
 	 * @return the game instance
 	 */
-	public HantoGame makeHantoTestGame(HantoGameID gameId) {
+	public HantoTestGame makeHantoTestGame(HantoGameID gameId) {
 		return makeHantoTestGame(gameId, HantoPlayerColor.BLUE);
 	}
 

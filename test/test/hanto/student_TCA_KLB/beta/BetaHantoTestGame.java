@@ -1,7 +1,6 @@
 package test.hanto.student_TCA_KLB.beta;
 
 import test.hanto.common.HantoTestGame;
-import test.hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
 import hanto.student_TCA_KLB.beta.BetaHantoGame;
@@ -30,8 +29,10 @@ public class BetaHantoTestGame extends BetaHantoGame implements HantoTestGame {
 	
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
-		if(player != movesFirst) {
-			turn++;
+		if (player != movesFirst) {
+			if (turn % 2 != 1) {
+				turn++;
+			}
 		}
 	}
 
