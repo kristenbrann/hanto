@@ -16,7 +16,6 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
-import hanto.student_TCA_KLB.common.Butterfly;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
@@ -62,13 +61,6 @@ public class AlphaHantoGame extends AbsHantoGame {
 			throw new InvalidPieceTypeException(pieceType,
 					"Can only place Butterflies");
 		}
-
-	}
-
-	protected void placePiece(final HantoPieceType pieceType,
-			final HantoCoordinate to) {
-		theBoard.put(new HantoCoordinateImpl(to), new Butterfly(
-				currentPlayer));
 
 	}
 
