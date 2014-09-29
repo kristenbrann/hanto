@@ -221,25 +221,28 @@ public abstract class AbsHantoGame implements HantoGame {
 		}
 	}
 	
-	private boolean boardIsContinuous() {
+	protected boolean boardIsContinuous(Map<HantoCoordinateImpl, HantoPiece> board, HantoCoordinate first) {
 		Set<HantoCoordinateImpl> visited = new HashSet<HantoCoordinateImpl> ();
 		
 		List<HantoCoordinateImpl> fringe = new LinkedList<HantoCoordinateImpl>();
 		
-		fringe.add( theBoard.keySet().iterator().next() );
+		fringe.add( new HantoCoordinateImpl(first ));
 		
 		while(!fringe.isEmpty()) {
 			HantoCoordinateImpl current = fringe.remove(0);
+			if(visited.contains(current)) {
+				continue;
+			}
 			visited.add(current);
 			
 			for(HantoCoordinate adjacent : current.getAdjacentCoordinates()) {
-				if(getPieceAt(adjacent) != null && !visited.contains(new HantoCoordinateImpl(adjacent))) {
+				if(board.get(adjacent) != null && !visited.contains(new HantoCoordinateImpl(adjacent))) {
 					fringe.add(new HantoCoordinateImpl(adjacent));
 				}
 			}
 		}
 		
-		return visited.size() == theBoard.size();
+		return visited.size() == board.size();
 	}
 
 }
