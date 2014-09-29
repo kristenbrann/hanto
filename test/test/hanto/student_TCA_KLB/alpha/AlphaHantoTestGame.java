@@ -1,11 +1,11 @@
 package test.hanto.student_TCA_KLB.alpha;
 
-import test.hanto.common.HantoTestGame;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
 import hanto.student_TCA_KLB.alpha.AlphaHantoGame;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.HantoPieceFactory;
+import test.hanto.common.HantoTestGame;
 
 public class AlphaHantoTestGame extends AlphaHantoGame implements HantoTestGame {
 
@@ -19,6 +19,20 @@ public class AlphaHantoTestGame extends AlphaHantoGame implements HantoTestGame 
 		for (PieceLocationPair p : initialPieces) {
 			HantoPiece toPlace = HantoPieceFactory.getInstance()
 					.makeHantoPiece(p.pieceType, p.player);
+			switch (p.pieceType) {
+			case BUTTERFLY:
+				switch (p.player) {
+				case BLUE:
+					blueButterfly = new HantoCoordinateImpl(p.location);
+					break;
+				case RED:
+					redButterfly = new HantoCoordinateImpl(p.location);
+					break;
+				}
+				break;
+			default:
+				break;
+			}
 			theBoard.put(new HantoCoordinateImpl(p.location), toPlace);
 		}
 	}
