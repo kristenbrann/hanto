@@ -42,6 +42,9 @@ public abstract class AbsHantoGame implements HantoGame {
 	protected HantoPlayerColor movesFirst;
 	protected HantoPlayerColor currentPlayer;
 	protected HantoPieceFactory pieceFactory  = HantoPieceFactory.getInstance();
+	protected HantoCoordinateImpl blueButterfly;
+	protected HantoCoordinateImpl redButterfly;
+	protected int maxTurns;
 
 	/**
 	 * @param color
@@ -114,9 +117,8 @@ public abstract class AbsHantoGame implements HantoGame {
 			throws HantoException {
 		
 		determineColor();
-		
 		validateMove(pieceType, from, to);
-		placePiece(pieceType, to);
+		placePiece(pieceType, from, to);
 		MoveResult result = determineMoveResult();
 		turn++;
 		return result;
@@ -169,9 +171,22 @@ public abstract class AbsHantoGame implements HantoGame {
 	 *             Throws exception if locations are invalid
 	 */
 	protected void placePiece(final HantoPieceType pieceType,
-			final HantoCoordinate to) throws HantoException {
+			final HantoCoordinate from, final HantoCoordinate to) throws HantoException {
 		HantoPiece toPlace = pieceFactory.makeHantoPiece(pieceType, currentPlayer);
+		if(pieceType == HantoPieceType.BUTTERFLY) {
+			switch(currentPlayer) {
+			case BLUE:
+				blueButterfly = new HantoCoordinateImpl(to);
+				break;
+			case RED:
+				redButterfly = new HantoCoordinateImpl(to);
+				break;
+			}
+		}
 		theBoard.put(new HantoCoordinateImpl(to), toPlace);
+		if (from != null) {
+			theBoard.remove(from);
+		}
 	}
 
 	/**

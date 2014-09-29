@@ -1,6 +1,7 @@
 package test.hanto.student_TCA_KLB.gamma;
 
 import hanto.common.HantoPiece;
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.HantoPieceFactory;
@@ -17,6 +18,17 @@ public class GammaHantoTestGame extends GammaHantoGame implements HantoTestGame 
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
 		for(PieceLocationPair p : initialPieces) {
 			HantoPiece toPlace = HantoPieceFactory.getInstance().makeHantoPiece(p.pieceType, p.player);
+			if( p.pieceType == HantoPieceType.BUTTERFLY ) {
+				switch(p.player) {
+				case BLUE:
+					blueButterfly = new HantoCoordinateImpl(p.location);
+					break;
+				case RED:
+					redButterfly = new HantoCoordinateImpl(p.location);
+					break;
+				
+				}
+			}
 			theBoard.put(new HantoCoordinateImpl(p.location), toPlace);
 		}
 	}
