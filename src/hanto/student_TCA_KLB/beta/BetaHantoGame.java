@@ -12,7 +12,6 @@
 package hanto.student_TCA_KLB.beta;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
@@ -22,7 +21,6 @@ import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
-import hanto.student_TCA_KLB.common.Sparrow;
 
 /**
  * @author tcarmstrong klbrann
@@ -31,45 +29,11 @@ import hanto.student_TCA_KLB.common.Sparrow;
 public class BetaHantoGame extends AbsHantoGame {
 
 	private final int maxTurns = 11;
-	private HantoCoordinateImpl blueButterfly;
-	private HantoCoordinateImpl redButterfly;
+
 
 	public BetaHantoGame(final HantoPlayerColor color) {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
-	}
-
-	protected void placePiece(final HantoPieceType pieceType, final HantoCoordinate to)
-			throws InvalidPieceTypeException {
-
-		final HantoCoordinateImpl hcTo = new HantoCoordinateImpl(to);
-
-		switch (pieceType) {
-		case BUTTERFLY:
-
-			final HantoPiece bfly = new Butterfly(currentPlayer);
-			theBoard.put(hcTo, bfly);
-
-			switch (currentPlayer) {
-			case BLUE:
-				blueButterfly = hcTo;
-				break;
-
-			case RED:
-				redButterfly = hcTo;
-				break;
-			}
-
-			break;
-
-		case SPARROW:
-			theBoard.put(hcTo, new Sparrow(currentPlayer));
-			break;
-
-		default:
-			throw new InvalidPieceTypeException(pieceType);
-		}
-
 	}
 
 	@Override

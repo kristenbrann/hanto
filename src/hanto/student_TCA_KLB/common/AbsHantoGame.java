@@ -14,7 +14,11 @@
 package hanto.student_TCA_KLB.common;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -37,6 +41,10 @@ public abstract class AbsHantoGame implements HantoGame {
 	protected int turn;
 	protected HantoPlayerColor movesFirst;
 	protected HantoPlayerColor currentPlayer;
+	protected HantoPieceFactory pieceFactory  = HantoPieceFactory.getInstance();
+	protected HantoCoordinateImpl blueButterfly;
+	protected HantoCoordinateImpl redButterfly;
+	protected int maxTurns;
 
 	/**
 	 * @param color
@@ -109,9 +117,8 @@ public abstract class AbsHantoGame implements HantoGame {
 			throws HantoException {
 		
 		determineColor();
-		
 		validateMove(pieceType, from, to);
-		placePiece(pieceType, to);
+		placePiece(pieceType, from, to);
 		MoveResult result = determineMoveResult();
 		turn++;
 		return result;
@@ -163,8 +170,24 @@ public abstract class AbsHantoGame implements HantoGame {
 	 * @throws HantoException
 	 *             Throws exception if locations are invalid
 	 */
-	protected abstract void placePiece(final HantoPieceType pieceType,
-			final HantoCoordinate to) throws HantoException;
+	protected void placePiece(final HantoPieceType pieceType,
+			final HantoCoordinate from, final HantoCoordinate to) throws HantoException {
+		HantoPiece toPlace = pieceFactory.makeHantoPiece(pieceType, currentPlayer);
+		if(pieceType == HantoPieceType.BUTTERFLY) {
+			switch(currentPlayer) {
+			case BLUE:
+				blueButterfly = new HantoCoordinateImpl(to);
+				break;
+			case RED:
+				redButterfly = new HantoCoordinateImpl(to);
+				break;
+			}
+		}
+		theBoard.put(new HantoCoordinateImpl(to), toPlace);
+		if (from != null) {
+			theBoard.remove(from);
+		}
+	}
 
 	/**
 	 * @return The result state of the move
@@ -174,7 +197,7 @@ public abstract class AbsHantoGame implements HantoGame {
 	/**
 	 * @return the color of the piece to be placed
 	 */
-	protected void determineColor() {
+	protected void determineColor() {	
 		if (turn % 2 == 0) {
 			switch (movesFirst) {
 			case BLUE:
@@ -196,6 +219,27 @@ public abstract class AbsHantoGame implements HantoGame {
 				break;
 			}
 		}
+	}
+	
+	private boolean boardIsContinuous() {
+		Set<HantoCoordinateImpl> visited = new HashSet<HantoCoordinateImpl> ();
+		
+		List<HantoCoordinateImpl> fringe = new LinkedList<HantoCoordinateImpl>();
+		
+		fringe.add( theBoard.keySet().iterator().next() );
+		
+		while(!fringe.isEmpty()) {
+			HantoCoordinateImpl current = fringe.remove(0);
+			visited.add(current);
+			
+			for(HantoCoordinate adjacent : current.getAdjacentCoordinates()) {
+				if(getPieceAt(adjacent) != null && !visited.contains(new HantoCoordinateImpl(adjacent))) {
+					fringe.add(new HantoCoordinateImpl(adjacent));
+				}
+			}
+		}
+		
+		return visited.size() == theBoard.size();
 	}
 
 }
