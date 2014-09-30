@@ -1,10 +1,19 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.student_TCA_KLB.gamma;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
@@ -15,6 +24,11 @@ import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 
+/**
+ * @author tcarmstrong klbrann
+ * @version 30 Sep 2014
+ *
+ */
 public class GammaHantoGame extends AbsHantoGame {
 
 	public GammaHantoGame(HantoPlayerColor color) {
@@ -25,18 +39,18 @@ public class GammaHantoGame extends AbsHantoGame {
 
 	@Override
 	protected void validateMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+			HantoCoordinate to) throws InvalidPieceTypeException,
+			InvalidTargetLocationException, InvalidSourceLocationException {
 
 		switch (pieceType) {
 
 		case SPARROW:
-			if (turn >= 6 ) {
-				if (!theBoard.containsValue(pieceFactory.makeHantoPiece(HantoPieceType.BUTTERFLY, currentPlayer))) {
-					throw new InvalidPieceTypeException(
-							pieceType,
-							"Player "
-									+ currentPlayer.name()
-									+ " must place a butterfly by the fourth turn");
+			if (turn >= 6) {
+				if (!theBoard.containsValue(pieceFactory.makeHantoPiece(
+						HantoPieceType.BUTTERFLY, currentPlayer))) {
+					throw new InvalidPieceTypeException(pieceType, "Player "
+							+ currentPlayer.name()
+							+ " must place a butterfly by the fourth turn");
 				}
 			}
 		case BUTTERFLY:
@@ -70,16 +84,13 @@ public class GammaHantoGame extends AbsHantoGame {
 									canSlide = true;
 								}
 							}
-							{
-								Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
-										theBoard);
-								temp.remove(from);
-								temp.put(new HantoCoordinateImpl(to),
-										pieceFactory.makeHantoPiece(pieceType,
-												currentPlayer));
-								canSlide = canSlide
-										&& boardIsContinuous(temp, to);
-							}
+
+							Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
+									theBoard);
+							temp.remove(from);
+							temp.put(new HantoCoordinateImpl(to), pieceFactory
+									.makeHantoPiece(pieceType, currentPlayer));
+							canSlide = canSlide && boardIsContinuous(temp, to);
 
 							if (!canSlide) {
 								throw new InvalidTargetLocationException(to,
