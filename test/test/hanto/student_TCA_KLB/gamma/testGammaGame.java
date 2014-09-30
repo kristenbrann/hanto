@@ -15,6 +15,7 @@ import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.Butterfly;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
+import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 import hanto.student_TCA_KLB.common.Sparrow;
 
@@ -340,7 +341,12 @@ public class testGammaGame {
 		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		
 		theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(1, -2));
-		
+	}
+	
+	
+	@Test (expected = InvalidSourceLocationException.class)
+	public void InvalidMovePieceWhenNoneOnBoard() throws HantoException {
+		theGame.makeMove(HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(1, 1), home);
 	}
 
 	@Test

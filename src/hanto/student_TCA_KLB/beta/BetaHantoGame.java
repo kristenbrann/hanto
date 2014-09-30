@@ -51,6 +51,9 @@ public class BetaHantoGame extends AbsHantoGame {
 		}
 
 		if (from == null) {
+			switch(pieceType) {
+			case SPARROW:
+			case BUTTERFLY:
 			if (theBoard.isEmpty()) {
 				if (!isHome(to)) {
 					throw new InvalidTargetLocationException(to,
@@ -79,6 +82,10 @@ public class BetaHantoGame extends AbsHantoGame {
 
 					}
 				}
+			}
+			break;
+			default:
+				throw new InvalidPieceTypeException(pieceType, "Can only use Butterflies and Sparrows in Beta.");
 			}
 		} else {
 			throw new InvalidSourceLocationException(from,
