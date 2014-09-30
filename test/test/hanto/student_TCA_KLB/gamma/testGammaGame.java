@@ -384,5 +384,24 @@ public class testGammaGame {
 			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
-
+	
+	@Test
+	public void simulateValidMaxTurnsDrawGame() {
+		HantoTestGame.PieceLocationPair[] toPlace = {
+				new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1))};
+	
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(20);
+		theGame.setPlayerMoving(HantoPlayerColor.RED);
+		
+		try {
+			assertEquals(MoveResult.DRAW, theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(0,2)));
+		} catch (HantoException e) {
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	
+	}
 }

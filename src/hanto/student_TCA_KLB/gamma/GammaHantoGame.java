@@ -20,7 +20,7 @@ public class GammaHantoGame extends AbsHantoGame {
 	public GammaHantoGame(HantoPlayerColor color) {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
-		maxTurns = Integer.MAX_VALUE;
+		maxTurns = 39;
 	}
 
 	@Override
