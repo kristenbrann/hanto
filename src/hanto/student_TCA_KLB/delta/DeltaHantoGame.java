@@ -28,7 +28,10 @@ public class DeltaHantoGame extends AbsHantoGame {
 			HantoCoordinate to) throws HantoException {
 
 		switch (pieceType) {
-
+		
+		case CRAB:
+			break;
+		
 		case SPARROW:
 			if (turn >= 6 ) {
 				if (!theBoard.containsValue(pieceFactory.makeHantoPiece(HantoPieceType.BUTTERFLY, currentPlayer))) {

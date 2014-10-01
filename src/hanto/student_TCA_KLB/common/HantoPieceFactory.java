@@ -52,7 +52,7 @@ public class HantoPieceFactory {
 			piece = new Butterfly(color);
 			break;
 		case CRAB:
-			break;
+			piece = new Crab(color);
 		case CRANE:
 			break;
 		case DOVE:
