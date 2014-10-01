@@ -15,6 +15,8 @@ public class GammaHantoTestGame extends GammaHantoGame implements HantoTestGame 
 
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
+		theBoard.clear();
+		
 		for (PieceLocationPair p : initialPieces) {
 			HantoPiece toPlace = HantoPieceFactory.getInstance()
 					.makeHantoPiece(p.pieceType, p.player);

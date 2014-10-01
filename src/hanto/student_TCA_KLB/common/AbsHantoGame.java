@@ -186,7 +186,7 @@ public abstract class AbsHantoGame implements HantoGame {
 		}
 		theBoard.put(new HantoCoordinateImpl(to), toPlace);
 		if (from != null) {
-			theBoard.remove(from);
+			theBoard.remove(new HantoCoordinateImpl(from));
 		}
 	}
 

@@ -18,7 +18,7 @@ import test.hanto.student_TCA_KLB.gamma.testGammaGame;
 @SuiteClasses({ testAlphaGame.class, testBetaGame.class, testButterfly.class,
 		testHantoCoordinateImpl.class, testSparrow.class, testMoveResult.class,
 		testHantoPieceType.class, testHantoGameID.class, testGammaGame.class,
-		AlphaHantoMasterTest.class, BetaHantoMasterTest.class})
+		AlphaHantoMasterTest.class, BetaHantoMasterTest.class, GammaHantoMasterTest.class })
 public class AllTests {
 
 }

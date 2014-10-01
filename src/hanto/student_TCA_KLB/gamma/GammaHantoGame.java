@@ -26,7 +26,7 @@ import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 
 /**
  * @author tcarmstrong klbrann
- * @version 30 Sep 2014
+ * @version 2 Oct 2014
  *
  */
 public class GammaHantoGame extends AbsHantoGame {
@@ -34,7 +34,7 @@ public class GammaHantoGame extends AbsHantoGame {
 	public GammaHantoGame(HantoPlayerColor color) {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
-		maxTurns = 39;
+		maxTurns = 38;
 	}
 
 	@Override
@@ -70,33 +70,47 @@ public class GammaHantoGame extends AbsHantoGame {
 					if (from != null) {
 						HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(
 								from);
-						if (!hcFrom.isAdjacentTo(to)) {
-							throw new InvalidTargetLocationException(to,
-									"Piece can only move one hex.");
-						} else {
-							boolean canSlide = false;
-							for (HantoCoordinate c : hcFrom
-									.getAdjacentCoordinates()) {
-								HantoCoordinateImpl next = new HantoCoordinateImpl(
-										c);
-								if (next.isAdjacentTo(to)
-										&& getPieceAt(next) == null) {
-									canSlide = true;
+						if (theBoard.containsKey(hcFrom)) {
+							if (theBoard.get(hcFrom).getType() != pieceType) {
+								throw new InvalidPieceTypeException(pieceType,
+										"Cannot move that type because a "
+												+ theBoard.get(hcFrom)
+														.getType()
+												+ " exists at " + hcFrom + ".");
+							}
+							if (!hcFrom.isAdjacentTo(to)) {
+								throw new InvalidTargetLocationException(to,
+										"Piece can only move one hex.");
+							} else {
+								boolean canSlide = false;
+								for (HantoCoordinate c : hcFrom
+										.getAdjacentCoordinates()) {
+									HantoCoordinateImpl next = new HantoCoordinateImpl(
+											c);
+									if (next.isAdjacentTo(to)
+											&& getPieceAt(next) == null) {
+										canSlide = true;
+									}
+								}
+
+								Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
+										theBoard);
+								temp.remove(hcFrom);
+								temp.put(new HantoCoordinateImpl(to),
+										pieceFactory.makeHantoPiece(pieceType,
+												currentPlayer));
+								canSlide = canSlide
+										&& boardIsContinuous(temp, to);
+
+								if (!canSlide) {
+									throw new InvalidTargetLocationException(
+											to, "Cannot move from " + from
+													+ " to " + to + ".");
 								}
 							}
-
-							Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
-									theBoard);
-							temp.remove(from);
-							temp.put(new HantoCoordinateImpl(to), pieceFactory
-									.makeHantoPiece(pieceType, currentPlayer));
-							canSlide = canSlide && boardIsContinuous(temp, to);
-
-							if (!canSlide) {
-								throw new InvalidTargetLocationException(to,
-										"Cannot move from " + from + " to "
-												+ to + ".");
-							}
+						} else {
+							throw new InvalidSourceLocationException(hcFrom,
+									"No piece at that location.");
 						}
 					} else {
 						if (to != null) {
@@ -138,7 +152,7 @@ public class GammaHantoGame extends AbsHantoGame {
 			result = MoveResult.BLUE_WINS;
 		} else if (blueButterfly != null && isSurrounded(blueButterfly)) {
 			result = MoveResult.RED_WINS;
-		} else if (turn == maxTurns) {
+		} else if (turn >= maxTurns) {
 			result = MoveResult.DRAW;
 		}
 		if ((redButterfly != null && isSurrounded(redButterfly))
