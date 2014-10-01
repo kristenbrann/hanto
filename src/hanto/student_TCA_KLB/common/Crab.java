@@ -9,10 +9,10 @@ public class Crab implements HantoPiece {
 	HantoPlayerColor color;
 
 	/**
-	 * Constructor for a Butterfly
+	 * Constructor for a Crab
 	 * 
 	 * @param color
-	 *            The Player color of the butterfly
+	 *            The Player color of the Crab
 	 */
 	public Crab(HantoPlayerColor color) {
 		this.color = color;
@@ -52,12 +52,12 @@ public class Crab implements HantoPiece {
 	/**
 	 * Determines if the given butterfly is the same as this butterfly
 	 * 
-	 * @param bfly
-	 *            the Butterfly to compare
-	 * @return true if the two butterflies are equivelent
+	 * @param crab
+	 *            the Crab to compare
+	 * @return true if the two butterflies are equivalent
 	 */
-	public boolean equals(Crab bfly) {
-		return color == bfly.getColor();
+	public boolean equals(Crab crab) {
+		return color == crab.getColor();
 	}
 
 }
