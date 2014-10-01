@@ -12,6 +12,7 @@ package test.hanto.common;
 
 import test.hanto.student_TCA_KLB.alpha.AlphaHantoTestGame;
 import test.hanto.student_TCA_KLB.beta.BetaHantoTestGame;
+import test.hanto.student_TCA_KLB.delta.DeltaHantoTestGame;
 import test.hanto.student_TCA_KLB.gamma.GammaHantoTestGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
@@ -73,6 +74,9 @@ public class HantoTestGameFactory {
 			break;
 		case GAMMA_HANTO:
 			game = new GammaHantoTestGame(movesFirst);
+			break;
+		case DELTA_HANTO:
+			game = new DeltaHantoTestGame(movesFirst);
 			break;
 		default:
 			break;
