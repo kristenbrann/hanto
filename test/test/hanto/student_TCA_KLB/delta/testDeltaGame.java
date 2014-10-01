@@ -9,11 +9,14 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.Butterfly;
 import hanto.student_TCA_KLB.common.Crab;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
+import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 import hanto.student_TCA_KLB.common.Sparrow;
 
 import org.junit.Before;
@@ -22,6 +25,7 @@ import org.junit.Test;
 
 import test.hanto.common.HantoTestGame;
 import test.hanto.common.HantoTestGameFactory;
+import test.hanto.common.HantoTestGame.PieceLocationPair;
 
 public class testDeltaGame {
 
@@ -127,6 +131,117 @@ public class testDeltaGame {
 
 			fail("Unexpected exception: " + e.getMessage());
 		}
+	}
+	
+	@Test(expected = InvalidTargetLocationException.class)
+	public void makeInvalidFirstMove1() throws HantoException {
+		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
+		HantoCoordinate notHome = new HantoCoordinateImpl(1, 1);
+		theGame.makeMove(firstPiece.getType(), null, notHome);
+	}
+	
+	@Test
+	public void makeValidWalkingMoveButterfly() {
+		try {
+
+			PieceLocationPair[] toPlace = {
+					new PieceLocationPair(HantoPlayerColor.BLUE,
+							HantoPieceType.BUTTERFLY, home),
+					new PieceLocationPair(HantoPlayerColor.RED,
+							HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(
+									0, 1)), };
+
+			theGame.initializeBoard(toPlace);
+			theGame.setTurnNumber(2);
+			theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+			assertEquals("Moving a butterfly should return OK.", MoveResult.OK,
+					theGame.makeMove(HantoPieceType.BUTTERFLY, home,
+							new HantoCoordinateImpl(1, 0)));
+			assertEquals("The piece at (1,0) should be a blue piece",
+					HantoPlayerColor.BLUE,
+					theGame.getPieceAt(new HantoCoordinateImpl(1, 0))
+							.getColor());
+			assertEquals("The piece at (1,0) should be a butterfly.",
+					HantoPieceType.BUTTERFLY,
+					theGame.getPieceAt(new HantoCoordinateImpl(1, 0)).getType());
+
+		} catch (HantoException e) {
+
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void makeValidWalkingMoveCrab() {
+		try {
+
+			PieceLocationPair[] toPlace = {
+					new PieceLocationPair(HantoPlayerColor.BLUE,
+							HantoPieceType.CRAB, home),
+					new PieceLocationPair(HantoPlayerColor.RED,
+							HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(
+									0, 1)), };
+
+			theGame.initializeBoard(toPlace);
+			theGame.setTurnNumber(2);
+			theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+			assertEquals("Moving a crab should return OK.", MoveResult.OK,
+					theGame.makeMove(HantoPieceType.CRAB, home,
+							new HantoCoordinateImpl(1, 0)));
+			assertEquals("The piece at (1,0) should be a blue piece",
+					HantoPlayerColor.BLUE,
+					theGame.getPieceAt(new HantoCoordinateImpl(1, 0))
+							.getColor());
+			assertEquals("The piece at (1,0) should be a crab.",
+					HantoPieceType.CRAB,
+					theGame.getPieceAt(new HantoCoordinateImpl(1, 0)).getType());
+
+		} catch (HantoException e) {
+
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	}
+	
+	@Test(expected = InvalidTargetLocationException.class)
+	public void makeInvalidWalkingMoveMoreThanOneHexButterfly() throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)), };
+
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(2);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		theGame.makeMove(HantoPieceType.BUTTERFLY, home,
+				new HantoCoordinateImpl(1, 1));
+	}
+
+	
+	@Test(expected = InvalidTargetLocationException.class)
+	public void makeInvalidWalkingMoveMoreThanOneHexCrab() throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, home),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(0, 1)), };
+
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(2);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		theGame.makeMove(HantoPieceType.CRAB, home,
+				new HantoCoordinateImpl(1, 1));
+	}
+
+	@Test(expected = InvalidPieceTypeException.class)
+	public void makeInvalidMoveFromNullWithInvalidPieceType()
+			throws HantoException {
+		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
+		theGame.makeMove(HantoPieceType.DOVE, null, home);
 	}
 	
 }

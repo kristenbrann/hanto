@@ -30,7 +30,9 @@ public class DeltaHantoGame extends AbsHantoGame {
 		switch (pieceType) {
 		
 		case CRAB:
-			break;
+			if (from != null) {
+				validateWalkOneHex(pieceType, from, to);
+			}
 		
 		case SPARROW:
 			if (turn >= 6 ) {
@@ -57,39 +59,7 @@ public class DeltaHantoGame extends AbsHantoGame {
 					}
 				} else {
 					if (from != null) {
-						HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(
-								from);
-						if (!hcFrom.isAdjacentTo(to)) {
-							throw new InvalidTargetLocationException(to,
-									"Piece can only move one hex.");
-						} else {
-							boolean canSlide = false;
-							for (HantoCoordinate c : hcFrom
-									.getAdjacentCoordinates()) {
-								HantoCoordinateImpl next = new HantoCoordinateImpl(
-										c);
-								if (next.isAdjacentTo(to)
-										&& getPieceAt(next) == null) {
-									canSlide = true;
-								}
-							}
-							{
-								Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
-										theBoard);
-								temp.remove(from);
-								temp.put(new HantoCoordinateImpl(to),
-										pieceFactory.makeHantoPiece(pieceType,
-												currentPlayer));
-								canSlide = canSlide
-										&& boardIsContinuous(temp, to);
-							}
-
-							if (!canSlide) {
-								throw new InvalidTargetLocationException(to,
-										"Cannot move from " + from + " to "
-												+ to + ".");
-							}
-						}
+						validateWalkOneHex(pieceType, from, to);
 					} else {
 						if (to != null) {
 							if (turn > 1) {
@@ -121,6 +91,44 @@ public class DeltaHantoGame extends AbsHantoGame {
 			throw new InvalidPieceTypeException(pieceType,
 					"Can only use Butterflies and Sparrows");
 		}
+	}
+	
+	void validateWalkOneHex(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws InvalidTargetLocationException{
+		
+		HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(
+				from);
+		if (!hcFrom.isAdjacentTo(to)) {
+			throw new InvalidTargetLocationException(to,
+					"Piece can only move one hex.");
+		} else {
+			boolean canSlide = false;
+			for (HantoCoordinate c : hcFrom
+					.getAdjacentCoordinates()) {
+				HantoCoordinateImpl next = new HantoCoordinateImpl(
+						c);
+				if (next.isAdjacentTo(to)
+						&& getPieceAt(next) == null) {
+					canSlide = true;
+				}
+			}
+			{
+				Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
+						theBoard);
+				temp.remove(from);
+				temp.put(new HantoCoordinateImpl(to),
+						pieceFactory.makeHantoPiece(pieceType,
+								currentPlayer));
+				canSlide = canSlide
+						&& boardIsContinuous(temp, to);
+			}
+
+			if (!canSlide) {
+				throw new InvalidTargetLocationException(to,
+						"Cannot move from " + from + " to "
+								+ to + ".");
+			}
+		}
+		
 	}
 
 	@Override
