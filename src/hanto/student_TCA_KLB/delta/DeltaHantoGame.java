@@ -141,12 +141,15 @@ public class DeltaHantoGame extends AbsHantoGame {
 		MoveResult result = MoveResult.OK;
 		if (redButterfly != null && isSurrounded(redButterfly)) {
 			result = MoveResult.BLUE_WINS;
+			gameInProgress = false;
 		} else if (blueButterfly != null && isSurrounded(blueButterfly)) {
 			result = MoveResult.RED_WINS;
+			gameInProgress = false;
 		} 
 		if ((redButterfly != null && isSurrounded(redButterfly))
 				&& (blueButterfly != null && isSurrounded(blueButterfly))) {
 			result = MoveResult.DRAW;
+			gameInProgress = false;
 		}
 		return result;
 	}
