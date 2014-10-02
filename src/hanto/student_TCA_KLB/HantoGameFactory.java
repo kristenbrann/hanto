@@ -13,6 +13,7 @@ package hanto.student_TCA_KLB;
 import hanto.common.*;
 import hanto.student_TCA_KLB.alpha.AlphaHantoGame;
 import hanto.student_TCA_KLB.beta.BetaHantoGame;
+import hanto.student_TCA_KLB.delta.DeltaHantoGame;
 import hanto.student_TCA_KLB.gamma.GammaHantoGame;
 
 /**
@@ -70,6 +71,9 @@ public class HantoGameFactory
 			break;
 		case GAMMA_HANTO:
 			game = new GammaHantoGame(movesFirst);
+			break;
+		case DELTA_HANTO:
+			game = new DeltaHantoGame(movesFirst);
 		default:
 			break;
 		}

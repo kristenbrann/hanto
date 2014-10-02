@@ -1,12 +1,11 @@
 package test.hanto.student_TCA_KLB.delta;
 
-import test.hanto.common.HantoTestGame;
-import test.hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.HantoPieceFactory;
 import hanto.student_TCA_KLB.delta.DeltaHantoGame;
+import test.hanto.common.HantoTestGame;
 
 public class DeltaHantoTestGame extends DeltaHantoGame implements HantoTestGame{
 

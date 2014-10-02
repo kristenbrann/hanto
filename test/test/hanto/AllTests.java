@@ -4,11 +4,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import test.hanto.common.testHantoGameFactory;
 import test.hanto.common.testHantoGameID;
 import test.hanto.common.testHantoPieceType;
 import test.hanto.common.testMoveResult;
 import test.hanto.student_TCA_KLB.alpha.testAlphaGame;
 import test.hanto.student_TCA_KLB.beta.testBetaGame;
+import test.hanto.student_TCA_KLB.common.TestCrab;
 import test.hanto.student_TCA_KLB.common.testButterfly;
 import test.hanto.student_TCA_KLB.common.testHantoCoordinateImpl;
 import test.hanto.student_TCA_KLB.common.testSparrow;
@@ -20,7 +22,7 @@ import test.hanto.student_TCA_KLB.gamma.testGammaGame;
 		testHantoCoordinateImpl.class, testSparrow.class, testMoveResult.class,
 		testHantoPieceType.class, testHantoGameID.class, testGammaGame.class,
 		AlphaHantoMasterTest.class, BetaHantoMasterTest.class, GammaHantoMasterTest.class,
-		testDeltaGame.class})
+		testDeltaGame.class, testHantoGameFactory.class, TestCrab.class})
 public class AllTests {
 
 }

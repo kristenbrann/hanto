@@ -11,7 +11,6 @@
 package hanto.student_TCA_KLB.common;
 
 import hanto.common.HantoException;
-import hanto.common.HantoPieceType;
 
 /**
  * @author tcarmstrong klbrann
