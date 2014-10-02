@@ -12,13 +12,15 @@ import test.hanto.student_TCA_KLB.beta.testBetaGame;
 import test.hanto.student_TCA_KLB.common.testButterfly;
 import test.hanto.student_TCA_KLB.common.testHantoCoordinateImpl;
 import test.hanto.student_TCA_KLB.common.testSparrow;
+import test.hanto.student_TCA_KLB.delta.testDeltaGame;
 import test.hanto.student_TCA_KLB.gamma.testGammaGame;
 
 @RunWith(Suite.class)
 @SuiteClasses({ testAlphaGame.class, testBetaGame.class, testButterfly.class,
 		testHantoCoordinateImpl.class, testSparrow.class, testMoveResult.class,
 		testHantoPieceType.class, testHantoGameID.class, testGammaGame.class,
-		AlphaHantoMasterTest.class, BetaHantoMasterTest.class, GammaHantoMasterTest.class })
+		AlphaHantoMasterTest.class, BetaHantoMasterTest.class, GammaHantoMasterTest.class,
+		testDeltaGame.class})
 public class AllTests {
 
 }
