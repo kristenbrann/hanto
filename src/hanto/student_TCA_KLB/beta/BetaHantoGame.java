@@ -28,12 +28,11 @@ import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
  */
 public class BetaHantoGame extends AbsHantoGame {
 
-	private final int maxTurns = 11;
-
 
 	public BetaHantoGame(final HantoPlayerColor color) {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
+		maxTurns = 11;
 	}
 
 	@Override

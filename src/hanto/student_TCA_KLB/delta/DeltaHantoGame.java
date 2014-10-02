@@ -1,10 +1,16 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.student_TCA_KLB.delta;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
@@ -16,6 +22,12 @@ import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author tcarmstrong klbrann
+ */
 public class DeltaHantoGame extends AbsHantoGame {
 
 	public DeltaHantoGame(HantoPlayerColor color) {
@@ -25,22 +37,25 @@ public class DeltaHantoGame extends AbsHantoGame {
 
 	@Override
 	protected void validateMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+			HantoCoordinate to) throws GameNotInProgressException,
+			InvalidTargetLocationException, InvalidPieceTypeException,
+			InvalidSourceLocationException {
 
-		if(!gameInProgress){
+		if (!gameInProgress) {
 			throw new GameNotInProgressException();
-			} else {
-			
+		} else {
+
 			switch (pieceType) {
-			
+
 			case CRAB:
 				if (from != null) {
 					validateWalkOneHex(pieceType, from, to);
 				}
-			
+
 			case SPARROW:
-				if (turn >= 6 ) {
-					if (!theBoard.containsValue(pieceFactory.makeHantoPiece(HantoPieceType.BUTTERFLY, currentPlayer))) {
+				if (turn >= 6) {
+					if (!theBoard.containsValue(pieceFactory.makeHantoPiece(
+							HantoPieceType.BUTTERFLY, currentPlayer))) {
 						throw new InvalidPieceTypeException(
 								pieceType,
 								"Player "
@@ -73,7 +88,8 @@ public class DeltaHantoGame extends AbsHantoGame {
 									for (HantoCoordinate adjacent : hcTo
 											.getAdjacentCoordinates()) {
 										if (getPieceAt(adjacent) != null
-												&& getPieceAt(adjacent).getColor() != currentPlayer) {
+												&& getPieceAt(adjacent)
+														.getColor() != currentPlayer) {
 											nextToOpposingPiece = true;
 										}
 									}
@@ -97,43 +113,44 @@ public class DeltaHantoGame extends AbsHantoGame {
 			}
 		}
 	}
-	
-	void validateWalkOneHex(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws InvalidTargetLocationException{
-		
-		HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(
-				from);
+
+	/**
+	 * @param pieceType
+	 *            The Piece type that is walking
+	 * @param from
+	 *            Where the piece is walking from
+	 * @param to
+	 *            Where the piece is walking to
+	 * @throws InvalidTargetLocationException
+	 */
+	void validateWalkOneHex(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws InvalidTargetLocationException {
+
+		HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(from);
 		if (!hcFrom.isAdjacentTo(to)) {
 			throw new InvalidTargetLocationException(to,
 					"Piece can only move one hex.");
 		} else {
 			boolean canSlide = false;
-			for (HantoCoordinate c : hcFrom
-					.getAdjacentCoordinates()) {
-				HantoCoordinateImpl next = new HantoCoordinateImpl(
-						c);
-				if (next.isAdjacentTo(to)
-						&& getPieceAt(next) == null) {
+			for (HantoCoordinate c : hcFrom.getAdjacentCoordinates()) {
+				HantoCoordinateImpl next = new HantoCoordinateImpl(c);
+				if (next.isAdjacentTo(to) && getPieceAt(next) == null) {
 					canSlide = true;
 				}
 			}
-			{
-				Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
-						theBoard);
-				temp.remove(from);
-				temp.put(new HantoCoordinateImpl(to),
-						pieceFactory.makeHantoPiece(pieceType,
-								currentPlayer));
-				canSlide = canSlide
-						&& boardIsContinuous(temp, to);
-			}
+			Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
+					theBoard);
+			temp.remove(from);
+			temp.put(new HantoCoordinateImpl(to),
+					pieceFactory.makeHantoPiece(pieceType, currentPlayer));
+			canSlide = canSlide && boardIsContinuous(temp, to);
 
 			if (!canSlide) {
 				throw new InvalidTargetLocationException(to,
-						"Cannot move from " + from + " to "
-								+ to + ".");
+						"Cannot move from " + from + " to " + to + ".");
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -145,7 +162,7 @@ public class DeltaHantoGame extends AbsHantoGame {
 		} else if (blueButterfly != null && isSurrounded(blueButterfly)) {
 			result = MoveResult.RED_WINS;
 			gameInProgress = false;
-		} 
+		}
 		if ((redButterfly != null && isSurrounded(redButterfly))
 				&& (blueButterfly != null && isSurrounded(blueButterfly))) {
 			result = MoveResult.DRAW;
