@@ -17,6 +17,7 @@ import hanto.student_TCA_KLB.common.Crab;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
+import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 import hanto.student_TCA_KLB.common.Sparrow;
 
@@ -291,6 +292,15 @@ public class testDeltaGame {
 		theGame.setTurnNumber(4);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
 		theGame.makeMove(HantoPieceType.SPARROW, null,new HantoCoordinateImpl(0, -1));
+	}
+	
+	@Test(expected = InvalidSourceLocationException.class)
+	public void movePieceNotOnBoardYet() throws HantoException {
+		PieceLocationPair[] toPlace = {};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(1);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		theGame.makeMove(HantoPieceType.SPARROW, home,new HantoCoordinateImpl(0, -1));
 	}
 
 }
