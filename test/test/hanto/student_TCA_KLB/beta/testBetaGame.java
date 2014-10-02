@@ -697,7 +697,7 @@ public class testBetaGame {
 	@Test(expected = HantoException.class)
 	public void makeInvalidMoveToCoordinateIsNull() throws HantoException {
 		HantoPiece firstPiece = new Butterfly(HantoPlayerColor.BLUE);
-		theGame.makeMove(firstPiece.getType(), null, null);
+		theGame.makeMove(firstPiece.getType(), home, null);
 	}
 
 	@Test
