@@ -14,6 +14,7 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.Butterfly;
 import hanto.student_TCA_KLB.common.Crab;
+import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
@@ -263,6 +264,24 @@ public class testDeltaGame {
 			throws HantoException {
 		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
 		theGame.makeMove(HantoPieceType.DOVE, null, home);
+	}
+	
+	@Test(expected = GameNotInProgressException.class)
+	public void makeMoveAfterGameEnded()
+			throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, home),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(
+								0, 1)), };
+
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(2);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		theGame.makeMove(HantoPieceType.CRAB, null,null);
+		theGame.makeMove(HantoPieceType.SPARROW, null,new HantoCoordinateImpl(1,1));
 	}
 
 }

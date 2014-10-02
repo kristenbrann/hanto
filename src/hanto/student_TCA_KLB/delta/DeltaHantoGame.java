@@ -10,6 +10,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
+import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
@@ -26,69 +27,74 @@ public class DeltaHantoGame extends AbsHantoGame {
 	protected void validateMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 
-		switch (pieceType) {
-		
-		case CRAB:
-			if (from != null) {
-				validateWalkOneHex(pieceType, from, to);
-			}
-		
-		case SPARROW:
-			if (turn >= 6 ) {
-				if (!theBoard.containsValue(pieceFactory.makeHantoPiece(HantoPieceType.BUTTERFLY, currentPlayer))) {
-					throw new InvalidPieceTypeException(
-							pieceType,
-							"Player "
-									+ currentPlayer.name()
-									+ " must place a butterfly by the fourth turn");
+		if(!gameInProgress){
+			throw new GameNotInProgressException();
+			} else {
+			
+			switch (pieceType) {
+			
+			case CRAB:
+				if (from != null) {
+					validateWalkOneHex(pieceType, from, to);
 				}
-			}
-		case BUTTERFLY:
-			if (getPieceAt(to) == null) {
-				if (theBoard.isEmpty()) {
-					if (from == null) {
-						if (!isHome(to)) {
-							throw new InvalidTargetLocationException(to,
-									"First piece must be placed at "
-											+ home.toString());
+			
+			case SPARROW:
+				if (turn >= 6 ) {
+					if (!theBoard.containsValue(pieceFactory.makeHantoPiece(HantoPieceType.BUTTERFLY, currentPlayer))) {
+						throw new InvalidPieceTypeException(
+								pieceType,
+								"Player "
+										+ currentPlayer.name()
+										+ " must place a butterfly by the fourth turn");
+					}
+				}
+			case BUTTERFLY:
+				if (getPieceAt(to) == null) {
+					if (theBoard.isEmpty()) {
+						if (from == null) {
+							if (!isHome(to)) {
+								throw new InvalidTargetLocationException(to,
+										"First piece must be placed at "
+												+ home.toString());
+							}
+						} else {
+							throw new InvalidSourceLocationException(from,
+									"Cannot move a piece if no pieces are on the board");
 						}
 					} else {
-						throw new InvalidSourceLocationException(from,
-								"Cannot move a piece if no pieces are on the board");
-					}
-				} else {
-					if (from != null) {
-						validateWalkOneHex(pieceType, from, to);
-					} else {
-						if (to != null) {
-							if (turn > 1) {
-								HantoCoordinateImpl hcTo = new HantoCoordinateImpl(
-										to);
-								boolean nextToOpposingPiece = false;
-								for (HantoCoordinate adjacent : hcTo
-										.getAdjacentCoordinates()) {
-									if (getPieceAt(adjacent) != null
-											&& getPieceAt(adjacent).getColor() != currentPlayer) {
-										nextToOpposingPiece = true;
+						if (from != null) {
+							validateWalkOneHex(pieceType, from, to);
+						} else {
+							if (to != null) {
+								if (turn > 1) {
+									HantoCoordinateImpl hcTo = new HantoCoordinateImpl(
+											to);
+									boolean nextToOpposingPiece = false;
+									for (HantoCoordinate adjacent : hcTo
+											.getAdjacentCoordinates()) {
+										if (getPieceAt(adjacent) != null
+												&& getPieceAt(adjacent).getColor() != currentPlayer) {
+											nextToOpposingPiece = true;
+										}
 									}
-								}
-								if (nextToOpposingPiece) {
-									throw new InvalidTargetLocationException(
-											to,
-											"Piece cannot be placed next adjacent to a piece of the opposing color.");
+									if (nextToOpposingPiece) {
+										throw new InvalidTargetLocationException(
+												to,
+												"Piece cannot be placed next adjacent to a piece of the opposing color.");
+									}
 								}
 							}
 						}
 					}
+				} else {
+					throw new InvalidTargetLocationException(to,
+							"A piece already exists at that location.");
 				}
-			} else {
-				throw new InvalidTargetLocationException(to,
-						"A piece already exists at that location.");
+				break;
+			default:
+				throw new InvalidPieceTypeException(pieceType,
+						"Can only use Butterflies and Sparrows");
 			}
-			break;
-		default:
-			throw new InvalidPieceTypeException(pieceType,
-					"Can only use Butterflies and Sparrows");
 		}
 	}
 	
