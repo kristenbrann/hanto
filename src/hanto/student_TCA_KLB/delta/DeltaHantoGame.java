@@ -18,6 +18,7 @@ import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.HantoPieceFactory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
@@ -48,10 +49,6 @@ public class DeltaHantoGame extends AbsHantoGame {
 			switch (pieceType) {
 
 			case CRAB:
-				if (from != null) {
-					validateWalkOneHex(pieceType, from, to);
-				}
-
 			case SPARROW:
 				if (turn >= 6) {
 					if (!theBoard.containsValue(pieceFactory.makeHantoPiece(
@@ -78,7 +75,7 @@ public class DeltaHantoGame extends AbsHantoGame {
 						}
 					} else {
 						if (from != null) {
-							validateWalkOneHex(pieceType, from, to);
+							validPieceMovement(pieceType, from, to);
 						} else {
 							if (to != null) {
 								if (turn > 1) {
@@ -111,6 +108,57 @@ public class DeltaHantoGame extends AbsHantoGame {
 				throw new InvalidPieceTypeException(pieceType,
 						"Can only use Butterflies and Sparrows");
 			}
+		}
+	}
+
+	void validPieceMovement(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws InvalidSourceLocationException,
+			InvalidTargetLocationException {
+
+		if (from == null || getPieceAt(from) == null) {
+			throw new InvalidSourceLocationException(to, "");
+		} else {
+			if (to == null || getPieceAt(to) != null) {
+				throw new InvalidTargetLocationException(to, "");
+			}
+		}
+
+		switch (pieceType) {
+		case BUTTERFLY:
+		case CRAB:
+			validateWalkOneHex(pieceType, from, to);
+			break;
+		case SPARROW:
+			validFlight(pieceType, from, to);
+			break;
+		default:
+			break;
+
+		}
+	}
+
+	private void validFlight(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws InvalidTargetLocationException,
+			InvalidSourceLocationException {
+		if (to == null) {
+			throw new InvalidTargetLocationException(to,
+					"Cannot move piece to null location");
+		} else if (from == null) {
+			throw new InvalidSourceLocationException(from,
+					"Cannot move piece from a null location");
+		}
+
+		Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
+				theBoard);
+		temp.remove(from);
+		temp.put(new HantoCoordinateImpl(to), HantoPieceFactory.getInstance()
+				.makeHantoPiece(pieceType, currentPlayer));
+		if (boardIsContinuous(temp, to)) {
+			theBoard.remove(from);
+			theBoard.put(new HantoCoordinateImpl(to), HantoPieceFactory
+					.getInstance().makeHantoPiece(pieceType, currentPlayer));
+		} else {
+			throw new InvalidTargetLocationException("Can't move piece.");
 		}
 	}
 

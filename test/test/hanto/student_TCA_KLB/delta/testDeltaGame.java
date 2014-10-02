@@ -201,7 +201,6 @@ public class testDeltaGame {
 		}
 	}
 
-	
 	@Test
 	public void makeValidMoveBlueResignGame() {
 		try {
@@ -217,14 +216,14 @@ public class testDeltaGame {
 			theGame.setTurnNumber(2);
 			theGame.setPlayerMoving(HantoPlayerColor.BLUE);
 
-			assertEquals("Moving a crab should return OK.", MoveResult.RED_WINS,
-					theGame.makeMove(HantoPieceType.CRAB, null,
-							null));
+			assertEquals("Moving a crab should return OK.",
+					MoveResult.RED_WINS,
+					theGame.makeMove(HantoPieceType.CRAB, null, null));
 		} catch (HantoException e) {
 			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void makeValidMoveRedResignGame() {
 		try {
@@ -240,14 +239,14 @@ public class testDeltaGame {
 			theGame.setTurnNumber(2);
 			theGame.setPlayerMoving(HantoPlayerColor.RED);
 
-			assertEquals("Moving a crab should return OK.", MoveResult.BLUE_WINS,
-					theGame.makeMove(HantoPieceType.CRAB, null,
-							null));
+			assertEquals("Moving a crab should return OK.",
+					MoveResult.BLUE_WINS,
+					theGame.makeMove(HantoPieceType.CRAB, null, null));
 		} catch (HantoException e) {
 			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void simulateValidBlueWinsGame1() {
 
@@ -289,7 +288,7 @@ public class testDeltaGame {
 			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void simulateValidDrawGame() {
 		PieceLocationPair[] toPlace = {
@@ -327,8 +326,7 @@ public class testDeltaGame {
 			fail("Unexpected exception: " + e.getMessage());
 		}
 	}
-	
-	
+
 	@Test(expected = InvalidTargetLocationException.class)
 	public void makeInvalidWalkingMoveMoreThanOneHexButterfly()
 			throws HantoException {
@@ -369,41 +367,39 @@ public class testDeltaGame {
 		HantoCoordinate home = new HantoCoordinateImpl(0, 0);
 		theGame.makeMove(HantoPieceType.DOVE, null, home);
 	}
-	
+
 	@Test(expected = GameNotInProgressException.class)
-	public void makeMoveAfterGameEnded()
-			throws HantoException {
+	public void makeMoveAfterGameEnded() throws HantoException {
 		PieceLocationPair[] toPlace = {
 				new PieceLocationPair(HantoPlayerColor.BLUE,
 						HantoPieceType.CRAB, home),
 				new PieceLocationPair(HantoPlayerColor.RED,
-						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(
-								0, 1)), };
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)), };
 
 		theGame.initializeBoard(toPlace);
 		theGame.setTurnNumber(2);
 		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		theGame.makeMove(HantoPieceType.CRAB, null,null);
-		theGame.makeMove(HantoPieceType.SPARROW, null,new HantoCoordinateImpl(1,1));
+		theGame.makeMove(HantoPieceType.CRAB, null, null);
+		theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(
+				1, 1));
 	}
-	
-	
-	
+
 	@Test(expected = InvalidPieceTypeException.class)
 	public void blueButterflyNotPlacedByFourthTurn() throws HantoException {
 		PieceLocationPair[] toPlace = {};
 		theGame.initializeBoard(toPlace);
 		theGame.setTurnNumber(4);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
-		theGame.makeMove(HantoPieceType.SPARROW, null,new HantoCoordinateImpl(0, -1));
-	}
-	
-	@Test(expected = InvalidSourceLocationException.class)
-	public void movePieceNotOnBoardYet() throws HantoException {
-		theGame.makeMove(HantoPieceType.SPARROW, home,new HantoCoordinateImpl(0, -1));
+		theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(
+				0, -1));
 	}
 
+	@Test(expected = InvalidSourceLocationException.class)
+	public void movePieceNotOnBoardYet() throws HantoException {
+		theGame.makeMove(HantoPieceType.SPARROW, home, new HantoCoordinateImpl(
+				0, -1));
+	}
 
 	@Test(expected = InvalidTargetLocationException.class)
 	public void makeInvalidMoveWhichCausesDiscontinuousBoard()
@@ -444,5 +440,53 @@ public class testDeltaGame {
 		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(
 				-2, 2));
+	}
+
+	@Test
+	public void testValidFlight() {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.SPARROW, new HantoCoordinateImpl(0, -1)),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 2)) };
+
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(3);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		try {
+
+			assertEquals("Sparrow can fly to another valid location.",
+					MoveResult.OK, theGame.makeMove(HantoPieceType.SPARROW,
+							new HantoCoordinateImpl(0, -1),
+							new HantoCoordinateImpl(0, 3)));
+
+		} catch (HantoException e) {
+			fail("Unexpected exception:\t" + e.getMessage());
+		}
+	}
+
+	@Test (expected=HantoException.class)
+	public void testInvalidFlight() throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.SPARROW, new HantoCoordinateImpl(0, -1)),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 2)) };
+
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(3);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		theGame.makeMove(HantoPieceType.SPARROW,
+				new HantoCoordinateImpl(0, -1), new HantoCoordinateImpl(0, 8));
+
 	}
 }
