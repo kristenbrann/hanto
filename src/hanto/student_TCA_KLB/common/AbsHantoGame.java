@@ -45,7 +45,7 @@ public abstract class AbsHantoGame implements HantoGame {
 	protected HantoCoordinateImpl blueButterfly;
 	protected HantoCoordinateImpl redButterfly;
 	protected int maxTurns;
-
+	protected boolean gameInProgress;
 	/**
 	 * @param color
 	 *            The color of the player who moves first
@@ -54,6 +54,7 @@ public abstract class AbsHantoGame implements HantoGame {
 		theBoard = new HashMap<HantoCoordinateImpl, HantoPiece>();
 		turn = 0;
 		movesFirst = color;
+		gameInProgress = true;
 	}
 
 	/*
@@ -115,12 +116,24 @@ public abstract class AbsHantoGame implements HantoGame {
 	public MoveResult makeMove(final HantoPieceType pieceType,
 			final HantoCoordinate from, final HantoCoordinate to)
 			throws HantoException {
-
 		determineColor();
-		validateMove(pieceType, from, to);
-		placePiece(pieceType, from, to);
-		MoveResult result = determineMoveResult();
-		turn++;
+		MoveResult result = MoveResult.OK;
+		if(to==null && from == null){
+			switch(currentPlayer){
+				case RED:
+					result = MoveResult.BLUE_WINS;
+					break;
+				case BLUE:
+					result = MoveResult.RED_WINS;
+			}
+			gameInProgress = false;
+			
+		} else {
+			validateMove(pieceType, from, to);
+			placePiece(pieceType, from, to);
+			result = determineMoveResult();
+			turn++;
+		}
 		return result;
 	}
 

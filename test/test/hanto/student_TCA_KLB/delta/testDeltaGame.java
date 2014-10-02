@@ -199,6 +199,31 @@ public class testDeltaGame {
 		}
 	}
 
+	
+	@Test
+	public void makeValidMoveResignGame() {
+		try {
+
+			PieceLocationPair[] toPlace = {
+					new PieceLocationPair(HantoPlayerColor.BLUE,
+							HantoPieceType.CRAB, home),
+					new PieceLocationPair(HantoPlayerColor.RED,
+							HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(
+									0, 1)), };
+
+			theGame.initializeBoard(toPlace);
+			theGame.setTurnNumber(2);
+			theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+
+			assertEquals("Moving a crab should return OK.", MoveResult.RED_WINS,
+					theGame.makeMove(HantoPieceType.CRAB, null,
+							null));
+		} catch (HantoException e) {
+			fail("Unexpected exception: " + e.getMessage());
+		}
+	}
+	
+	
 	@Test(expected = InvalidTargetLocationException.class)
 	public void makeInvalidWalkingMoveMoreThanOneHexButterfly()
 			throws HantoException {
