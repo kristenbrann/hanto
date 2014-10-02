@@ -489,4 +489,20 @@ public class testDeltaGame {
 				new HantoCoordinateImpl(0, -1), new HantoCoordinateImpl(0, 8));
 
 	}
+	
+	@Test (expected=InvalidPieceTypeException.class)
+	public void testInvalidMovement() throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.RED,
+						HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)) };
+
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(2);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		theGame.makeMove(HantoPieceType.SPARROW,
+				home, new HantoCoordinateImpl(1, 0));
+
+	}
 }

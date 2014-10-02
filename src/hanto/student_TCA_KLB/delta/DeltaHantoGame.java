@@ -75,6 +75,9 @@ public class DeltaHantoGame extends AbsHantoGame {
 						}
 					} else {
 						if (from != null) {
+							if( getPieceAt(from).getType() != pieceType) {
+								throw new InvalidPieceTypeException(pieceType, "Piece type given does not match piece type that exists on the board.");
+							}
 							validPieceMovement(pieceType, from, to);
 						} else {
 							if (to != null) {
@@ -111,6 +114,18 @@ public class DeltaHantoGame extends AbsHantoGame {
 		}
 	}
 
+	/**
+	 * Determines if moving (not placing) the piece is valid.
+	 * @param pieceType
+	 * 				The piece type that is being moved
+	 * @param from
+	 * 				Where the piece is moving from
+	 * @param to
+	 * 				Where the piece is moving to
+	 * 
+	 * @throws InvalidSourceLocationException
+	 * @throws InvalidTargetLocationException
+	 */
 	void validPieceMovement(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws InvalidSourceLocationException,
 			InvalidTargetLocationException {
