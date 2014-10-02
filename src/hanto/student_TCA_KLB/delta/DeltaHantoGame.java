@@ -20,7 +20,6 @@ public class DeltaHantoGame extends AbsHantoGame {
 	public DeltaHantoGame(HantoPlayerColor color) {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
-		maxTurns = 39;
 	}
 
 	@Override
@@ -138,9 +137,7 @@ public class DeltaHantoGame extends AbsHantoGame {
 			result = MoveResult.BLUE_WINS;
 		} else if (blueButterfly != null && isSurrounded(blueButterfly)) {
 			result = MoveResult.RED_WINS;
-		} else if (turn == maxTurns) {
-			result = MoveResult.DRAW;
-		}
+		} 
 		if ((redButterfly != null && isSurrounded(redButterfly))
 				&& (blueButterfly != null && isSurrounded(blueButterfly))) {
 			result = MoveResult.DRAW;
