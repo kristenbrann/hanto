@@ -283,5 +283,14 @@ public class testDeltaGame {
 		theGame.makeMove(HantoPieceType.CRAB, null,null);
 		theGame.makeMove(HantoPieceType.SPARROW, null,new HantoCoordinateImpl(1,1));
 	}
+	
+	@Test(expected = InvalidPieceTypeException.class)
+	public void blueButterflyNotPlacedByFourthTurn() throws HantoException {
+		PieceLocationPair[] toPlace = {};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(4);
+		theGame.setPlayerMoving(HantoPlayerColor.RED);
+		theGame.makeMove(HantoPieceType.SPARROW, null,new HantoCoordinateImpl(0, -1));
+	}
 
 }
