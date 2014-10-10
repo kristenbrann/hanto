@@ -10,12 +10,13 @@
 
 package test.hanto.common;
 
+import hanto.common.HantoGameID;
+import hanto.common.HantoPlayerColor;
 import test.hanto.student_TCA_KLB.alpha.AlphaHantoTestGame;
 import test.hanto.student_TCA_KLB.beta.BetaHantoTestGame;
 import test.hanto.student_TCA_KLB.delta.DeltaHantoTestGame;
+import test.hanto.student_TCA_KLB.epsilon.EpsilonHantoTestGame;
 import test.hanto.student_TCA_KLB.gamma.GammaHantoTestGame;
-import hanto.common.HantoGameID;
-import hanto.common.HantoPlayerColor;
 
 //import hanto.student_TCA_KLB.gamma.GammaHantoTestGame;
 
@@ -77,6 +78,9 @@ public class HantoTestGameFactory {
 			break;
 		case DELTA_HANTO:
 			game = new DeltaHantoTestGame(movesFirst);
+			break;
+		case EPSILON_HANTO:
+			game = new EpsilonHantoTestGame(movesFirst);
 			break;
 		default:
 			break;

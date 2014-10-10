@@ -15,6 +15,7 @@ import test.hanto.student_TCA_KLB.common.testButterfly;
 import test.hanto.student_TCA_KLB.common.testHantoCoordinateImpl;
 import test.hanto.student_TCA_KLB.common.testSparrow;
 import test.hanto.student_TCA_KLB.delta.testDeltaGame;
+import test.hanto.student_TCA_KLB.epsilon.testEpsilonGame;
 import test.hanto.student_TCA_KLB.gamma.testGammaGame;
 
 @RunWith(Suite.class)
@@ -22,7 +23,8 @@ import test.hanto.student_TCA_KLB.gamma.testGammaGame;
 		testHantoCoordinateImpl.class, testSparrow.class, testMoveResult.class,
 		testHantoPieceType.class, testHantoGameID.class, testGammaGame.class,
 		AlphaHantoMasterTest.class, BetaHantoMasterTest.class, GammaHantoMasterTest.class,
-		testDeltaGame.class, testHantoGameFactory.class, TestCrab.class})
+		testDeltaGame.class, testHantoGameFactory.class, TestCrab.class, DeltaHantoMasterTest.class,
+		testEpsilonGame.class})
 public class AllTests {
 
 }

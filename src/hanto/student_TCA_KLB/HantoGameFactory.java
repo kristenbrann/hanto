@@ -14,6 +14,7 @@ import hanto.common.*;
 import hanto.student_TCA_KLB.alpha.AlphaHantoGame;
 import hanto.student_TCA_KLB.beta.BetaHantoGame;
 import hanto.student_TCA_KLB.delta.DeltaHantoGame;
+import hanto.student_TCA_KLB.epsilon.EpsilonHantoGame;
 import hanto.student_TCA_KLB.gamma.GammaHantoGame;
 
 /**
@@ -74,6 +75,9 @@ public class HantoGameFactory
 			break;
 		case DELTA_HANTO:
 			game = new DeltaHantoGame(movesFirst);
+			break;
+		case EPSILON_HANTO:
+			game = new EpsilonHantoGame(movesFirst);
 		default:
 			break;
 		}
