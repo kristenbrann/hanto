@@ -44,6 +44,7 @@ public abstract class AbsHantoGame implements HantoGame {
 	protected HantoPieceFactory pieceFactory = HantoPieceFactory.getInstance();
 	protected HantoCoordinateImpl blueButterfly;
 	protected HantoCoordinateImpl redButterfly;
+	protected HantoPieceInventory pieceInventory;
 	protected int maxTurns;
 	protected boolean gameInProgress;
 

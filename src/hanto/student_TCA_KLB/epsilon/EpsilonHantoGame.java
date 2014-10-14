@@ -8,6 +8,7 @@ import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
@@ -18,6 +19,7 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		super(color);
 		flightDistance = 4;
 		home = new HantoCoordinateImpl(0,0);
+		pieceInventory = new HantoPieceInventory(1,6,4,2);
 	}
 
 	@Override
