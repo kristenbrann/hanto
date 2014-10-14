@@ -32,6 +32,7 @@ public class EpsilonHantoTestGame extends EpsilonHantoGame implements HantoTestG
 			default:
 				break;
 			}
+			pieceInventory.usePiece(p.player, p.pieceType);
 			theBoard.put(new HantoCoordinateImpl(p.location), toPlace);
 		}
 
