@@ -158,10 +158,17 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		case SPARROW:
 			validFlight(pieceType, from, to);
 			break;
+		case HORSE:
+			validJump(from ,to);
 		default:
 			break;
 
 		}
+	}
+
+	private void validJump(HantoCoordinate from, HantoCoordinate to) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
