@@ -113,6 +113,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 
 	@Override
 	protected MoveResult handleResignation() throws HantoException {
+		if(hasAvailableMove(currentPlayer)){
+			throw new hanto.common.HantoPrematureResignationException();
+		}
 		MoveResult result = MoveResult.OK;
 		switch (currentPlayer) {
 		case RED:
@@ -123,6 +126,11 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		}
 		gameInProgress = false;
 		return result;
+	}
+
+	private boolean hasAvailableMove(HantoPlayerColor currentPlayer) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
