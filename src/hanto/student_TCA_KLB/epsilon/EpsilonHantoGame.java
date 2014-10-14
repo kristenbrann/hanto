@@ -166,9 +166,70 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		}
 	}
 
-	private void validJump(HantoCoordinate from, HantoCoordinate to) {
-		// TODO Auto-generated method stub
+	/**
+	 * Determines if moving from 'from' position to 'to' position follows valid jumping behavior
+	 * @param from - Where the piece is moving from
+	 * @param to - Where the piece is moving to
+	 * @throws InvalidTargetLocationException
+	 */
+	private void validJump(HantoCoordinate from, HantoCoordinate to) throws InvalidTargetLocationException {
 		
+		boolean gap = false;
+		
+		int largerX;
+		int smallerX;
+		
+		if(from.getX()<to.getX()){
+			largerX = to.getX();
+			smallerX = from.getX();
+		} else {
+			largerX = from.getX();
+			smallerX = to.getX();
+		}
+		
+		int largerY;
+		int smallerY;
+		if(from.getY()<to.getY()){
+			largerY = to.getY();
+			smallerY = from.getY();
+		} else {
+			largerY = from.getY();
+			smallerY = to.getY();
+		}
+		
+		
+		if(from.getX()==to.getX()){
+			// 'vertical' straight line			
+			for(int y = smallerY; y < largerY; y ++){
+				HantoCoordinateImpl hcVisiting = new HantoCoordinateImpl(from.getX(),y);
+				if(getPieceAt(hcVisiting)==null){
+					gap = true;
+				}
+			}
+		} else if(from.getY()==to.getY()){
+			// 'positive diagonal' straight line			
+			for(int x = smallerX; x < largerX; x ++){
+				HantoCoordinateImpl hcVisiting = new HantoCoordinateImpl(x, from.getY());
+				if(getPieceAt(hcVisiting)==null){
+					gap = true;
+				}
+			}
+		} else if(from.getX()-to.getX()==(0-(from.getY()-to.getY()))){
+			// 'negative diagonal' straight line
+			int y = largerY;
+			for(int x = smallerX; x < largerX; x ++){
+				HantoCoordinateImpl hcVisiting = new HantoCoordinateImpl(x, y);
+				if(getPieceAt(hcVisiting)==null && !(hcVisiting.equals(to))){
+					gap = true;
+				}
+				y--;
+			}
+		} else {
+			throw new InvalidTargetLocationException(to, "Pieces may only jump in a straight line.");
+		}
+		if(gap == true){
+			throw new InvalidTargetLocationException(to, "Pieces may not jump over empty spaces.");
+		}
 	}
 
 }

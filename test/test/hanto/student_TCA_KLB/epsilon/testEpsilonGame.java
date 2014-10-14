@@ -552,7 +552,7 @@ public class testEpsilonGame {
 	}
 	
 	@Test
-	public void horseMakesValidJump() {
+	public void horseMakesValidJumpVertical() {
 		PieceLocationPair[] toPlace = {
 				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, home),
 				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, new HantoCoordinateImpl(0, -1)),
@@ -566,6 +566,96 @@ public class testEpsilonGame {
 		} catch (HantoException e) {
 			fail("Unexpected exception:  " + e.getMessage());
 		}
+	}
+	
+	@Test
+	public void horseMakesValidJumpPosDiagonal() {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, new HantoCoordinateImpl(-1, 1)),
+				new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)),
+		};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(3);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		try {
+			assertEquals(MoveResult.OK, theGame.makeMove(HantoPieceType.HORSE, new HantoCoordinateImpl(-1, 1), new HantoCoordinateImpl(1, -1)));
+		} catch (HantoException e) {
+			fail("Unexpected exception:  " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void horseMakesValidJumpNegDiagonal() {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, new HantoCoordinateImpl(1, -1)),
+				new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)),
+		};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(3);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		try {
+			assertEquals(MoveResult.OK, theGame.makeMove(HantoPieceType.HORSE, new HantoCoordinateImpl(1, -1), new HantoCoordinateImpl(-1, 1)));
+		} catch (HantoException e) {
+			fail("Unexpected exception:  " + e.getMessage());
+		}
+	}
+	
+	@Test(expected = InvalidTargetLocationException.class)
+	public void invalidJumpNotStraightLine() throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.HORSE, new HantoCoordinateImpl(1, -1)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.HORSE, new HantoCoordinateImpl(2,-2)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.SPARROW, new HantoCoordinateImpl(0, -1)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(-1, 0)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(2, -1)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(-2, 0)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(-1, -1))
+		};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(8);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		theGame.makeMove(HantoPieceType.HORSE, 
+				new HantoCoordinateImpl(2, -2), 
+				new HantoCoordinateImpl(0, 1));
+	}
+	
+	@Test(expected = InvalidTargetLocationException.class)
+	public void invalidJumpGapInLine() throws HantoException {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.HORSE, new HantoCoordinateImpl(1, -1)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.HORSE, new HantoCoordinateImpl(2,-2)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.SPARROW, new HantoCoordinateImpl(0, -1)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(-1, 0)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(2, -1)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(-2, 0)),
+				new PieceLocationPair(HantoPlayerColor.BLUE,
+						HantoPieceType.CRAB, new HantoCoordinateImpl(-1, -1))
+		};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(8);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		theGame.makeMove(HantoPieceType.HORSE, 
+				new HantoCoordinateImpl(2, -2), 
+				new HantoCoordinateImpl(2, 1));
 	}
 	
 	
