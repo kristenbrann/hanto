@@ -21,6 +21,7 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
@@ -36,6 +37,7 @@ public class GammaHantoGame extends AbsHantoGame {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
 		maxTurns = 38;
+		pieceInventory = new HantoPieceInventory(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 	}
 
 	@Override

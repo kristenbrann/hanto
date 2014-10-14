@@ -20,6 +20,7 @@ import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.HantoPieceFactory;
+import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
@@ -36,6 +37,7 @@ public class DeltaHantoGame extends AbsHantoGame {
 		super(color);
 		home = new HantoCoordinateImpl(0, 0);
 		flightDistance = Integer.MAX_VALUE;
+		pieceInventory = new HantoPieceInventory(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 	}
 
 	@Override
