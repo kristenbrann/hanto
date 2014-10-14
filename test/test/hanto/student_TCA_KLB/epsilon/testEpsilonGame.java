@@ -17,7 +17,6 @@ import hanto.student_TCA_KLB.common.Crab;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
-import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 import hanto.student_TCA_KLB.common.Sparrow;
 
@@ -26,8 +25,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import test.hanto.common.HantoTestGame;
-import test.hanto.common.HantoTestGameFactory;
 import test.hanto.common.HantoTestGame.PieceLocationPair;
+import test.hanto.common.HantoTestGameFactory;
 
 public class testEpsilonGame {
 	
@@ -489,6 +488,7 @@ public class testEpsilonGame {
 		}
 	}
 	
+	@Test
 	public void simulateValidDrawGame() {
 		PieceLocationPair[] toPlace = {
 				new PieceLocationPair(HantoPlayerColor.BLUE,
@@ -549,6 +549,23 @@ public class testEpsilonGame {
 		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		theGame.makeMove(HantoPieceType.CRAB, null, new HantoCoordinateImpl(
 				0, -2));
+	}
+	
+	@Test
+	public void horseMakesValidJump() {
+		PieceLocationPair[] toPlace = {
+				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, home),
+				new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, new HantoCoordinateImpl(0, -1)),
+				new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoCoordinateImpl(0, 1)),
+		};
+		theGame.initializeBoard(toPlace);
+		theGame.setTurnNumber(3);
+		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		try {
+			assertEquals(MoveResult.OK, theGame.makeMove(HantoPieceType.HORSE, new HantoCoordinateImpl(0, -1), new HantoCoordinateImpl(0, 2)));
+		} catch (HantoException e) {
+			fail("Unexpected exception:  " + e.getMessage());
+		}
 	}
 	
 	

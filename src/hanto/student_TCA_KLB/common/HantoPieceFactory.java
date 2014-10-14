@@ -59,6 +59,7 @@ public class HantoPieceFactory {
 		case DOVE:
 			break;
 		case HORSE:
+			piece = new Horse(color);
 			break;
 		case SPARROW:
 			piece = new Sparrow(color);
