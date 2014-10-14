@@ -1,7 +1,12 @@
 package hanto.student_TCA_KLB.epsilon;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
@@ -128,9 +133,109 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param currentPlayer
+	 * @return
+	 */
 	private boolean hasAvailableMove(HantoPlayerColor currentPlayer) {
-		// TODO Auto-generated method stub
-		return false;
+		HantoPlayerColor enemy;
+		if(currentPlayer.equals(HantoPlayerColor.BLUE)){
+			enemy = HantoPlayerColor.RED;
+		} else {
+			enemy = HantoPlayerColor.BLUE;
+		}
+		
+		boolean canPlacePiece = false;
+		boolean canMovePiece = false;
+		if(theBoard.isEmpty() && !pieceInventory.isEmpty(currentPlayer)){
+			canPlacePiece = true;
+		} else {
+			if(!pieceInventory.isEmpty(currentPlayer)){
+				if(turn<=1){
+					canPlacePiece = true;
+				} else {
+					for (Entry<HantoCoordinateImpl, HantoPiece> entry : theBoard.entrySet()) {
+						HantoCoordinateImpl hc = new HantoCoordinateImpl(entry.getKey());
+						if(getPieceAt(hc).getColor().equals(currentPlayer)){
+							boolean nextToEnemy = false;
+							for (HantoCoordinate adjacent : new HantoCoordinateImpl(hc).getAdjacentCoordinates()) {
+								if (getPieceAt(adjacent) != null && getPieceAt(adjacent).getColor().equals(enemy)) {
+									nextToEnemy = true;
+									break;
+								}
+							}
+							if(!nextToEnemy){
+								canPlacePiece = true;
+								break;
+							}
+						}
+					}
+				}
+			} 
+			
+			if(!canPlacePiece) {
+				for (Entry<HantoCoordinateImpl, HantoPiece> entry : theBoard.entrySet()) {
+					HantoCoordinateImpl hc = new HantoCoordinateImpl(entry.getKey());
+					
+					if(getPieceAt(hc)!=null && getPieceAt(hc).getColor().equals(currentPlayer)){
+						// If it is YOUR PIECE
+						HantoPieceType pieceType = getPieceAt(hc).getType();
+						
+						// IF MOVING IT WOULD MAKE THE BOARD DISCONTINUOUS
+						Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(theBoard);
+						temp.remove(new HantoCoordinateImpl(hc));
+						HantoCoordinateImpl adjCoord = null;
+						for (HantoCoordinate adj : hc.getAdjacentCoordinates()) {
+							if (getPieceAt(adj) != null) {
+								adjCoord = new HantoCoordinateImpl(adj);
+								break;
+							}
+						}
+						
+						boolean movingBreaksContinuity = true;
+						if(adjCoord!=null){
+							movingBreaksContinuity = !boardIsContinuous(temp,adjCoord);
+						}
+						
+						if(movingBreaksContinuity){
+							break;
+						}
+						
+						switch(pieceType) {
+							case BUTTERFLY:
+								// same rules as butterfly, no break
+							case CRAB:
+								// no open spots 1 space away
+								// if there is, break the switch to save time
+								// break switch
+								boolean emptyAdjacentPlace = false;
+								for (HantoCoordinate adjacent : hc.getAdjacentCoordinates()) {
+									if (getPieceAt(adjacent) == null) {
+										emptyAdjacentPlace = true;
+										break;
+									}
+								}
+								if(emptyAdjacentPlace){
+									canMovePiece = true;
+								}
+								break;
+							case SPARROW:
+								break;
+							case HORSE:
+								break;
+							default:
+						}
+						if(canMovePiece){
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		
+		return canPlacePiece || canMovePiece;
 	}
 
 	/**

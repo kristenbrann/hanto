@@ -121,4 +121,24 @@ public class HantoPieceInventory {
 		
 		return hasPiece;
 	}
+	
+	public boolean isEmpty(HantoPlayerColor playerColor){
+		boolean isEmpty = false;
+		switch(playerColor){
+			case RED:
+				isEmpty = (numButterfliesRed == 0) &&
+					(numCrabsRed == 0) &&
+					(numHorsesRed == 0) &&
+					(numSparrowsRed == 0);
+				break;
+			case BLUE:
+				isEmpty = (numButterfliesBlue == 0) &&
+				(numCrabsBlue == 0) &&
+				(numHorsesBlue == 0) &&
+				(numSparrowsBlue == 0);
+			default:
+				break;
+		}
+		return isEmpty;
+	}
 }
