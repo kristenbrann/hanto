@@ -23,6 +23,11 @@ public class HantoPlayer implements HantoGamePlayer {
 		this.doIMoveFirst = doIMoveFirst;
 		rGenerator = new Random(System.currentTimeMillis());
 	}
+	
+	public HantoPlayer() {
+
+		rGenerator = new Random(System.currentTimeMillis());
+	}
 
 	@Override
 	public void startGame(HantoGameID version, HantoPlayerColor myColor,
