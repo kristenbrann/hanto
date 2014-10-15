@@ -9,6 +9,7 @@ import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
+import hanto.student_TCA_KLB.common.HantoPieceFactory;
 import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
@@ -29,6 +30,7 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		home = new HantoCoordinateImpl(0, 0);
 		pieceInventory = new HantoPieceInventory(1, 6, 4, 2);
 	}
+	
 
 	@Override
 	protected void validateMove(HantoPieceType pieceType, HantoCoordinate from,
@@ -120,6 +122,41 @@ public class EpsilonHantoGame extends AbsHantoGame {
 			gameInProgress = false;
 		}
 		return result;
+	}
+	
+	/**
+	 * Takes an list of possible moves and returns a list of only the moves deemed desirable
+	 * A move is 'desirable' if it puts a piece of yours closer to the enemy butterfly
+	 * @param moves - all available moves
+	 * @param myColor - color of player looking for desirable move
+	 * @return - list of just 'desirable' moves
+	 */
+	public List<HantoMoveRecord> getDesirableMoves(List<HantoMoveRecord> moves, HantoPlayerColor myColor){
+		List<HantoMoveRecord> desirableMoves = new ArrayList<HantoMoveRecord>();
+		if(myColor.equals(HantoPlayerColor.BLUE) && redButterfly!=null){
+			for(HantoCoordinate entry: redButterfly.getAdjacentCoordinates()){
+				if(getPieceAt(entry)==null){
+					for(HantoMoveRecord moveRecord : moves){
+						if(moveRecord.getTo().equals(entry)){
+							desirableMoves.add(moveRecord);
+						}
+					}
+				}
+			}
+		} else {
+			if(myColor.equals(HantoPlayerColor.RED) && blueButterfly!=null){
+				for(HantoCoordinate entry: blueButterfly.getAdjacentCoordinates()){
+					if(getPieceAt(entry)==null){
+						for(HantoMoveRecord moveRecord : moves){
+							if(moveRecord.getTo().equals(entry)){
+								desirableMoves.add(moveRecord);
+							}
+						}
+					}
+				}
+			} 
+		}
+		return desirableMoves;
 	}
 
 	@Override
@@ -591,5 +628,6 @@ public class EpsilonHantoGame extends AbsHantoGame {
 					"Pieces may not jump over empty spaces.");
 		}
 	}
+	
 
 }

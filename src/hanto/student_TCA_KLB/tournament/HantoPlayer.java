@@ -3,6 +3,7 @@ package hanto.student_TCA_KLB.tournament;
 import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.HantoGameFactory;
 import hanto.student_TCA_KLB.epsilon.EpsilonHantoGame;
 import hanto.tournament.HantoGamePlayer;
@@ -70,11 +71,20 @@ public class HantoPlayer implements HantoGamePlayer {
 		}
 
 		List<HantoMoveRecord> moves = theGame.getAvailableMoves(myColor);
-		HantoMoveRecord move;
+		HantoMoveRecord move = null;
 		if (moves.isEmpty()) {
 			move = new HantoMoveRecord(null, null, null);
 		} else {
-			move = moves.get(rGenerator.nextInt(moves.size()));
+			List<HantoMoveRecord> desirable = theGame.getDesirableMoves(moves, myColor);
+			int pickDesirable = rGenerator.nextInt(2)+1;
+			// if there are moves and desirable moves, randomly decide whether to make 
+			// a 'desirable move' or 'any available' generic move
+			if(!desirable.isEmpty() && pickDesirable==1){
+				
+				move = desirable.get(rGenerator.nextInt(desirable.size()));
+			} else {
+				move = moves.get(rGenerator.nextInt(moves.size()));
+			}
 		}
 		try {
 			theGame.makeMove(move.getPiece(), move.getFrom(), move.getTo());
