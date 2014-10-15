@@ -889,7 +889,7 @@ public class testEpsilonGame {
 		theGame.setTurnNumber(7);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
 		for(HantoMoveRecord move : ((EpsilonHantoTestGame) theGame).getAvailableMoves(HantoPlayerColor.RED)){
-			if(move.getPiece().equals(HantoPieceType.HORSE) && new HantoCoordinateImpl(move.getTo()).equals(new HantoCoordinateImpl(-3,0))){
+			if(move.getPiece().equals(HantoPieceType.HORSE) && new HantoCoordinateImpl(move.getTo()).equals(new HantoCoordinateImpl(-3,0)) && move.getFrom() != null){
 				fail();
 			}
 		}

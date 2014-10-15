@@ -313,6 +313,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 																.getX(), hc.getY()
 																+ i)));
 											} catch (HantoException e) {
+												if(getPieceAt(new HantoCoordinateImpl(hc.getX(), hc.getY() + i)) == null) {
+													break;
+												}
 												i++;
 												continue;
 											}
@@ -336,6 +339,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 																.getX(), hc.getY()
 																- i)));
 											} catch (HantoException e) {
+												if(getPieceAt(new HantoCoordinateImpl(hc.getX(), hc.getY() - i)) == null) {
+													break;
+												}
 												i++;
 												continue;
 											}
@@ -359,6 +365,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 																.getX() + i, hc
 																.getY())));
 											} catch (HantoException e) {
+												if(getPieceAt(new HantoCoordinateImpl(hc.getX() + i, hc.getY())) == null) {
+													break;
+												}
 												i++;
 												continue;
 											}
@@ -382,6 +391,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 																.getX() - i, hc
 																.getY())));
 											} catch (HantoException e) {
+												if(getPieceAt(new HantoCoordinateImpl(hc.getX() - i, hc.getY())) == null) {
+													break;
+												}
 												i++;
 												continue;
 											}
@@ -405,6 +417,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 																.getX() + i, hc
 																.getY() - i)));
 											} catch (HantoException e) {
+												if(getPieceAt(new HantoCoordinateImpl(hc.getX() + i, hc.getY() - i)) == null) {
+													break;
+												}
 												i++;
 												continue;
 											}
@@ -427,6 +442,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 																.getX() - i, hc
 																.getY() + i)));
 											} catch (HantoException e) {
+												if(getPieceAt(new HantoCoordinateImpl(hc.getX() - i, hc.getY() + i)) == null) {
+													break;
+												}
 												i++;
 												continue;
 											}
