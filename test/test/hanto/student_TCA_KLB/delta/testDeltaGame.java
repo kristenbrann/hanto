@@ -218,7 +218,7 @@ public class testDeltaGame {
 
 			assertEquals("Moving a crab should return OK.",
 					MoveResult.RED_WINS,
-					theGame.makeMove(HantoPieceType.CRAB, null, null));
+					theGame.makeMove(null, null, null));
 		} catch (HantoException e) {
 			fail("Unexpected exception: " + e.getMessage());
 		}
@@ -241,7 +241,7 @@ public class testDeltaGame {
 
 			assertEquals("Moving a crab should return OK.",
 					MoveResult.BLUE_WINS,
-					theGame.makeMove(HantoPieceType.CRAB, null, null));
+					theGame.makeMove(null, null, null));
 		} catch (HantoException e) {
 			fail("Unexpected exception: " + e.getMessage());
 		}
@@ -380,7 +380,7 @@ public class testDeltaGame {
 		theGame.setTurnNumber(2);
 		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		theGame.makeMove(HantoPieceType.CRAB, null, null);
+		theGame.makeMove(null, null, null);
 		theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(
 				1, 1));
 	}

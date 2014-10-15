@@ -281,7 +281,7 @@ public class testEpsilonGame {
 		theGame.setTurnNumber(2);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
 
-		theGame.makeMove(HantoPieceType.CRAB, null, null);
+		theGame.makeMove(null, null, null);
 		theGame.makeMove(HantoPieceType.SPARROW, null, new HantoCoordinateImpl(
 				1, 1));
 	}
@@ -729,7 +729,7 @@ public class testEpsilonGame {
 
 			assertEquals("Should be able to resign when no available move.",
 					MoveResult.RED_WINS,
-					theGame.makeMove(HantoPieceType.CRAB, null, null));
+					theGame.makeMove(null, null, null));
 		} catch (HantoException e) {
 			fail("Unexpected exception: " + e.getMessage());
 		}
@@ -778,7 +778,7 @@ public class testEpsilonGame {
 
 			assertEquals("Should be able to resign when no available move.",
 					MoveResult.BLUE_WINS,
-					theGame.makeMove(HantoPieceType.CRAB, null, null));
+					theGame.makeMove(null, null, null));
 		} catch (HantoException e) {
 			fail("Unexpected exception: " + e.getMessage());
 		}
@@ -795,7 +795,7 @@ public class testEpsilonGame {
 		theGame.initializeBoard(toPlace);
 		theGame.setTurnNumber(2);
 		theGame.setPlayerMoving(HantoPlayerColor.BLUE);
-		theGame.makeMove(HantoPieceType.HORSE, null, null);
+		theGame.makeMove(null, null, null);
 	}
 	
 	@Test(expected = HantoPrematureResignationException.class)
@@ -805,7 +805,7 @@ public class testEpsilonGame {
 		theGame.initializeBoard(toPlace);
 		theGame.setTurnNumber(2);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
-		theGame.makeMove(HantoPieceType.HORSE, null, null);
+		theGame.makeMove(null, null, null);
 	}
 	
 	@Test(expected = HantoPrematureResignationException.class)
@@ -819,7 +819,7 @@ public class testEpsilonGame {
 		theGame.initializeBoard(toPlace);
 		theGame.setTurnNumber(2);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
-		theGame.makeMove(HantoPieceType.HORSE, null, null);
+		theGame.makeMove(null, null, null);
 	}
 	
 	@Test(expected = HantoPrematureResignationException.class)
@@ -831,7 +831,7 @@ public class testEpsilonGame {
 		theGame.initializeBoard(toPlace);
 		theGame.setTurnNumber(1);
 		theGame.setPlayerMoving(HantoPlayerColor.RED);
-		theGame.makeMove(HantoPieceType.HORSE, null, null);
+		theGame.makeMove(null, null, null);
 	}
 	
 	

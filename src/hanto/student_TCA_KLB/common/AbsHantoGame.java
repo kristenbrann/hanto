@@ -121,7 +121,7 @@ public abstract class AbsHantoGame implements HantoGame {
 			throws HantoException {
 		determineColor();
 		MoveResult result = MoveResult.OK;
-		if(to==null && from == null){
+		if(to==null && from == null && pieceType == null){
 			result = handleResignation();			
 		} else {
 			validateMove(pieceType, from, to);
