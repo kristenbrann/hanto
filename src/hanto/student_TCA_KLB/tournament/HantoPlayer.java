@@ -32,6 +32,7 @@ public class HantoPlayer implements HantoGamePlayer {
 	@Override
 	public void startGame(HantoGameID version, HantoPlayerColor myColor,
 			boolean doIMoveFirst) {
+		this.myColor = myColor;
 		if (myColor == HantoPlayerColor.BLUE) {
 			if (doIMoveFirst) {
 				theGame = (EpsilonHantoGame) HantoGameFactory.getInstance()
