@@ -73,8 +73,9 @@ public class HantoPlayer implements HantoGamePlayer {
 		HantoMoveRecord move;
 		if (moves.isEmpty()) {
 			move = new HantoMoveRecord(null, null, null);
+		} else {
+			move = moves.get(rGenerator.nextInt(moves.size()));
 		}
-		move = moves.get(rGenerator.nextInt(moves.size()));
 		try {
 			theGame.makeMove(move.getPiece(), move.getFrom(), move.getTo());
 		} catch (HantoException e) {
