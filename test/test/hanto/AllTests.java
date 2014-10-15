@@ -18,6 +18,7 @@ import test.hanto.student_TCA_KLB.common.testSparrow;
 import test.hanto.student_TCA_KLB.delta.testDeltaGame;
 import test.hanto.student_TCA_KLB.epsilon.testEpsilonGame;
 import test.hanto.student_TCA_KLB.gamma.testGammaGame;
+import test.hanto.student_TCA_KLB.tournament.testHantoPlayer;
 
 @RunWith(Suite.class)
 @SuiteClasses({ testAlphaGame.class, testBetaGame.class, testButterfly.class,
@@ -25,7 +26,7 @@ import test.hanto.student_TCA_KLB.gamma.testGammaGame;
 		testHantoPieceType.class, testHantoGameID.class, testGammaGame.class,
 		AlphaHantoMasterTest.class, BetaHantoMasterTest.class, GammaHantoMasterTest.class,
 		testDeltaGame.class, testHantoGameFactory.class, TestCrab.class, DeltaHantoMasterTest.class,
-		testEpsilonGame.class})
+		testEpsilonGame.class, testHantoPlayer.class})
 public class AllTests {
 
 }
