@@ -23,7 +23,7 @@ public class HantoPlayer implements HantoGamePlayer {
 		this.doIMoveFirst = doIMoveFirst;
 		rGenerator = new Random(System.currentTimeMillis());
 	}
-	
+
 	public HantoPlayer() {
 
 		rGenerator = new Random(System.currentTimeMillis());
@@ -58,12 +58,14 @@ public class HantoPlayer implements HantoGamePlayer {
 
 	@Override
 	public HantoMoveRecord makeMove(HantoMoveRecord opponentsMove) {
-		try {
-			theGame.makeMove(opponentsMove.getPiece(), opponentsMove.getFrom(),
-					opponentsMove.getTo());
-		} catch (HantoException e) {
-			System.out.println("Opponent made an improper move?!?!  "
-					+ e.getMessage());
+		if (opponentsMove != null) {
+			try {
+				theGame.makeMove(opponentsMove.getPiece(),
+						opponentsMove.getFrom(), opponentsMove.getTo());
+			} catch (HantoException e) {
+				System.out.println("Opponent made an improper move?!?!  "
+						+ e.getMessage());
+			}
 		}
 
 		List<HantoMoveRecord> moves = theGame.getAvailableMoves(myColor);
