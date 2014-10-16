@@ -83,5 +83,11 @@ public class testHantoPlayer {
 		assertTrue(new HantoCoordinateImpl(myFirstMove.getTo()).equals(home));
 	}
 	
+	@Test
+	public void testHantoConstructor() {
+		hantoPlayer = new HantoPlayer(HantoPlayerColor.BLUE, true);
+		assertTrue(hantoPlayer.isDoIMoveFirst());
+	}
+	
 
 }
