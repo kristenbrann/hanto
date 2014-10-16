@@ -138,46 +138,7 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		return result;
 	}
 
-	/**
-	 * Takes an list of possible moves and returns a list of only the moves
-	 * deemed desirable A move is 'desirable' if it puts a piece of yours closer
-	 * to the enemy butterfly
-	 * 
-	 * @param moves
-	 *            - all available moves
-	 * @param myColor
-	 *            - color of player looking for desirable move
-	 * @return - list of just 'desirable' moves
-	 */
-	public List<HantoMoveRecord> getDesirableMoves(List<HantoMoveRecord> moves,
-			HantoPlayerColor myColor) {
-		List<HantoMoveRecord> desirableMoves = new ArrayList<HantoMoveRecord>();
-		if (myColor.equals(HantoPlayerColor.BLUE) && redButterfly != null) {
-			for (HantoCoordinate entry : redButterfly.getAdjacentCoordinates()) {
-				if (getPieceAt(entry) == null) {
-					for (HantoMoveRecord moveRecord : moves) {
-						if (moveRecord.getTo().equals(entry)) {
-							desirableMoves.add(moveRecord);
-						}
-					}
-				}
-			}
-		} else {
-			if (myColor.equals(HantoPlayerColor.RED) && blueButterfly != null) {
-				for (HantoCoordinate entry : blueButterfly
-						.getAdjacentCoordinates()) {
-					if (getPieceAt(entry) == null) {
-						for (HantoMoveRecord moveRecord : moves) {
-							if (moveRecord.getTo().equals(entry)) {
-								desirableMoves.add(moveRecord);
-							}
-						}
-					}
-				}
-			}
-		}
-		return desirableMoves;
-	}
+	
 
 	@Override
 	protected MoveResult handleResignation()
@@ -572,14 +533,7 @@ public class EpsilonHantoGame extends AbsHantoGame {
 			HantoCoordinate to) throws InvalidSourceLocationException,
 			InvalidTargetLocationException {
 
-		if (from == null || getPieceAt(from) == null) {
-			throw new InvalidSourceLocationException(to, "");
-		} else {
-			if (to == null || getPieceAt(to) != null) {
-				throw new InvalidTargetLocationException(to, "");
-			}
-		}
-
+		
 		switch (pieceType) {
 		case BUTTERFLY:
 		case CRAB:

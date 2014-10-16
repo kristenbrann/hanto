@@ -52,6 +52,7 @@ public class HantoPlayer implements HantoGamePlayer {
 	@Override
 	public void startGame(HantoGameID version, HantoPlayerColor myColor,
 			boolean doIMoveFirst) {
+		this.setDoIMoveFirst(doIMoveFirst);
 		this.myColor = myColor;
 		if (myColor == HantoPlayerColor.BLUE) {
 			if (doIMoveFirst) {
@@ -94,18 +95,7 @@ public class HantoPlayer implements HantoGamePlayer {
 		if (moves.isEmpty()) {
 			move = new HantoMoveRecord(null, null, null);
 		} else {
-			List<HantoMoveRecord> desirable = theGame.getDesirableMoves(moves,
-					myColor);
-			int pickDesirable = rGenerator.nextInt(2) + 1;
-			// if there are moves and desirable moves, randomly decide whether
-			// to make
-			// a 'desirable move' or 'any available' generic move
-			if (!desirable.isEmpty() && pickDesirable == 1) {
-
-				move = desirable.get(rGenerator.nextInt(desirable.size()));
-			} else {
-				move = moves.get(rGenerator.nextInt(moves.size()));
-			}
+			move = moves.get(rGenerator.nextInt(moves.size()));
 		}
 		try {
 			theGame.makeMove(move.getPiece(), move.getFrom(), move.getTo());

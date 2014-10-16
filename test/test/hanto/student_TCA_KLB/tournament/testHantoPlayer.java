@@ -1,10 +1,14 @@
 package test.hanto.student_TCA_KLB.tournament;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import hanto.common.HantoCoordinate;
+import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.tournament.HantoPlayer;
 import hanto.tournament.HantoMoveRecord;
@@ -12,6 +16,8 @@ import hanto.tournament.HantoMoveRecord;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import test.hanto.common.HantoTestGame.PieceLocationPair;
 
 public class testHantoPlayer {
 	
@@ -36,11 +42,31 @@ public class testHantoPlayer {
 		assertTrue(myFirstMove.getPiece()!=null);
 		assertTrue(myFirstMove.getFrom()==null);
 		assertTrue(new HantoCoordinateImpl(myFirstMove.getTo()).equals(home));
+		assertTrue(hantoPlayer.isDoIMoveFirst());
+	}
+	
+	@Test
+	public void testHantoPlayerIMoveFirstRed() {
+		hantoPlayer.startGame(HantoGameID.EPSILON_HANTO, HantoPlayerColor.RED, true);
+		HantoMoveRecord myFirstMove = hantoPlayer.makeMove(null);
+		assertTrue(myFirstMove.getPiece()!=null);
+		assertTrue(myFirstMove.getFrom()==null);
+		assertTrue(new HantoCoordinateImpl(myFirstMove.getTo()).equals(home));
 	}
 	
 	@Test
 	public void testHantoPlayerIMoveSecond() {
 		hantoPlayer.startGame(HantoGameID.EPSILON_HANTO, HantoPlayerColor.BLUE, false);
+		
+		HantoMoveRecord myFirstMove = hantoPlayer.makeMove(new HantoMoveRecord(HantoPieceType.CRAB, null, home));
+		assertTrue(myFirstMove.getPiece()!=null);
+		assertTrue(myFirstMove.getFrom()==null);
+		assertTrue(!(new HantoCoordinateImpl(myFirstMove.getTo()).equals(home)));
+	}
+	
+	@Test
+	public void testHantoPlayerIMoveSecondRed() {
+		hantoPlayer.startGame(HantoGameID.EPSILON_HANTO, HantoPlayerColor.RED, false);
 		
 		HantoMoveRecord myFirstMove = hantoPlayer.makeMove(new HantoMoveRecord(HantoPieceType.CRAB, null, home));
 		assertTrue(myFirstMove.getPiece()!=null);
@@ -56,4 +82,6 @@ public class testHantoPlayer {
 		assertTrue(myFirstMove.getFrom()==null);
 		assertTrue(new HantoCoordinateImpl(myFirstMove.getTo()).equals(home));
 	}
+	
+
 }
