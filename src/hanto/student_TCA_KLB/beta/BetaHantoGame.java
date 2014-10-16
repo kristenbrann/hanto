@@ -12,7 +12,6 @@
 package hanto.student_TCA_KLB.beta;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
@@ -115,7 +114,7 @@ public class BetaHantoGame extends AbsHantoGame {
 	}
 
 	@Override
-	protected MoveResult handleResignation() throws HantoException {
+	protected MoveResult handleResignation() throws InvalidTargetLocationException  {
 		throw new InvalidTargetLocationException("To cannot be null.");
 	}
 }

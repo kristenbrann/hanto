@@ -10,11 +10,7 @@
 
 package hanto.student_TCA_KLB.gamma;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
@@ -25,6 +21,9 @@ import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author tcarmstrong klbrann
@@ -166,7 +165,7 @@ public class GammaHantoGame extends AbsHantoGame {
 	}
 
 	@Override
-	protected MoveResult handleResignation() throws HantoException {
+	protected MoveResult handleResignation() throws InvalidTargetLocationException {
 		throw new InvalidTargetLocationException("To cannot be null.");
 	}
 

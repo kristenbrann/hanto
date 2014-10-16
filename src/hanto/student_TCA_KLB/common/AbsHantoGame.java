@@ -49,6 +49,7 @@ public abstract class AbsHantoGame implements HantoGame {
 	protected boolean gameInProgress;
 
 	protected int flightDistance;
+
 	/**
 	 * @param color
 	 *            The color of the player who moves first
@@ -121,8 +122,8 @@ public abstract class AbsHantoGame implements HantoGame {
 			throws HantoException {
 		determineColor();
 		MoveResult result = MoveResult.OK;
-		if(to==null && from == null && pieceType == null){
-			result = handleResignation();			
+		if (to == null && from == null && pieceType == null) {
+			result = handleResignation();
 		} else {
 			validateMove(pieceType, from, to);
 			placePiece(pieceType, from, to);
@@ -131,7 +132,15 @@ public abstract class AbsHantoGame implements HantoGame {
 		}
 		return result;
 	}
-	
+
+	/**
+	 * Determines what to do if a player resigns
+	 * 
+	 * @return The corresponding move result if a valid resignation
+	 * 
+	 * @throws HantoException
+	 *             Throws an exception if invalid resignation
+	 */
 	protected abstract MoveResult handleResignation() throws HantoException;
 
 	/**
@@ -261,7 +270,7 @@ public abstract class AbsHantoGame implements HantoGame {
 			visited.add(current);
 
 			for (HantoCoordinate adjacent : current.getAdjacentCoordinates()) {
-				if (board.get(adjacent) != null
+				if (board.get(new HantoCoordinateImpl(adjacent)) != null
 						&& !visited.contains(new HantoCoordinateImpl(adjacent))) {
 					fringe.add(new HantoCoordinateImpl(adjacent));
 				}
@@ -270,7 +279,7 @@ public abstract class AbsHantoGame implements HantoGame {
 
 		return visited.size() == board.size();
 	}
-	
+
 	/**
 	 * @param pieceType
 	 *            The Piece type that is walking
@@ -280,8 +289,9 @@ public abstract class AbsHantoGame implements HantoGame {
 	 *            Where the piece is walking to
 	 * @throws InvalidTargetLocationException
 	 */
-	protected void validateWalkOneHex(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws InvalidTargetLocationException {
+	protected void validateWalkOneHex(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to)
+			throws InvalidTargetLocationException {
 
 		HantoCoordinateImpl hcFrom = new HantoCoordinateImpl(from);
 		if (!hcFrom.isAdjacentTo(to)) {
@@ -309,7 +319,23 @@ public abstract class AbsHantoGame implements HantoGame {
 		}
 
 	}
-	
+
+	/**
+	 * Determines if the piece is making a valid flight move
+	 * 
+	 * @param pieceType
+	 *            The piece that is flying
+	 * @param from
+	 *            Where the piece is originating from
+	 * @param to
+	 *            Where the piece wants to fly to
+	 * 
+	 * @throws InvalidTargetLocationException
+	 *             Thrown if you can't fly to that location
+	 * 
+	 * @throws InvalidSourceLocationException
+	 *             Thrown if you can't fly from that location
+	 */
 	protected void validFlight(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws InvalidTargetLocationException,
 			InvalidSourceLocationException {
@@ -326,18 +352,16 @@ public abstract class AbsHantoGame implements HantoGame {
 		temp.remove(new HantoCoordinateImpl(from));
 		temp.put(new HantoCoordinateImpl(to), HantoPieceFactory.getInstance()
 				.makeHantoPiece(pieceType, currentPlayer));
-		if (boardIsContinuous(temp, to)) {
-			
-		} else {
+		if (!boardIsContinuous(temp, to)) {
 			throw new InvalidTargetLocationException("Can't move piece.");
 		}
-		
-		if(new HantoCoordinateImpl(from).getDistanceTo(to)>flightDistance){
-			throw new InvalidTargetLocationException(to,"This piece cannot fly more than "+flightDistance+" places.");
-		}
-		
-		
-	}
 
+		if (new HantoCoordinateImpl(from).getDistanceTo(to) > flightDistance) {
+			throw new InvalidTargetLocationException(to,
+					"This piece cannot fly more than " + flightDistance
+							+ " places.");
+		}
+
+	}
 
 }

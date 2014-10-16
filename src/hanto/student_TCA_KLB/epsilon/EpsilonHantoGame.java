@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.student_TCA_KLB.epsilon;
 
 import hanto.common.HantoCoordinate;
@@ -5,11 +15,11 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
-import hanto.student_TCA_KLB.common.HantoPieceFactory;
 import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
@@ -22,6 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * @author tcarmstrong klbrann
+ *
+ */
 public class EpsilonHantoGame extends AbsHantoGame {
 
 	public EpsilonHantoGame(HantoPlayerColor color) {
@@ -30,11 +44,12 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		home = new HantoCoordinateImpl(0, 0);
 		pieceInventory = new HantoPieceInventory(1, 6, 4, 2);
 	}
-	
 
 	@Override
 	protected void validateMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+			HantoCoordinate to) throws GameNotInProgressException,
+			InvalidPieceTypeException, InvalidTargetLocationException,
+			InvalidSourceLocationException {
 
 		if (!gameInProgress) {
 			throw new GameNotInProgressException();
@@ -72,7 +87,6 @@ public class EpsilonHantoGame extends AbsHantoGame {
 				throw new InvalidPieceTypeException(pieceType,
 						"Can only use Butterflies, Sparrows, Crabs, and Horses.");
 			}
-			;
 		}
 	}
 
@@ -123,44 +137,51 @@ public class EpsilonHantoGame extends AbsHantoGame {
 		}
 		return result;
 	}
-	
+
 	/**
-	 * Takes an list of possible moves and returns a list of only the moves deemed desirable
-	 * A move is 'desirable' if it puts a piece of yours closer to the enemy butterfly
-	 * @param moves - all available moves
-	 * @param myColor - color of player looking for desirable move
+	 * Takes an list of possible moves and returns a list of only the moves
+	 * deemed desirable A move is 'desirable' if it puts a piece of yours closer
+	 * to the enemy butterfly
+	 * 
+	 * @param moves
+	 *            - all available moves
+	 * @param myColor
+	 *            - color of player looking for desirable move
 	 * @return - list of just 'desirable' moves
 	 */
-	public List<HantoMoveRecord> getDesirableMoves(List<HantoMoveRecord> moves, HantoPlayerColor myColor){
+	public List<HantoMoveRecord> getDesirableMoves(List<HantoMoveRecord> moves,
+			HantoPlayerColor myColor) {
 		List<HantoMoveRecord> desirableMoves = new ArrayList<HantoMoveRecord>();
-		if(myColor.equals(HantoPlayerColor.BLUE) && redButterfly!=null){
-			for(HantoCoordinate entry: redButterfly.getAdjacentCoordinates()){
-				if(getPieceAt(entry)==null){
-					for(HantoMoveRecord moveRecord : moves){
-						if(moveRecord.getTo().equals(entry)){
+		if (myColor.equals(HantoPlayerColor.BLUE) && redButterfly != null) {
+			for (HantoCoordinate entry : redButterfly.getAdjacentCoordinates()) {
+				if (getPieceAt(entry) == null) {
+					for (HantoMoveRecord moveRecord : moves) {
+						if (moveRecord.getTo().equals(entry)) {
 							desirableMoves.add(moveRecord);
 						}
 					}
 				}
 			}
 		} else {
-			if(myColor.equals(HantoPlayerColor.RED) && blueButterfly!=null){
-				for(HantoCoordinate entry: blueButterfly.getAdjacentCoordinates()){
-					if(getPieceAt(entry)==null){
-						for(HantoMoveRecord moveRecord : moves){
-							if(moveRecord.getTo().equals(entry)){
+			if (myColor.equals(HantoPlayerColor.RED) && blueButterfly != null) {
+				for (HantoCoordinate entry : blueButterfly
+						.getAdjacentCoordinates()) {
+					if (getPieceAt(entry) == null) {
+						for (HantoMoveRecord moveRecord : moves) {
+							if (moveRecord.getTo().equals(entry)) {
 								desirableMoves.add(moveRecord);
 							}
 						}
 					}
 				}
-			} 
+			}
 		}
 		return desirableMoves;
 	}
 
 	@Override
-	protected MoveResult handleResignation() throws HantoException {
+	protected MoveResult handleResignation()
+			throws HantoPrematureResignationException {
 		if (!getAvailableMoves(currentPlayer).isEmpty()) {
 			throw new hanto.common.HantoPrematureResignationException();
 		}
@@ -177,9 +198,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 	}
 
 	/**
-	 * 
-	 * @param currentPlayer
-	 * @return
+	 * @param me
+	 *            This player's color
+	 * @return list of available moves for the player
 	 */
 	public List<HantoMoveRecord> getAvailableMoves(HantoPlayerColor me) {
 		HantoPlayerColor enemy;
@@ -228,8 +249,9 @@ public class EpsilonHantoGame extends AbsHantoGame {
 
 										if (getPieceAt(adjacentToAdjacent) != null
 												&& getPieceAt(
-														adjacentToAdjacent).getColor()
-														.equals(enemy)) {
+														adjacentToAdjacent)
+														.getColor().equals(
+																enemy)) {
 											nextToEnemy = true;
 											break;
 										}
@@ -237,9 +259,12 @@ public class EpsilonHantoGame extends AbsHantoGame {
 									}
 
 									if (!nextToEnemy) {
-										if((turn >= 6) && 
-												(!theBoard.containsValue(pieceFactory.makeHantoPiece(
-														HantoPieceType.BUTTERFLY, me)))){
+										if ((turn >= 6)
+												&& (!theBoard
+														.containsValue(pieceFactory
+																.makeHantoPiece(
+																		HantoPieceType.BUTTERFLY,
+																		me)))) {
 											if (pieceInventory.hasPiece(me,
 													HantoPieceType.BUTTERFLY)) {
 												moves.add(new HantoMoveRecord(
@@ -250,8 +275,8 @@ public class EpsilonHantoGame extends AbsHantoGame {
 											if (pieceInventory.hasPiece(me,
 													HantoPieceType.CRAB)) {
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.CRAB, null,
-														adjacent));
+														HantoPieceType.CRAB,
+														null, adjacent));
 											}
 											if (pieceInventory.hasPiece(me,
 													HantoPieceType.SPARROW)) {
@@ -262,8 +287,8 @@ public class EpsilonHantoGame extends AbsHantoGame {
 											if (pieceInventory.hasPiece(me,
 													HantoPieceType.HORSE)) {
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, null,
-														adjacent));
+														HantoPieceType.HORSE,
+														null, adjacent));
 											}
 										}
 									}
@@ -272,41 +297,41 @@ public class EpsilonHantoGame extends AbsHantoGame {
 						}
 					}
 				}
-				if(!((turn >= 6) && 
-						(!theBoard.containsValue(pieceFactory.makeHantoPiece(
-								HantoPieceType.BUTTERFLY, me))))){
+				if (!((turn >= 6) && (!theBoard.containsValue(pieceFactory
+						.makeHantoPiece(HantoPieceType.BUTTERFLY, me))))) {
 					for (Entry<HantoCoordinateImpl, HantoPiece> entry : theBoard
 							.entrySet()) {
 						HantoCoordinateImpl hc = new HantoCoordinateImpl(
 								entry.getKey());
-	
+
 						if (getPieceAt(hc) != null
 								&& getPieceAt(hc).getColor().equals(me)) {
 							// If it is YOUR PIECE
 							HantoPieceType pieceType = getPieceAt(hc).getType();
-	
+
 							// IF MOVING IT WOULD MAKE THE BOARD DISCONTINUOUS
 							Map<HantoCoordinateImpl, HantoPiece> temp = new HashMap<HantoCoordinateImpl, HantoPiece>(
 									theBoard);
 							temp.remove(new HantoCoordinateImpl(hc));
 							HantoCoordinateImpl adjCoord = null;
-							for (HantoCoordinate adj : hc.getAdjacentCoordinates()) {
+							for (HantoCoordinate adj : hc
+									.getAdjacentCoordinates()) {
 								if (getPieceAt(adj) != null) {
 									adjCoord = new HantoCoordinateImpl(adj);
 									break;
 								}
 							}
-	
+
 							boolean movingBreaksContinuity = true;
 							if (adjCoord != null) {
-								movingBreaksContinuity = !boardIsContinuous(temp,
-										adjCoord);
+								movingBreaksContinuity = !boardIsContinuous(
+										temp, adjCoord);
 							}
-	
+
 							if (movingBreaksContinuity) {
 								break;
 							}
-	
+
 							switch (pieceType) {
 							case BUTTERFLY:
 								// same rules as butterfly, no break
@@ -314,15 +339,16 @@ public class EpsilonHantoGame extends AbsHantoGame {
 								for (HantoCoordinate adjacent : hc
 										.getAdjacentCoordinates()) {
 									if (getPieceAt(adjacent) == null) {
-										try{
-											validateWalkOneHex(pieceType, hc, adjacent);
+										try {
+											validateWalkOneHex(pieceType, hc,
+													adjacent);
 											moves.add(new HantoMoveRecord(
-													getPieceAt(hc).getType(), hc,
-													adjacent));
+													getPieceAt(hc).getType(),
+													hc, adjacent));
 										} catch (HantoException e) {
-											
+											System.out.println(e.getMessage());
 										}
-										
+
 									}
 								}
 								break;
@@ -330,174 +356,197 @@ public class EpsilonHantoGame extends AbsHantoGame {
 								break;
 							case HORSE:
 								// for each axis
-	
+
 								for (int axis = 0; axis < 6; axis++) {
 									int i;
+									boolean condition = true;
 									switch (axis) {
 									case 0:
 										i = 1;
-										while (true) {
-	
+										while (condition) {
+
 											try {
 												validJump(
 														hc,
-														new HantoCoordinateImpl(hc
-																.getX(), hc.getY()
-																+ i));
+														new HantoCoordinateImpl(
+																hc.getX(), hc
+																		.getY()
+																		+ i));
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, hc,
-														new HantoCoordinateImpl(hc
-																.getX(), hc.getY()
-																+ i)));
+														HantoPieceType.HORSE,
+														hc,
+														new HantoCoordinateImpl(
+																hc.getX(), hc
+																		.getY()
+																		+ i)));
 											} catch (HantoException e) {
-												if(getPieceAt(new HantoCoordinateImpl(hc.getX(), hc.getY() + i)) == null) {
+												if (getPieceAt(new HantoCoordinateImpl(
+														hc.getX(), hc.getY()
+																+ i)) == null) {
 													break;
 												}
 												i++;
 												continue;
 											}
-											break;
+											condition = false;
 										}
 										break;
-	
+
 									case 1:
 										i = 1;
-										while (true) {
-	
+										while (condition) {
+
 											try {
 												validJump(
 														hc,
-														new HantoCoordinateImpl(hc
-																.getX(), hc.getY()
-																- i));
+														new HantoCoordinateImpl(
+																hc.getX(), hc
+																		.getY()
+																		- i));
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, hc,
-														new HantoCoordinateImpl(hc
-																.getX(), hc.getY()
-																- i)));
+														HantoPieceType.HORSE,
+														hc,
+														new HantoCoordinateImpl(
+																hc.getX(), hc
+																		.getY()
+																		- i)));
 											} catch (HantoException e) {
-												if(getPieceAt(new HantoCoordinateImpl(hc.getX(), hc.getY() - i)) == null) {
+												if (getPieceAt(new HantoCoordinateImpl(
+														hc.getX(), hc.getY()
+																- i)) == null) {
 													break;
 												}
 												i++;
 												continue;
 											}
-											break;
+											condition = false;
 										}
 										break;
-	
+
 									case 2:
 										i = 1;
-										while (true) {
-	
+										while (condition) {
+
 											try {
 												validJump(
 														hc,
-														new HantoCoordinateImpl(hc
-																.getX() + i, hc
-																.getY()));
+														new HantoCoordinateImpl(
+																hc.getX() + i,
+																hc.getY()));
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, hc,
-														new HantoCoordinateImpl(hc
-																.getX() + i, hc
-																.getY())));
+														HantoPieceType.HORSE,
+														hc,
+														new HantoCoordinateImpl(
+																hc.getX() + i,
+																hc.getY())));
 											} catch (HantoException e) {
-												if(getPieceAt(new HantoCoordinateImpl(hc.getX() + i, hc.getY())) == null) {
+												if (getPieceAt(new HantoCoordinateImpl(
+														hc.getX() + i,
+														hc.getY())) == null) {
 													break;
 												}
 												i++;
 												continue;
 											}
-											break;
+											condition = false;
 										}
 										break;
-	
+
 									case 3:
 										i = 1;
-										while (true) {
-	
+										while (condition) {
+
 											try {
 												validJump(
 														hc,
-														new HantoCoordinateImpl(hc
-																.getX() - i, hc
-																.getY()));
+														new HantoCoordinateImpl(
+																hc.getX() - i,
+																hc.getY()));
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, hc,
-														new HantoCoordinateImpl(hc
-																.getX() - i, hc
-																.getY())));
+														HantoPieceType.HORSE,
+														hc,
+														new HantoCoordinateImpl(
+																hc.getX() - i,
+																hc.getY())));
 											} catch (HantoException e) {
-												if(getPieceAt(new HantoCoordinateImpl(hc.getX() - i, hc.getY())) == null) {
+												if (getPieceAt(new HantoCoordinateImpl(
+														hc.getX() - i,
+														hc.getY())) == null) {
 													break;
 												}
 												i++;
 												continue;
 											}
-											break;
+											condition = false;
 										}
 										break;
-	
+
 									case 4:
 										i = 1;
-										while (true) {
-	
+										while (condition) {
+
 											try {
 												validJump(
 														hc,
-														new HantoCoordinateImpl(hc
-																.getX() + i, hc
-																.getY() - i));
+														new HantoCoordinateImpl(
+																hc.getX() + i,
+																hc.getY() - i));
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, hc,
-														new HantoCoordinateImpl(hc
-																.getX() + i, hc
-																.getY() - i)));
+														HantoPieceType.HORSE,
+														hc,
+														new HantoCoordinateImpl(
+																hc.getX() + i,
+																hc.getY() - i)));
 											} catch (HantoException e) {
-												if(getPieceAt(new HantoCoordinateImpl(hc.getX() + i, hc.getY() - i)) == null) {
+												if (getPieceAt(new HantoCoordinateImpl(
+														hc.getX() + i,
+														hc.getY() - i)) == null) {
 													break;
 												}
 												i++;
 												continue;
 											}
-											break;
+											condition = false;
 										}
 										break;
 									case 5:
 										i = 1;
-										while (true) {
-	
+										while (condition) {
+
 											try {
 												validJump(
 														hc,
-														new HantoCoordinateImpl(hc
-																.getX() - i, hc
-																.getY() + i));
+														new HantoCoordinateImpl(
+																hc.getX() - i,
+																hc.getY() + i));
 												moves.add(new HantoMoveRecord(
-														HantoPieceType.HORSE, hc,
-														new HantoCoordinateImpl(hc
-																.getX() - i, hc
-																.getY() + i)));
+														HantoPieceType.HORSE,
+														hc,
+														new HantoCoordinateImpl(
+																hc.getX() - i,
+																hc.getY() + i)));
 											} catch (HantoException e) {
-												if(getPieceAt(new HantoCoordinateImpl(hc.getX() - i, hc.getY() + i)) == null) {
+												if (getPieceAt(new HantoCoordinateImpl(
+														hc.getX() - i,
+														hc.getY() + i)) == null) {
 													break;
 												}
 												i++;
 												continue;
 											}
-											break;
+											condition = false;
 										}
 										break;
 									}
-	
+
 								}
-	
+
 								break;
 							default:
 							}
 						}
 					}
-	
+
 				}
 			}
 		}
@@ -559,13 +608,15 @@ public class EpsilonHantoGame extends AbsHantoGame {
 	 */
 	private void validJump(HantoCoordinate from, HantoCoordinate to)
 			throws InvalidTargetLocationException {
-		
-		if(getPieceAt(to) != null) {
-			throw new InvalidTargetLocationException("Piece already exists there!");
+
+		if (getPieceAt(to) != null) {
+			throw new InvalidTargetLocationException(
+					"Piece already exists there!");
 		}
-		
-		if(new HantoCoordinateImpl(from).isAdjacentTo(to)) {
-			throw new InvalidTargetLocationException(to, "Can't jump to adjacent tile.");
+
+		if (new HantoCoordinateImpl(from).isAdjacentTo(to)) {
+			throw new InvalidTargetLocationException(to,
+					"Can't jump to adjacent tile.");
 		}
 
 		boolean gap = false;
@@ -623,11 +674,10 @@ public class EpsilonHantoGame extends AbsHantoGame {
 			throw new InvalidTargetLocationException(to,
 					"Pieces may only jump in a straight line.");
 		}
-		if (gap == true) {
+		if (gap) {
 			throw new InvalidTargetLocationException(to,
 					"Pieces may not jump over empty spaces.");
 		}
 	}
-	
 
 }

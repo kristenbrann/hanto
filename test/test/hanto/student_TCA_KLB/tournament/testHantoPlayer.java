@@ -13,9 +13,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import test.hanto.common.HantoTestGame;
-import test.hanto.common.HantoTestGameFactory;
-
 public class testHantoPlayer {
 	
 	private HantoCoordinate home;

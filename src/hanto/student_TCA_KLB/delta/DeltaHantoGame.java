@@ -11,22 +11,16 @@
 package hanto.student_TCA_KLB.delta;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
-import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.student_TCA_KLB.common.AbsHantoGame;
 import hanto.student_TCA_KLB.common.GameNotInProgressException;
 import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
-import hanto.student_TCA_KLB.common.HantoPieceFactory;
 import hanto.student_TCA_KLB.common.HantoPieceInventory;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidSourceLocationException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author tcarmstrong klbrann
@@ -172,11 +166,11 @@ public class DeltaHantoGame extends AbsHantoGame {
 			result = MoveResult.DRAW;
 			gameInProgress = false;
 		}
-		return result;
+		return result;	
 	}
 	
 	@Override
-	protected MoveResult handleResignation() throws HantoException {
+	protected MoveResult handleResignation() {
 		MoveResult result = MoveResult.OK;
 		switch(currentPlayer) {
 			case RED:

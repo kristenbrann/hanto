@@ -20,7 +20,6 @@ import hanto.student_TCA_KLB.common.HantoCoordinateImpl;
 import hanto.student_TCA_KLB.common.InvalidPieceTypeException;
 import hanto.student_TCA_KLB.common.InvalidTargetLocationException;
 import hanto.student_TCA_KLB.common.Sparrow;
-import hanto.student_TCA_KLB.tournament.HantoPlayer;
 import hanto.tournament.HantoMoveRecord;
 
 import org.junit.Before;
